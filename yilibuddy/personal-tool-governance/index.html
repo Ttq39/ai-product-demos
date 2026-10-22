@@ -547,7 +547,363 @@ function obSubtoolList(t,readonly=false,full=false){
 const list=t.discoveredTools||[];if(!list.length)return '';
 const selected=new Set(t.selectedTools||[]);
 if(ob.mode==='mobile'&&!readonly&&!full)return '<section class="obMobileToolSummary"><h4>接入范围 '+mark(35)+mark(37)+'</h4><p>已发现 '+list.length+' 个工具，已选择 '+selected.size+' 个</p><p class="muted">'+esc(list.filter(x=>selected.has(x.name)).map(x=>x.title).join('、')||'尚未选择工具')+'</p>'+((t.discoveryChanges||[]).length?'<p class="muted">发现新增工具，默认未启用。</p>':'')+obButton('panelTools','调整接入范围')+'<p class="muted">也可以直接说“只用实时天气和天气预警”。</p></section>';
-return '<section class="obSubtools"><h4>接入的子工具 '+mark(35)+'</h4><p class="muted">'+(t.discoveryChanges?.length?'发现新增子工具，默认不启用，请核对。':'')+'已发现 '+list.length+' 个，已选择 '+selected.size+' 个。仅所选工具参与本次测试和接入。</p>'+(readonly?'':'<div class="obSubtoolActions">'+obButton('selectAllTools','全选')+obButton('clearTools','清空')+'</div>')+list.map(x=>'<div class="obSubtool"><label><input type="checkbox" data-ob-tool value="fixture">授权文件摘要测试夹具</option><option value="missing">缺少可信测试依据</option></select><p class="muted">通过“CLI配置示例”填充虚构命令与Schema；普通用户操作区仍为历史可编辑表单。测试不读取真实文件。</p>');
+return '<section class="obSubtools"><h4>接入的子工具 '+mark(35)+'</h4><p class="muted">'+(t.discoveryChanges?.length?'发现新增子工具，默认不启用，请核对。':'')+'已发现 '+list.length+' 个，已选择 '+selected.size+' 个。仅所选工具参与本次测试和接入。</p>'+(readonly?'':'<div class="obSubtoolActions">'+obButton('selectAllTools','全选')+obButton('clearTools','清空')+'</div>')+list.map(x=>'<div class="obSubtool"><label><input type="checkbox" data-ob-tool="'+esc(x.name)+'" '+(selected.has(x.name)?'checked':'')+(readonly?' disabled':'')+'> <b>'+esc(x.title)+'</b><span class="muted">'+esc(x.name)+'</span></label><p>'+esc(x.description)+'</p><details><summary>查看输入参数</summary><div class="groupBody">'+Object.entries(x.inputSchema.properties).map(([k,v])=>'<p><b>'+esc(k)+'</b> · '+esc(v.type)+' · '+(x.inputSchema.required.includes(k)?'必填':'可选')+' · '+esc(v.description||'')+'</p>').join('')+'<p class="muted">输出结构：示例未声明；测试另依据可信返回约定。</p></div></details></div>').join('')+'</section>';
+}
+function obUpdateToolDraft(names){const t=ob.task,available=new Set(t.discoveredTools.map(x=>x.name));t.toolDraft=[...new Set(names)].filter(x=>available.has(x));document.querySelectorAll('.obTaskPanel [data-ob-tool]').forEach(x=>x.checked=t.toolDraft.includes(x.dataset.obTool));const count=$('#obToolDraftCount');if(count)count.textContent='已选择 '+t.toolDraft.length+' / '+t.discoveredTools.length;const confirm=document.querySelector('[data-ob="confirmTools"]');if(confirm){confirm.textContent='确认使用 '+t.toolDraft.length+' 个工具';confirm.disabled=!t.toolDraft.length;}}
+function obSyncMobileViewport(){if(ob.mode!=='mobile')return;const bar=document.querySelector('.demoBar');document.documentElement.style.setProperty('--ob-demo-height',(bar?.getBoundingClientRect().height||48)+'px');}
+function basisSample(t){if(t.type==='CLI'&&t.command==='demo-summary')return {description:'授权文件摘要夹具 FILE-SUMMARY-001；文件已部署在测试目录。',object:'{"file":"fixture/normal.txt"}',expected:'输出 summary 字符串及 length 整数，与固定文件夹具一致。'};if(obFixture(t)==='caiyun')return {description:'彩云官方用途及参数说明；授权固定响应夹具 CY-WEATHER-001。',object:'{"lat":39.9,"lng":116.4}',expected:'实时天气按固定夹具返回20℃；天气预警按夹具返回空列表，均正常完成。'};if(obFixture(t)==='order')return {description:'授权订单夹具 ORDER-001；仅查询测试订单。',object:'{"order_id":"TEST-001"}',expected:'返回 TEST-001 及已完成状态，不修改订单。'};return null;}
+function basisSection(t){const v=t.basisDraft||t.testBasis||{};return '<details class="basisSection" '+(t.evidenceNeeded?'open':'')+'><summary>补充验证依据 '+mark(38)+'</summary><div class="groupBody"><p class="muted">已有资料足够时无需填写。只补当前缺项；说明中请包含依据来源，不要填写密钥。</p><div id="basisError" class="danger" role="alert"></div>'+obInput('basisDescription','说明与依据来源',v.description||'','textarea')+obInput('basisObject','测试对象 / 输入',v.object||'','textarea')+obInput('basisExpected','预期结果',v.expected||'','textarea')+'<button type="button" class="primary" data-basis-save>保存并重新生成</button></div></details>';}
+function basisMatches(t,v){const sample=basisSample(t);if(!sample||!v)return false;try{return JSON.stringify(JSON.parse(v.object))===JSON.stringify(JSON.parse(sample.object))&&v.description===sample.description&&v.expected===sample.expected;}catch{return false;}}
+function basisRenderError(message){const node=$('#basisError');if(node)node.textContent=message;}
+function saveTestBasis(){const t=page==='onboard'?ob.task:active;if(!t)return;const v={description:$('#basisDescription')?.value.trim()||'',object:$('#basisObject')?.value.trim()||'',expected:$('#basisExpected')?.value.trim()||''};if(!v.description||!v.object||!v.expected)return basisRenderError('请补充说明、测试对象和预期；已有内容保留');let input;try{input=JSON.parse(v.object);}catch{return basisRenderError('测试输入JSON格式错误，请修正后保存；内容保留');}if(!input||typeof input!=='object'||Array.isArray(input))return basisRenderError('测试输入需为JSON对象');if(/(?:authorization|api.?key|secret|token|password)\s*["：:]/i.test(v.description+' '+v.object+' '+v.expected))return basisRenderError('疑似凭证请改用安全输入，不要填入验证说明');
+v.verified=basisMatches(t,v);t.testBasis=v;delete t.basisDraft;t.evidenceNeeded=!v.verified;t.revision=(t.revision||1)+1;t.testRun=null;
+if(page==='onboard'){t.cases=[];t.results=null;t.testFinished=false;t.done=false;t.stage=1;t.error='';t.chatPanel=null;obRender();if(!v.verified)return obError('补充内容已保存；本Demo仅核对预置授权夹具，其他资料尚未接入真实校验，不据此判通过');if(t.connected)obGenerate();else obError('补充内容已保存，请先完成连接检查，再重新生成');}else{tests();if(!v.verified)basisRenderError('补充内容已保存；本Demo仅核对预置夹具，其他资料未接入真实校验');}}
+function obSelectTools(names){const t=ob.task,available=new Set((t.discoveredTools||[]).map(x=>x.name));t.selectedTools=[...new Set(names)].filter(x=>available.has(x));t.revision++;t.cases=[];t.results=null;t.testFinished=false;t.done=false;t.stage=1;t.error='';t.chatReply='已选择 '+t.selectedTools.length+' 个子工具，请核对后生成测试。';obRender();}
+function obSavedTools(t){const selected=(t.discoveredTools||[]).filter(x=>(t.selectedTools||[]).includes(x.name));return selected.length?obSubtoolList({...t,discoveredTools:selected},true):'';}
+function obAuthorizeTool(t,name){return (t.selectedTools||[]).includes(name)&&(t.discoveredTools||[]).some(x=>x.name===name);}
+function caiyunCases(t){
+const coords={lat:39.9,lng:116.4};
+return t.discoveredTools.filter(x=>t.selectedTools.includes(x.name)).flatMap(x=>{
+const input={...coords,...(x.name==='get_hourly_forecast'?{hours:24}:{})};
+const purpose={get_realtime_weather:'返回授权坐标对应的实时天气字段，固定模拟温度20℃',get_hourly_forecast:'返回24个小时的预报记录，时间有序',get_weekly_forecast:'返回七日日级预报，起始日期与模拟时钟一致',get_historical_weather:'返回模拟时钟之前24小时的历史数据',get_weather_alerts:'返回空预警列表并正常完成，不把无预警当作错误'}[x.name];
+return [
+{name:x.title+' · 正常查询',kind:'正向',input:JSON.stringify(input),expected:purpose,basis:'彩云官方用途/参数说明＋授权固定响应夹具 CY-WEATHER-001（模拟时钟2026-10-22 08:00）',tool:x.name},
+{name:x.title+' · 缺少纬度',kind:'负向',input:JSON.stringify({lng:116.4}),expected:'调用前按输入定义拒绝缺少lat，不访问天气服务',basis:'工具输入Schema：lat必填',tool:x.name},
+{name:x.title+' · 参数类型错误',kind:'负向',input:JSON.stringify({lat:'invalid',lng:116.4}),expected:'调用前拒绝错误类型，不访问天气服务',basis:'工具输入Schema：lat为number',tool:x.name}
+];
+}).concat([{name:'接入范围 · 拒绝未选择的工具',kind:'负向',input:'未选择或不存在的工具标识',expected:'执行层拒绝调用，不向MCP服务发送请求',basis:'当前版本所选工具白名单',tool:'platform'},{name:'授权隔离 · 无效凭证',kind:'负向',input:'隔离的无效凭证上下文',expected:'认证失败，不读取天气数据',basis:'平台认证隔离规则',tool:'platform'}]);
+}
+
+notes[25]=['MCP分步创建与自动回填',['MCP在Web和移动对话导入核对并测试；Web页面同规则。CLI沿用历史同页表单，不使用此分步创建器。','名称/标识/描述优先取导入信息，否则本地生成建议，均可编辑；不是调用AI或真实读取服务。','必要配置、认证字段、绑定和共享范围仍须完整，折叠不免除校验。','更新失败保持旧有效版本；完成后的重复操作不生成另一工具。'],'FR-02/03/19/20 · AC-67/68'];
+notes[26]=['完整JSON安全导入',['文件与专用粘贴区接收完整JSON，无需手动删除密钥；解析后清空原文，只保留脱敏元数据和模拟引用。','此静态Demo无凭证服务器，不保存真实密钥、不发网络请求；请仅使用示例数据。生产必须在模型调用前隔离输入。','多服务先选择；未知字段只显示路径并核对；本地stdio不运行。存储失败不报成功。','普通聊天框检测JSON/可能的凭证时阻止发送，引导安全导入，不回显原文。'],'FR-20 §5.20.1 · AC-77/78'];
+notes[27]=['双端对话与恢复',['Web与移动端对话仅MCP；CLI请求说明Web工具入口，不创建任务。移动端为390px触控容器，不是缩小Web长表单。','Agent解释、字段核对和安全输入在对话内承接，所有真实调用在生产均须用户确认。','关闭/离开可从目录恢复同一模拟任务；不存聊天密钥，不持久化浏览器数据。','安全输入、授权及后台服务均为本期实现依赖；本地状态模拟不证明YiliBuddy已集成。'],'FR-19 · AC-67/70/72'];
+notes[28]=['CLI历史配置与执行边界',['CLI只从Web能力商店—工具新增，不在对话创建，也不查询或解析当前用户代码包。','沿用历史命令/入口、参数Schema、约束、超时、认证参数和共享配置；字段可编辑，必填与敏感复选可操作。','代码须先由技术部署且命令在Runner允许范围；Demo允许demo-summary，其他命令演示不可执行。','填写配置不授予执行权限。测试依据不足保留配置并阻断，不要求手写整套样例或上传代码包。'],'FR-03/20 · AC-69/79/80'];
+notes[29]=['测试与生效门禁',['显示样例、输入、预期及依据后才能确认测试；连接通过不等于工具可用。','生成失败、缺可信预期、缺安全环境或必要认证时不执行不生效；失败保持已核对配置。','个人通过后本人可用；共享通过后待审核，不提前对他人生效。配置中心可修改用户工具，保留创建者。'],'FR-04/06/09 · AC-73～78'];
+function obInput(id,label,value,kind='input',required=false,extra=''){
+return '<label class="obField '+(kind==='textarea'?'obFieldWide':'')+'"><span class="obFieldLabel">'+(required?'<span class="obRequired">*</span> ':'')+label+'</span>'+(kind==='textarea'?'<textarea id="'+id+'" '+extra+'>'+esc(value||'')+'</textarea>':'<input id="'+id+'" value="'+esc(value||'')+'" '+extra+'>')+'</label>';
+}
+function obButton(action,label,primary=false,disabled=false){return '<button data-ob="'+action+'" class="'+(primary?'primary':'')+'" '+(disabled?'disabled':'')+'>'+label+'</button>';}
+function obMode(mode){ob.mode=mode;document.body.classList.toggle('obMobile',mode==='mobile');}
+function beginOnboarding(type='MCP',original=null,mode='webform'){
+$('#toast').style.display='none';
+if(type!=='MCP'){if(mode!=='webform'){const message='本期对话仅支持创建MCP。请在电脑端能力商店—工具中创建CLI';if(ob.task)obError(message);else toast(message);return;}obLeave();form('CLI',original);return;}
+$('#adminPage')?.classList.remove('open');$('.shell').style.display='flex';
+if($('#cliWalkthroughGuide'))$('#cliWalkthroughGuide').hidden=true;obMode(mode);ob.task={id:'intake-'+(++ob.serial),type,stage:0,revision:1,original,
+identifier:original?.id||'',name:original?.name||'',desc:original?.desc||'',url:original?.url||'',
+timeout:original?.formConfig?.timeout||10,credential:original?.credential||'无凭据',
+discoveredTools:structuredClone(original?.discoveredTools||[]),selectedTools:[...(original?.selectedTools||[])],discoveryDone:!!original?.discoveredTools?.length,testBasis:structuredClone(original?.testBasis||null),demoContract:original?.demoContract||null,identity:original?.identity||'不使用',auth:(original?.authSchema||[]).map(x=>({...x})),bindings:(original?.bindings||[]).map(x=>({...x})),
+shared:original?.shared||false,mode:original?.mode||'用户申请后使用',display:original?.display||'暂不展示',
+teams:[...(original?.teams||[])],roles:[...(original?.roles||[])],users:[...(original?.users||[])],openSettings:structuredClone(original?.openSettings||toolHubDefault()),
+parsed:!!original,connected:false,definition:false,cases:[],messages:[],secretCount:0,secretReady:false,unknown:[],error:''};
+ob.tasks.push(ob.task);if(original)ob.task.stage=1;obRender();
+}
+function obStoreFields(){
+const t=ob.task;if(!t)return;
+const fields={obName:'name',obIdentifier:'identifier',obDesc:'desc',obURL:'url',obTimeout:'timeout',obIdentity:'identity',obCredential:'credential',obDisplay:'display',obUseMode:'mode'};
+for(const [id,key]of Object.entries(fields)){const v=$('#'+id);if(v)t[key]=v.value;}
+if(document.querySelector('[name=obAudience]:checked'))t.shared=document.querySelector('[name=obAudience]:checked').value==='shared';
+if($('#obTeams'))t.teams=$('#obTeams').value.split(/[,，]/).map(x=>x.trim()).filter(Boolean);
+if($('#obUsers'))t.users=$('#obUsers').value.split(/[,，]/).map(x=>x.trim()).filter(Boolean);
+for(const [id,key]of [['obTeamPicker','teams'],['obRolePicker','roles'],['obUserPicker','users']])if($('#'+id))t[key]=[...document.querySelectorAll('#'+id+' input:checked')].map(i=>i.value);
+if($('#obCategory'))t.category=$('#obCategory').value;
+document.querySelectorAll('[data-ob-auth]').forEach(i=>{const [n,k]=i.dataset.obAuth.split(':');t.auth[n][k]=k==='required'?i.value==='必填':k==='secret'?i.value==='密文':i.value;});
+document.querySelectorAll('[data-ob-bind]').forEach(i=>{const [n,k]=i.dataset.obBind.split(':');t.bindings[n][k]=i.value;});
+}
+function obInvalidate(){const t=ob.task;t.revision++;t.connected=false;t.definition=false;t.cases=[];t.stage=1;t.done=false;}
+function obError(msg){ob.task.error=msg;const n=$('#obError');if(n)n.textContent=msg;else obRender();}
+function obScenario(){return $('#obScenario')?.value||'pass';}
+function obSanitizeEntry(name,s){
+if(!s||typeof s!=='object'||Array.isArray(s))throw Error('服务配置必须是JSON对象');
+if(!s.url&&!s.endpoint)throw Error('该配置需要本地进程或缺少远程URL，请提供平台可访问的MCP地址');
+let u;try{u=new URL(s.url||s.endpoint);}catch{throw Error('MCP URL格式不正确');}
+if(!['https:','http:'].includes(u.protocol)||['localhost','127.0.0.1','0.0.0.0','::1','[::1]'].includes(u.hostname))throw Error('请提供平台可访问的HTTP(S)远程MCP地址');
+let count=0,auth=[],bindings=[],unknown=[];
+const secret=(label,target,key)=>{const ref='credential_'+auth.length;auth.push({name:ref,label,required:true,secret:true,configured:true});if(target)bindings.push({target,name:key,source:'凭证字段',ref,template:'{value}'});count++;};
+if(u.username||u.password){secret('URL连接凭证');u.username='';u.password='';unknown.push('URL认证用途需安全核对');}
+for(const [key,value]of [...u.searchParams]){if(/token|key|secret|pass|auth|cookie/i.test(key)){secret(key,'Query',key);u.searchParams.delete(key);}else{unknown.push('URL.query.'+key);u.searchParams.delete(key);}}
+for(const [target,values]of [['Header',s.headers||{}],['Query',s.query||s.queries||{}]]){
+if(!values||Array.isArray(values)||typeof values!=='object')throw Error(target+'必须为对象');
+for(const [key,value]of Object.entries(values)){
+if(target==='Header'&&/^(accept|content-type|accept-encoding)$/i.test(key)&&typeof value==='string')bindings.push({target,name:key,source:'固定值',value});
+else secret(key,target,key);
+}}
+const safe=new Set(['name','display_name','description','url','endpoint','headers','query','queries','timeout','credential_mode']);
+for(const k of Object.keys(s))if(!safe.has(k))unknown.push(k);
+return {serverKey:name,name:typeof s.name==='string'?s.name:typeof s.display_name==='string'?s.display_name:name==='Server'?'MCP工具':name,
+desc:typeof s.description==='string'?s.description:'连接已配置的MCP服务，使用前核对工具能力与适用范围。',
+identifier:name==='Server'?u.hostname.split('.')[0]+'-mcp':name.replace(/[^a-zA-Z0-9_-]/g,'-').replace(/^-+|-+$/g,'')||'my-mcp',
+url:u.toString(),timeout:Number(s.timeout)||10,auth,bindings,secretCount:count,unknown,preferred:s.credential_mode==='personal'?'用户个人 Key':null};
+}
+async function obParse(){
+const t=ob.task,area=$('#obJSON');let raw=area?.value||'';
+if(!raw.trim())return obError('请先上传或粘贴完整JSON配置');
+try{
+const j=JSON.parse(raw);const c=j.mcpServers||j.servers||j;
+const entries=c.url||c.endpoint?[['Server',c]]:Object.entries(c);
+if(!entries.length)throw Error('未识别到服务配置');
+const safe=entries.map(([key,val])=>obSanitizeEntry(key,val));
+if(obScenario()==='save')throw Error('凭证安全保存未完成，请重试；当前配置尚不可用于连接');
+if(t.parsed&&!confirm('重新导入将替换当前配置并使检查测试失效，确认替换？'))return;
+t.servers=safe;t.serverIndex='';t.parsed=false;t.error='';
+area.value='';raw='';t.messages.push('配置已接收，请核对信息。');if(safe.length===1)obSelectServer(0);else obRender();
+}catch(err){obError(err instanceof SyntaxError?'JSON格式错误，请检查语法后重试；当前内容仅保留在安全导入区。':'导入未完成：'+err.message);}
+}
+function obSelectServer(i){
+const t=ob.task,entry=t.servers[Number(i)];if(!entry)return;
+Object.assign(t,entry);t.secretReady=!!entry.secretCount;t.credential=entry.preferred||(entry.auth.length?'用户个人 Key':'无凭据');t.serverIndex=Number(i);t.parsed=true;t.purposeConfirmed=false;
+t.demoContract=entry.url==='https://mcp-weather.caiyunapp.com/mcp'?'caiyun':entry.serverKey==='order-query'&&entry.url==='https://example.com/mcp'?'order':null;if(t.demoContract==='caiyun'){if(!entry.name||entry.name===entry.serverKey)t.name='彩云天气 MCP';if(entry.desc==='连接已配置的MCP服务，使用前核对工具能力与适用范围。')t.desc='查询实时天气、天气预报、历史天气和天气预警。';}t.discoveredTools=[];t.selectedTools=[];t.discoveryDone=false;t.testBasis=null;t.basisDraft=null;t.evidenceNeeded=false;t.unknownConfirmed=!entry.unknown.length;t.stage=1;t.connected=false;t.cases=[];t.error='';obRender();
+}
+function obSetImportMode(mode){for(const [id,isPaste]of [['obPastePanel',true],['obFilePanel',false]]){const x=$('#'+id);if(x)x.hidden=(mode==='paste')!==isPaste;}$('#obPasteTab')?.setAttribute('aria-selected',String(mode==='paste'));$('#obFileTab')?.setAttribute('aria-selected',String(mode==='file'));}
+function obSample(){obSetImportMode('paste');const a=$('#obJSON');if(a)a.value=caiyunDemoJSON();}
+function obHistoricalRow(kind,value,index){
+const host=document.createElement('div');
+host.innerHTML=kind==='auth'?schemaRow(value,index,'MCP'):bindingRow(value,index,ob.task.auth.map(x=>x.name));
+const keys=kind==='auth'?{sn:'name',sl:'label',sp:'placeholder',sr:'required',ss:'secret'}:{bt:'target',bn:'name',bs:'source',bv:'value',br:'ref',bp:'template'};
+host.querySelectorAll('input,select,textarea').forEach(control=>{const old=control.id,key=keys[old.slice(0,2)];control.id='ob-'+old;host.querySelectorAll('label').forEach(label=>{if(label.htmlFor===old)label.htmlFor=control.id;});control.setAttribute(kind==='auth'?'data-ob-auth':'data-ob-bind',index+':'+key);if(kind==='auth'&&key==='placeholder'&&!control.value)control.placeholder='例如 请输入'+(value.label||'连接凭证');});
+const button=host.querySelector('button');button.removeAttribute(kind==='auth'?'data-delete-schema':'data-delete-binding');button.dataset.ob=kind==='auth'?'removeAuth':'removeBinding';button.dataset.index=index;
+if(kind==='bind'){host.querySelector('.fixedWrap').hidden=value.source==='凭证字段';host.querySelector('.refWrap').hidden=value.source!=='凭证字段';}
+return host.innerHTML;
+}
+window.addEventListener('change',e=>{if(e.target.name==='obAudience'&&ob.task){obStoreFields();ob.task.shared=e.target.value==='shared';ob.task.error='';obRender();}},true);
+function obAudienceCards(t){return '<div class="toolAudience"><div>使用对象 '+mark(13)+'</div><div class="choiceRow"><label class="choice '+(!t.shared?'selected':'')+'"><input type="radio" name="obAudience" value="personal" '+(!t.shared?'checked':'')+'><strong>个人使用</strong><p class="muted">检查测试通过后仅本人可用</p></label><label class="choice '+(t.shared?'selected':'')+'"><input type="radio" name="obAudience" value="shared" '+(t.shared?'checked':'')+'><strong>共享</strong><p class="muted">配置范围后提交平台管理员审核</p></label></div></div>';}
+function obFormBody(){
+const t=ob.task;
+if(t.stage===0){
+return '<h3 class="obSectionTitle">导入 MCP 配置 '+mark(26)+'</h3><p class="obIntro">导入后自动填写配置，名称等信息可在下一步修改。凭证无需手动删除。</p><div class="obImportTabs" role="tablist" aria-label="配置导入方式"><button type="button" role="tab" id="obPasteTab" data-ob="importPaste" aria-selected="true" aria-controls="obPastePanel">粘贴 JSON</button><button type="button" role="tab" id="obFileTab" data-ob="importFile" aria-selected="false" aria-controls="obFilePanel">上传 JSON 文件</button></div><div id="obPastePanel" role="tabpanel" aria-labelledby="obPasteTab"><label class="obFieldLabel" for="obJSON">配置 JSON</label><textarea id="obJSON" spellcheck="false" placeholder=\'例如 { "mcpServers": { "my-service": { "url": "https://your-host/mcp" } } }\'></textarea><div class="obImportHelper"><span>支持完整 MCP JSON 配置</span>'+obButton('example','填入示例')+'</div></div><div id="obFilePanel" role="tabpanel" aria-labelledby="obFileTab" hidden><label class="obUploadDrop" for="obFile"><span class="obUploadIcon">↑</span><b>'+(ob.mode==='mobile'?'选择手机文件':'选择 JSON 文件')+'</b><span>'+(ob.mode==='mobile'?'从系统文件选择器导入 JSON':'选取已有配置文件后解析')+'</span><input type="file" id="obFile" accept=".json,application/json" aria-label="选择JSON文件"></label><p id="obFileName" class="muted">尚未选择文件</p></div>'+
+(t.servers?'<div class="obServerPick"><h4>检测到 '+t.servers.length+' 个服务</h4><p class="muted">请选择本次要接入的服务</p><select id="obServerSelect"><option value="">请选择服务</option>'+t.servers.map((x,i)=>'<option value="'+i+'">'+esc(x.serverKey)+' · '+esc(x.name)+'</option>').join('')+'</select></div>':'');
+}
+if(t.stage===1){
+const auth=t.auth.map((a,i)=>obHistoricalRow('auth',a,i)).join('');
+const bindings=t.bindings.map((a,i)=>obHistoricalRow('bind',a,i)).join('');
+return '<h3>核对配置 '+mark(25)+'</h3><div class="obFields">'+obInput('obIdentifier','标识名',t.identifier,'input',true,t.original?'readonly':'')+obInput('obName','显示名称',t.name,'input',true)+obInput('obDesc','描述',t.desc,'textarea',false,'maxlength="500"')+'</div><p class="muted">已根据来源生成建议，你可以直接修改。</p>'+
+'<section class="obConnectionGroup"><h4>连接信息 '+mark(33)+'</h4><div class="obConnectionLine">'+obInput('obURL','MCP URL',t.url,'input',true)+obInput('obTimeout','超时（秒）',t.timeout,'input',true,'type="number" min="1"')+'<label class="obField"><span class="obFieldLabel">凭据模式</span><select id="obCredential">'+options(['无凭据','平台统一 Key','用户个人 Key'],t.credential)+'</select></label></div><div class="obIdentityArea"><label class="obField">用户身份鉴权<select id="obIdentity">'+options(['不使用','OA鉴权','平台固定Token'],t.identity)+'</select></label><p class="muted">OA 鉴权使用当前用户 OA Token；平台固定 Token 复用平台密文凭据并注入 x-access-token。</p></div></section>'+
+(t.secretCount?'<div class="banner ok">识别到 '+t.secretCount+' 项凭证，已转为安全引用；无需重复填写。</div>':'')+
+
+(t.unknown.length?'<div class="banner warn">需核对的字段路径：'+esc(t.unknown.join('、'))+'<br><label><input type="checkbox" id="obUnknown" '+(t.unknownConfirmed?'checked':'')+'>已核对，这些未映射字段不用于本次连接</label></div>':'')+
+obAudienceCards(t)+
+(t.shared?toolHubMarkup(t.openSettings):'')+
+'<details class="obAdvanced"><summary>其余配置：分类、图标、连接与凭证字段</summary><label class="obField">分类<select id="obCategory">'+options(t.type==='MCP'?['请选择','效率工具','办公协同','数据分析']:['请选择'],t.category||'请选择')+'</select></label><label class="obField">图标（JPG/PNG，最大5MB）<input id="obIcon" type="file" accept="image/png,image/jpeg"></label>'+
+
+'<h4>凭证字段</h4><p class="banner">按工具要求定义凭证字段，必填和显示方式逐项生效。</p>'+obButton('addAuth','＋ 添加字段')+auth+
+(t.type==='MCP'?'<details class="obBindingAdvanced"><summary>请求注入绑定（高级） '+mark(33)+'</summary><div class="groupBody"><p class="muted">已从配置生成。将固定配置或安全凭证放入服务要求的 Header / Query；正常导入无需重复填写。</p>'+bindings+obButton('addBinding','＋ 添加绑定')+'</div></details>':'')+'</details>'+
+obCredentialSection(t)+basisSection(t)+
+'<div class="banner '+(t.connected?'ok':'')+'">'+(t.connected?'连接检查完成；请核对子工具范围，再生成并确认测试。':'请先完成连接或可执行性检查。')+'</div>'+obButton('connect',t.connected?'重新连接并同步工具':t.type==='MCP'?'连接测试':'检查可执行性')+obSubtoolList(t);
+}
+if(t.stage===2){
+if(t.busy)return testRunningCard(t.cases.length);if(t.testFinished)return testResultCard(t.name,t.shared,t.cases,t.results,true,t.error);
+return '<h3>样例与候选测试 '+mark(29)+mark(34)+'</h3><div class="banner">已根据当前工具资料生成候选内容，请检查后确认执行。</div><h4>使用样例</h4><p>'+esc(obFixture(t)==='caiyun'?'查询北京坐标（39.9，116.4）的所选天气能力':t.type==='MCP'?'查询授权测试订单 TEST-001 的状态':'对授权测试文件生成摘要')+'</p><div class="obCases">'+t.cases.map((c,i)=>'<details><summary>'+esc(c.name)+' · '+c.kind+' · '+(t.results?.[i]||'待确认')+'</summary><pre>输入：'+esc(c.input)+'\n预期：'+esc(c.expected)+'</pre><p>依据：'+esc(c.basis)+'；验证方式：隔离示例；数据影响：只读</p></details>').join('')+'</div><label class="obCheck"><input id="obTestConfirm" type="checkbox">我已核对用例、当前版本及测试环境，确认执行</label>';
+}
+return testResultCard(t.name,t.shared,t.cases,t.results||[],!t.done)+(ob.mode==='mobile'?'':obButton('showTool','查看工具详情'));
+}
+
+function obCredentialItems(t){return (t.credential==='无凭据'?[]:t.auth).concat(t.identity==='平台固定Token'?[{name:'identity',label:'平台固定Token',required:true,secret:true,configured:!!t.identityReady}]:[]);}
+function obCredentialReady(t){const items=obCredentialItems(t);t.secretReady=items.filter(x=>x.name!=='identity'&&x.required!==false).every(x=>x.configured);return items.filter(x=>x.required!==false).every(x=>x.configured);}
+function obCredentialSection(t){
+const items=obCredentialItems(t);if(!items.length)return '';obCredentialReady(t);
+const ready=items.filter(x=>x.required!==false).every(x=>x.configured),edit=!!t.changingSecret;
+const shown=items.filter(x=>!x.configured||edit);
+return '<details class="obAdvanced obCredentials" open><summary>连接凭证</summary><p class="muted">'+(t.credential==='平台统一 Key'?'平台统一凭证供该工具授权调用使用。':'个人凭证仅供本人连接和测试使用。')+'历史密钥不回显。</p><div id="obSecretError" role="alert" style="color:#c52c3e"></div>'+items.map(x=>'<div class="obCredentialStatus"><b>'+esc(x.label)+'</b><span class="badge">'+(x.configured?'已配置':'待补充')+'</span></div>').join('')+
+(ready&&!edit?'<p class="banner ok">凭证已配置，'+(t.connected?'连接检查已通过。':'待连接检查，无需重复填写。')+'</p>'+obButton('changeSecret','更换凭证'):'')+
+shown.map(x=>obInput('obSecret-'+x.name,x.label,'','input',x.required!==false,'type="password" autocomplete="new-password"')).join('')+
+(shown.length?obButton('secret',edit?'保存并更换':'保存并验证',true)+(edit?obButton('cancelSecret','取消更换'):''):'')+'</details>';
+}
+function obHandleConversation(){
+const t=ob.task,box=$('#obMessage'),text=box?.value.trim();if(!text)return;
+if(text.startsWith('{')){if(t.stage!==0)return obError('已有配置，重新导入请通过安全导入入口确认覆盖');const area=$('#obJSON');if(area){area.value=text;box.value='';obParse();}return;}
+if(/token|secret|authorization|api.?key|密码|密钥/i.test(text))return obError('凭证请使用安全输入；不要发送到普通对话');
+if(/CLI|代码包|部署命令/i.test(text))return obError('本期对话仅支持创建MCP。请在电脑端能力商店—工具中创建CLI');
+t.messages.push(text);box.value='';
+if(t.busy){t.chatReply='当前测试正在执行，请等待本次结果。';obRender();return;}
+if(t.stage===2&&/^(开始测试|确认测试|确认并开始测试|执行测试|重新测试)$/.test(text)){if(t.testFinished){t.testFinished=false;t.results=null;t.error='';obRender();t.chatReply='请重新核对当前测试计划后，再说“开始测试”。';obRender();return;}if($('#obTestConfirm'))$('#obTestConfirm').checked=true;obRun();return;}
+if(t.stage===2&&/名称|名字|描述|用途|TEST-00/.test(text)){t.stage=1;t.connected=false;t.cases=[];t.results=null;t.testFinished=false;}
+if(t.stage===1){
+if(/^(说明|测试对象|预期)[：:]/.test(text)){const kind=text.split(/[：:]/)[0],value=text.slice(kind.length+1).trim();t.testBasis={...(t.testBasis||{}),[{'说明':'description','测试对象':'object','预期':'expected'}[kind]]:value,verified:false};t.evidenceNeeded=true;t.cases=[];t.results=null;t.revision++;t.chatReply='已记录'+kind+'，其余资料保留。补齐后说“保存依据”可重新核验生成。';obRender();return;}
+if(text==='保存依据'){t.chatPanel='evidence';obRender();saveTestBasis();return;}
+if(/^(个人使用|仅本人使用|只给我用|只有我用)[，,。\s]+(继续|下一步)$/.test(text)){t.shared=false;t.error='';if(!t.connected)obConnect();if(t.connected)obGenerate();return;}
+const name=text.match(/^(?:把|将)?(?:工具的?)?(?:名称|名字|显示名称)(?:改成|改为|设为|设置为|是|：|:)\s*[“"]?(.+?)[”"]?$/),desc=text.match(/^(?:把|将)?(?:描述|用途)(?:改成|改为|设为|是|：|:)\s*(.+)$/);
+if(name||desc){t[name?'name':'desc']=(name||desc)[1];t.connected=false;t.cases=[];t.revision++;t.chatReply=(name?'名称':'描述')+'已更新。'+obChatNext(t);}
+else if(/^(个人使用|仅本人使用|只给我用|只有我用)$/.test(text)){t.shared=false;t.chatReply='已设为个人使用。'+obChatNext(t);}
+else if(/^(共享|申请共享|共享给别人)$/.test(text)){t.shared=true;t.chatPanel='scope';t.chatReply='请核对可见和订阅范围；其余已填信息保留。';}
+else if(/^(只用|只接入|仅接入|选择).*(实时天气|天气预警|小时预报|七日预报|历史天气)/.test(text)&&t.connected){obSelectTools(t.discoveredTools.filter(x=>text.includes(x.title)||text.includes(x.name)).map(x=>x.name));return;}
+else if(/^(检查连接|连接测试|重试连接)$/.test(text)){t.error='';obConnect();return;}
+else if(/^(继续|生成测试|生成测试集|生成样例|下一步)$/.test(text)){t.error='';if(!t.connected)obConnect();if(t.connected)obGenerate();return;}
+else{const id=text.match(/(?:用|订单|测试对象[：:]?)\s*(TEST-00[12])(?:.*)/i);if(id&&t.demoContract==='order'){t.testObject=id[1].toUpperCase();t.cases=[];t.revision++;t.chatReply='测试对象已设为 '+t.testObject+'，使用示例夹具中的可信预期。说“继续”可生成测试计划。';}else t.chatReply=obChatNext(t)+' 可以说“名称改为…”、“只给我用”、“检查连接”或“继续”。';}
+}else t.chatReply='请按当前步骤补充；测试计划展示后，可以说“开始测试”。';
+obRender();
+}
+function obChatNext(t){
+if(!t.name||!t.identifier)return '还缺少名称或标识，请先补齐这两项。';
+if(!t.url)return '还缺少服务地址，请补充MCP URL。';
+if(t.credential!=='无凭据'&&!t.secretReady)return '配置已解析，还需要补充连接凭证，请使用安全输入。';
+return t.connected?'连接检查通过，可以生成使用样例和测试集供你核对。':'配置已整理好。你可以先检查连接，需要时再修改信息或选择共享。';
+}
+function obChatPanel(fragment){
+const t=ob.task;if(!t.chatPanel)return '';
+const kind=t.chatPanel;let content='',title='核对完整配置';
+if(kind==='evidence'){title='补充验证依据';content=basisSection(t);}
+else if(kind==='tools'){title='选择接入工具';content='<p id="obToolDraftCount" role="status">已选择 '+t.toolDraft.length+' / '+t.discoveredTools.length+'</p>'+obSubtoolList({...t,selectedTools:t.toolDraft},false,true);}
+else if(kind==='basics'){title='修改基本信息';content=fragment.querySelector('.obFields')?.outerHTML||'';}
+else if(kind==='secrets'){title='安全配置连接凭证';content=[...fragment.querySelectorAll('.obAdvanced')].find(x=>x.classList.contains('obCredentials'))?.outerHTML||'<p>当前连接不需要填写凭证。</p>';}
+else if(kind==='scope'){title='使用对象与开放设置';content=(fragment.querySelector('.toolAudience')?.outerHTML||'')+(fragment.querySelector('.toolHubSettings')?.outerHTML||'');}
+else{fragment.querySelector('.obSubtools')?.remove();fragment.querySelector('h3')?.remove();fragment.querySelector('[data-ob="connect"]')?.remove();fragment.querySelector('.toolAudience')?.remove();fragment.querySelector('.toolHubSettings')?.remove();content=fragment.innerHTML;}
+return '<section class="obTaskPanel" role="dialog" aria-modal="true" aria-labelledby="obPanelTitle"><header><b id="obPanelTitle">'+title+'</b>'+obButton('panelClose',kind==='tools'?'取消':'返回对话')+'</header><div class="obTaskPanelBody">'+content+'</div><footer>'+(kind==='tools'?obButton('confirmTools','确认使用 '+t.toolDraft.length+' 个工具',true).replace('data-ob="confirmTools"','data-ob="confirmTools"'+(!t.toolDraft.length?' disabled':'')):obButton('panelClose','完成并返回对话',true))+'</footer></section>';
+}
+function obChatBody(){
+const t=ob.task,fragment=document.createElement('div');fragment.innerHTML=obFormBody();
+if(t.stage===0)return '<p class="obChatLead">请导入MCP配置，我会先解析，再逐项帮你补齐。</p><details class="obChatImport"><summary>安全导入 JSON '+mark(26)+'</summary><div class="obChatDetail">'+fragment.innerHTML+'</div></details>';
+if(t.stage===1){
+return '<p class="obChatLead">'+esc(t.chatReply||obChatNext(t))+'</p><div class="obCompactSummary"><div class="obSummaryTitle">'+esc(t.name||'待填写名称')+' '+mark(31)+'</div><dl><dt>服务地址</dt><dd>'+esc(t.url||'待补充')+'</dd><dt>连接凭证</dt><dd>'+(t.credential==='无凭据'?'无需凭证':t.secretReady?'已配置':'待补充')+'</dd><dt>使用对象</dt><dd>'+(t.shared?'共享，测试通过后提交审核':'个人使用')+'</dd><dt>当前进度</dt><dd>'+(t.connected?'连接检查通过':'待检查连接')+'</dd></dl><div class="obCardActions">'+obButton('panelBasics','修改信息')+obButton('panelSecrets',obCredentialReady(t)?'查看 / 更换凭证':'补充凭证')+obButton('panelScope',t.shared?'修改开放设置':'个人 / 共享')+obButton('panelConfig','查看完整配置')+'</div></div>'+(t.evidenceNeeded?'<div class="banner warn">请补充说明、测试对象和预期，再核验生成。'+obButton('panelEvidence','补充验证依据')+'</div>':'')+(t.connected?obSubtoolList(t):'')+obChatPanel(fragment);
+}
+if(t.stage===2&&t.busy)return testRunningCard(t.cases.length);if(t.stage===2&&t.testFinished)return testResultCard(t.name,t.shared,t.cases,t.results,true,t.error);
+if(t.stage===2)return '<div class="obCompactSummary"><div class="obSummaryTitle">'+esc(t.name)+' · 核对样例与测试集 '+mark(29)+mark(34)+'</div><p>已生成 '+t.cases.length+' 条候选测试。请展开检查输入、预期和依据，再确认执行。</p><details class="obChatReview"><summary>查看样例与逐条测试</summary><div class="obChatDetail">'+fragment.querySelector('h4')?.outerHTML+fragment.querySelector('p')?.outerHTML+fragment.querySelector('.obCases')?.outerHTML+'</div></details><label class="obCheck"><input id="obTestConfirm" type="checkbox">我已核对用例及测试环境，确认执行</label></div>';
+return '<div class="obCompactSummary"><div class="obSummaryTitle">'+esc(t.name)+' · '+(t.shared?'共享待审核':'已可用')+'</div>'+obFormBody()+'</div>';
+}
+
+function obFooter(){
+const t=ob.task;if(t.busy)return '<button disabled>处理中…</button>';
+if(t.stage===0)return obButton('parse','解析配置',true);
+if(t.stage===1){if(ob.mode!=='webform')return t.connected?obButton('generate','生成样例和测试集',true):obButton('connect','检查连接',true);return obButton('back','上一步')+obButton('generate','保存配置并生成样例',true);}
+if(t.stage===2&&t.testFinished)return obButton('edit','修改配置')+obButton('retryTests','重新测试',true);
+if(t.stage===2)return obButton('edit','修改配置')+obButton('regenerate','重新生成')+obButton('run','确认并开始测试',true);
+return ob.mode==='mobile'?'':obButton('finish','完成',true);
+}
+function obRender(){
+const t=ob.task;if(!t)return;const sameStage=ob.renderedTask===t.id&&ob.renderedStage===t.stage;const scrolls=[...document.querySelectorAll('#modalBody,.obChatScroll,.obTaskPanelBody')].map(x=>[x.id||x.className,x.scrollTop]);obCredentialReady(t);const panelState=[...document.querySelectorAll('.obAdvanced')].map(x=>x.open);page='onboard';dirty=false;
+const body='<div id="obError" class="obError" role="alert">'+esc(t.error||'')+'</div>'+(ob.mode==='webform'?obFormBody():obChatBody());
+if(ob.mode==='webform'){
+$('#conversationSurface')?.remove();show((t.original?'更新':'创建')+t.type+' 工具 '+mark(25),'<div class="obSteps">'+['导入解析','核对配置','检查与测试'].map((x,i)=>'<span class="'+(i===Math.min(t.stage,2)?'current':'')+'">'+(i+1)+'. '+x+'</span>').join('')+'</div>'+body,'');$('#modalFoot').innerHTML=obFooter();$('#modalFoot').style.display='flex';$('#modal').classList.add('obModal');
+}else{
+$('#overlay').classList.remove('open');$('#modalBody').innerHTML='';$('#modalFoot').innerHTML='';document.querySelectorAll('.main > :not(#conversationSurface)').forEach(x=>x.style.display='none');
+let surface=$('#conversationSurface');if(!surface){surface=document.createElement('section');surface.id='conversationSurface';$('.main').append(surface);}
+surface.className=ob.mode==='mobile'?'mobileChat':'webChat';
+surface.innerHTML='<div class="obChatHeader">'+(ob.mode==='mobile'?'':obButton('leave','‹ 返回'))+'<b>工具接入助手</b>'+mark(27)+'</div><div class="obChatScroll"><div class="obUser">我要创建自己的 '+t.type+' 工具</div><div class="obAssistant"><b>YiliBuddy</b><p>'+['请安全导入MCP配置，我会协助你核对并完成接入。','我已整理配置，请核对建议内容并补齐必要信息。','样例和测试已准备好，请核对后确认执行。','本次接入结果如下。'][t.stage]+'</p>'+body+(t.stage===0?'<div class="obTypeChoices">'+obButton('chatMCP','接入 MCP')+'</div>':'')+'</div>'+t.messages.slice(-2).map(m=>'<div class="obChatMessage">'+esc(m)+'</div>').join('')+'</div><div class="obChatActions">'+obFooter()+'</div><div class="obComposer"><input id="obMessage" placeholder="输入补充说明，凭证请使用安全输入">'+obButton('send','发送')+'</div>';
+}
+document.querySelectorAll('.obAdvanced').forEach((x,i)=>{if(panelState[i]||ob.mode==='webform'||t.chatPanel)x.open=true;});toolHubMount();if(sameStage){for(const [key,top]of scrolls){const node=key==='modalBody'?$('#modalBody'):document.getElementsByClassName(key)[0];if(node)node.scrollTop=top;}}ob.renderedTask=t.id;ob.renderedStage=t.stage;obSyncMobileViewport();
+}
+function obLeave(){
+obStoreFields();$('#conversationSurface')?.remove();document.querySelectorAll('.main > *').forEach(x=>x.style.display='');$('#modal').classList.remove('obModal');document.body.classList.remove('obMobile');$('#overlay').classList.remove('open');page='';renderCards();
+}
+function obValidate(){
+const t=ob.task;obStoreFields();
+if(!t.identifier.trim()||!t.name.trim())return '请补齐标识名与显示名称';
+
+if(tools.some(x=>x.id===t.identifier&&x!==t.original))return '该标识名已存在，请更换';
+if(t.desc.length>500)return '描述最多500字';
+if(t.type==='MCP'){try{const u=new URL(t.url);if(!['http:','https:'].includes(u.protocol))return '请输入有效的远程MCP URL';}catch{return '请输入有效的MCP URL';}}
+if(!(Number(t.timeout)>0))return '请输入有效的超时秒数';
+
+if(t.shared){const error=toolHubError(t.openSettings);if(error)return error;}
+if(!t.unknownConfirmed&&t.unknown.length)return '请核对未映射字段，不能静默丢弃';
+if(t.credential==='无凭据'&&t.bindings.some(x=>x.source==='凭证字段'&&!x.system))return '凭证字段绑定需要相应凭证模式；请核对用途或移除绑定';
+if(t.credential!=='无凭据'&&!t.auth.length)return '有凭据模式至少需要一项认证参数';
+if(t.auth.some(x=>!x.name||!x.label))return '认证参数名和展示名必填';
+if(new Set(t.auth.map(x=>x.name)).size!==t.auth.length)return '认证参数名不能重复';
+if(t.auth.some(x=>/token|secret|key|auth/i.test(x.name)&&!x.secret))return '可能的敏感字段必须设置为敏感值';
+const bound=new Set();for(const a of t.bindings){if(!a.name)return '注入参数名不能为空';const key=a.target+':'+a.name.toLowerCase();if(bound.has(key))return '同一目标的参数名不能重复';bound.add(key);if(a.source==='固定值'&&/api.?key|token|secret|authorization/i.test(a.name))return '该认证参数应引用安全凭证字段，请勿使用明文固定值';if(a.source==='固定值'&&!a.value)return '请输入固定值';if(a.source==='凭证字段'&&(!(t.auth.some(x=>x.name===a.ref)||(a.system&&t.identity==='平台固定Token'))||(a.template||'').split('{value}').length!==2))return '绑定需引用有效字段，模板包含且仅包含一个{value}';}
+return '';
+}
+function obConnect(){
+const error=obValidate();if(error)return obError(error);const t=ob.task;t.connected=false;
+const failures={connection:'目标服务不可达或认证失败；配置保留，可重试',auth:'凭证认证失败，请检查或更换本次凭证',permission:'凭证有效，但缺少目标服务权限，请补充授权',network:'暂时无法连接服务，请稍后重试；配置保留',timeout:'连接检查超时，请重试；不判定工具业务失败',blocked:'命中平台禁止规则：未经授权的目标访问，无法继续执行'};if(failures[obScenario()]){t.failureKind=obScenario();return obError(failures[obScenario()]);}
+if(t.credential!=='无凭据'&&!t.secretReady)return obError('配置已保存，连接尚缺必要凭证，请在安全输入区补充');
+if(t.identity==='平台固定Token'&&t.bindings.some(x=>x.name.toLowerCase()==='x-access-token'&&!x.system))return obError('已有 x-access-token 绑定，请核对后再使用平台固定Token');
+if(t.identity==='平台固定Token'&&!t.identityReady)return obError('请在安全输入区补充平台固定Token');
+if(obScenario()==='toolsError')return obError('读取子工具失败，原列表保留但不能继续，请重试');t.connected=true;obDiscover(t);if(!t.discoveredTools.length&&obFixture(t)){t.connected=false;return obError('未读取到可接入的子工具，请检查服务权限或重试');}t.error='';t.chatReply=t.discoveredTools.length?'连接检查通过，已读取 '+t.discoveredTools.length+' 个子工具。请核对本次接入范围。':'配置已解析；本 Demo 未连接该服务，暂无法读取工具定义和生成对应测试。';t.chatPanel=null;obRender();
+}
+function obGenerate(){
+const err=obValidate();if(err)return obError(err);const t=ob.task;
+if(!t.connected)return obError('请先完成连接测试或可执行性检查');
+if(!obFixture(t))return obError('配置已解析；本 Demo 未连接该服务，暂无法读取工具定义和生成对应测试。请使用彩云示例体验完整流程。');
+if(t.testBasis)t.testBasis.verified=basisMatches(t,t.testBasis);
+if(obScenario()==='definition'&&!t.testBasis?.verified){t.evidenceNeeded=true;t.failureKind='insufficient-evidence';obRender();return obError('缺少可验证的工具定义或可信业务预期，请补充后继续。个人与共享使用同一验证标准；当前任务保留，不生成其他工具的用例。');}
+if(obScenario()==='generation')return obError('测试生成服务暂不可用，配置保留，请重新生成');
+if(!t.discoveryDone)obDiscover(t);if(!t.selectedTools.length)return obError('请至少选择一个本次接入的子工具');
+const summary=false,target='订单查询';
+t.cases=[
+['正常调用','正向',JSON.stringify({order_id:t.testObject||'TEST-001'}),(t.testObject==='TEST-002'?'返回TEST-002及处理中状态':'返回TEST-001及已完成状态'),'授权测试夹具'],
+['另一有效输入','正向',summary?'{"file":"fixture/unicode.txt"}':'{"order_id":"TEST-002"}',summary?'正确处理中文文本':'返回TEST-002及处理中状态','第二组测试夹具'],
+['最小合法输入','正向',summary?'{"file":"fixture/short.txt"}':'{"order_id":"T1"}','满足返回结构约定','最小边界夹具及Schema'],
+['授权上下文有效','正向','当前用户测试授权','允许访问授权测试资料','平台隔离测试授权'],
+['结果结构验证','正向','固定测试输入','必需输出字段及类型正确','工具输出约定'],
+['必填缺失','负向','{}','拒绝且不改变数据','输入Schema'],
+['参数类型错误','负向',summary?'{"file":42}':'{"order_id":42}','拒绝类型错误','输入Schema'],
+['无授权请求','负向','隔离模拟无授权上下文','平台拒绝，不执行真实业务','平台拒绝规则']
+].map(([name,kind,input,expected,basis])=>({name:target+' · '+name,kind,input,expected,basis}));
+if(obFixture(t)==='caiyun'){if(t.selectedTools.some(x=>!caiyunDemoTools.some(y=>y.name===x)))return obError('新增子工具缺少可信测试依据，请取消选择或补齐后继续');t.cases=caiyunCases(t);}t.planTools=[...t.selectedTools];t.planDefinition=t.discoverySignature;
+t.planRevision=t.revision;t.stage=2;t.definition=true;t.results=null;t.testFinished=false;t.error='';t.messages.push('配置已核对，按本工具的覆盖计划生成了'+t.cases.length+'条候选测试。');obRender();
+}
+async function obRun(){
+const t=ob.task;if(!$('#obTestConfirm')?.checked)return obError('请先核对并确认当前版本及测试环境');
+if(t.done||t.busy)return;if(t.cases.some(x=>x.tool&&x.tool!=='platform'&&!obAuthorizeTool(t,x.tool)))return obError('所选范围不允许调用该子工具，请重新核对');if(JSON.stringify(t.planTools)!==JSON.stringify(t.selectedTools)||t.planDefinition!==t.discoverySignature)return obError('子工具范围或定义已变化，请重新生成测试');if(t.planRevision!==t.revision)return obError('配置已变化，请重新生成并核对当前测试计划');t.chatPanel=null;
+t.busy=true;t.error='';const rev=t.revision;obRender();await new Promise(r=>setTimeout(r,400));
+if(t!==ob.task||rev!==t.revision)return;t.busy=false;
+if(['test','business','evaluation'].includes(obScenario())){t.results=t.cases.map((_,i)=>i===6?'失败':'通过');t.testFinished=true;t.failureKind=obScenario();t.error=obScenario()==='evaluation'?'候选测试预期与原始定义不一致，请核对并修正测试依据后重新生成；尚不能判定工具失败。':obScenario()==='business'?'测试业务结果与可信预期不一致，请查看明细并修复工具或核对预期。':'必测用例“参数类型错误”未通过，原配置与旧有效版本保持。';obRender();return;}
+t.results=t.cases.map(()=> '通过');t.testFinished=true;t.done=true;t.stage=3;
+const original=t.original;const record={...(original||{}),id:t.identifier,name:t.name,desc:t.desc,type:t.type,url:t.url,command:'',
+mine:original?original.mine:true,creator:original?.creator||'演示用户',credential:t.credential,shared:t.shared,display:t.shared?'展示到能力中心':'暂不展示',mode:t.shared?'HUB订阅授权':'仅本人',openSettings:t.shared?structuredClone(t.openSettings):null,teams:t.teams,roles:t.roles,users:t.users,scope:[...t.teams,...t.roles,...t.users].join(' / '),
+status:t.shared?'待审核':'个人可用',submittedAt:stamp(),authSchema:t.auth,bindings:t.bindings,enabled:original?.enabled!==false,everShared:original?.everShared||t.shared,
+discoveredTools:structuredClone(t.discoveredTools||[]),selectedTools:[...t.selectedTools],discoverySignature:t.discoverySignature,testBasis:structuredClone(t.testBasis||null),demoContract:t.demoContract,testCases:structuredClone(t.cases),identity:t.identity,formConfig:{timeout:Number(t.timeout),category:t.category||'请选择'},samples:[{target:t.type==='MCP'?'query_order':'summarize',instruction:'处理授权测试数据',params:'{}',expected:'按测试夹具验证',effect:'只读',env:'隔离测试示例'}]};
+if(original){if(original.status==='共享可用')record.previous={...original};Object.assign(original,record);t.record=original;}else{tools.push(record);t.record=record;}
+active=t.record;renderCards();obRender();
+}
+window.addEventListener('click',e=>{
+const el=e.target.closest('button');if(!el)return;
+if(el.dataset.route==='webchat'||el.dataset.route==='mobilechat'){e.preventDefault();e.stopImmediatePropagation();$('#reviewPanel').classList.remove('open');beginOnboarding('MCP',null,el.dataset.route==='mobilechat'?'mobile':'webchat');return;}
+if(el.dataset.route==='resume'){e.preventDefault();e.stopImmediatePropagation();$('#reviewPanel').classList.remove('open');if(!ob.task){toast('暂无接入任务');return;}obRender();return;}
+if(el.dataset.type&&page==='choose'){e.preventDefault();e.stopImmediatePropagation();beginOnboarding(el.dataset.type);return;}
+if(el.dataset.ob){e.preventDefault();e.stopImmediatePropagation();const a=el.dataset.ob,t=ob.task;
+if(!t&&a!=='chatMCP')return;
+if(a==='selectAllTools'){if(t.chatPanel==='tools')obUpdateToolDraft(t.discoveredTools.map(x=>x.name));else obSelectTools(t.discoveredTools.map(x=>x.name));return;}if(a==='clearTools'){if(t.chatPanel==='tools')obUpdateToolDraft([]);else obSelectTools([]);return;}if(a==='confirmTools'){if(!t.toolDraft?.length)return;t.chatPanel=null;const next=[...t.toolDraft];delete t.toolDraft;if(JSON.stringify(next)!==JSON.stringify(t.selectedTools))obSelectTools(next);else obRender();return;}
+if(a.startsWith('panel')){if(a==='panelTools')t.toolDraft=[...(t.selectedTools||[])];if(a==='panelClose'){delete t.toolDraft;if(t.chatPanel==='evidence')delete t.basisDraft;}if(a==='panelClose')t.changingSecret=false;obStoreFields();t.chatReply='';t.chatPanel=a==='panelClose'?null:({panelBasics:'basics',panelSecrets:'secrets',panelScope:'scope',panelConfig:'config',panelTools:'tools',panelEvidence:'evidence'})[a];obRender();return;}
+if(a==='importPaste')obSetImportMode('paste');else if(a==='importFile')obSetImportMode('file');else if(a==='example')obSample();
+else if(a==='parse')obParse();
+else if(a==='back'){obStoreFields();t.stage=0;t.error='';obRender();}
+else if(a==='edit'){obStoreFields();obInvalidate();t.error='';obRender();}
+else if(a==='connect')obConnect();
+else if(a==='generate'||a==='regenerate')obGenerate();
+else if(a==='retryTests'){t.testFinished=false;t.results=null;t.error='';obRender();}
+else if(a==='run')obRun();
+else if(a==='addAuth'){obStoreFields();t.auth.push({name:'field_'+(t.auth.length+1),label:'连接凭证',required:true,secret:true});obRender();}
+else if(a==='removeAuth'){obStoreFields();const item=t.auth[Number(el.dataset.index)];if(t.bindings.some(x=>x.ref===item.name))return obError('请先删除或修改引用该字段的绑定');t.auth.splice(Number(el.dataset.index),1);obRender();}
+else if(a==='addBinding'){obStoreFields();t.bindings.push({target:'Header',name:'',source:'固定值',value:''});obRender();}
+else if(a==='removeBinding'){obStoreFields();t.bindings.splice(Number(el.dataset.index),1);obRender();}
+else if(a==='changeSecret'){t.changingSecret=true;t.error='';obRender();}
+else if(a==='cancelSecret'){t.changingSecret=false;t.error='';obRender();}
+else if(a==='secret'){
+const inputs=[...document.querySelectorAll('[id^="obSecret-"]')],items=obCredentialItems(t);const fail=msg=>{const error=$('#obSecretError');if(error)error.textContent=msg;else obError(msg);};
+if(inputs.some(x=>{const item=items.find(a=>'obSecret-'+a.name===x.id);return item?.required!==false&&!x.value.trim();}))return fail('请填写标记为必填的凭证字段');
+if(!inputs.some(x=>x.value.trim()))return fail('请输入本次要保存的凭证');
+if(obScenario()==='connection')return fail('凭证验证失败，请检查后重试；原凭证保持不变');
+if(obScenario()==='save')return fail('凭证保存失败，请重试；原凭证保持不变');
+inputs.forEach(x=>{if(!x.value.trim())return;const name=x.id.slice('obSecret-'.length);if(name==='identity')t.identityReady=true;else{const item=t.auth.find(a=>a.name===name);if(item)item.configured=true;}x.value='';});
+t.changingSecret=false;obCredentialReady(t);t.connected=false;t.cases=[];t.revision++;t.error='';t.chatPanel=null;t.chatReply='凭证已保存，请重新检查连接。';obRender();}
+
+else if(a==='leave'||a==='finish'){if(ob.mode==='mobile'){t.chatPanel=null;obRender();return;}obLeave();}
+else if(a==='showTool'){if(ob.mode==='mobile')return;const r=t.record;obLeave();if(r)detail(r);}
+else if(a==='admin'){obLeave();admin();}
+else if(a==='chatMCP'){beginOnboarding('MCP',null,ob.mode);}
+else if(a==='send'){obHandleConversation();}
+return;
+}
+if(page==='onboard'&&el.id==='close'){e.preventDefault();e.stopImmediatePropagation();obLeave();}
+},true);
+window.addEventListener('change',async e=>{
+if(page!=='onboard')return;const t=ob.task;
+if(e.target.dataset.obTool){if(t.chatPanel==='tools')obUpdateToolDraft([...document.querySelectorAll('.obTaskPanel [data-ob-tool]:checked')].map(x=>x.dataset.obTool));else obSelectTools([...document.querySelectorAll('[data-ob-tool]:checked')].map(x=>x.dataset.obTool));return;}
+if(e.target.id==='obIcon'){const f=e.target.files[0];if(f&&(!['image/png','image/jpeg'].includes(f.type)||f.size>5*1024*1024))obError('图标仅支持JPG/PNG，最大5MB');else if(f){t.iconName=f.name;toast('已选择图标');}return;}
+if(e.target.id==='obFile'){const f=e.target.files[0];if(f){if(f.size>1024*1024){obError('示例仅支持1MB以内JSON，请改用小型测试配置');return;}try{const content=await f.text();$('#obJSON').value=content;if($('#obFileName'))$('#obFileName').textContent='已选择：'+f.name;}catch{return obError('文件读取失败，请重新选择；原导入内容保留');}}return;}
+if(e.target.id==='obServerSelect'&&e.target.value!==''){obSelectServer(e.target.value);return;}
+if(e.target.id==='obPurpose'){t.purposeConfirmed=e.target.checked;return;}
+if(e.target.id==='obUnknown'){t.unknownConfirmed=e.target.checked;return;}
+if(['obAudience','obUseMode','obCredential','obIdentity'].includes(e.target.id)||e.target.dataset.obBind?.endsWith(':source')){obStoreFields();obInvalidate();obRender();}
+});
+window.addEventListener('input',e=>{
+if(page!=='onboard')return;
+if(e.target.closest('.obFields')||e.target.dataset.obAuth||e.target.dataset.obBind||['obURL','obTimeout'].includes(e.target.id)){obStoreFields();ob.task.connected=false;ob.task.cases=[];ob.task.revision++;}
+});
+$('#reviewPanel .directory').insertAdjacentHTML('afterbegin','<button data-route="legacyAudit">彩云后台历史示例 · 审核详情</button><button data-route="legacyTool">彩云后台历史示例 · 工具中心</button><button data-route="cliExample">CLI 配置示例（历史表单）</button><button data-route="webchat">Web 对话创建 MCP</button><button data-route="mobilechat">移动端对话创建 MCP</button><button data-route="resume">恢复当前接入任务</button>');
+$('#reviewPanel').insertAdjacentHTML('beforeend','<label for="obScenario">新流程模拟结果（持续生效）</label><select id="obScenario"><option value="pass">正常：当前已支持的MCP示例</option><option value="save">凭证安全保存失败</option><option value="connection">连接/认证失败</option><option value="auth">凭证无效</option><option value="permission">权限不足</option><option value="network">网络不可达</option><option value="timeout">检查超时</option><option value="blocked">禁止目标访问</option><option value="business">业务结果不符</option><option value="evaluation">候选测试预期错误</option><option value="definition">MCP定义或测试依据不足</option><option value="toolsEmpty">子工具列表为空</option><option value="toolsError">子工具同步失败</option><option value="toolsChanged">模拟发现新增子工具</option><option value="generation">AI生成失败</option><option value="test">必测用例失败</option></select><p class="muted">“填入示例”为彩云天气：5个子工具、固定响应夹具和测试均为模拟，不联网、不需要真实Key。MCP远程定义、AI建议/测试、凭证服务均使用本地示例；CLI使用历史配置示例，无Token消耗。勿输入真实密钥。</p>');
+$('#reviewPanel').insertAdjacentHTML('beforeend','<button id="basisDemoFill">填入当前工具的授权验证资料（演示）</button><label for="cliTestBasis">CLI示例测试依据（持续生效）</label><select id="cliTestBasis"><option value="fixture">授权文件摘要测试夹具</option><option value="missing">缺少可信测试依据</option></select><p class="muted">通过“CLI配置示例”填充虚构命令与Schema；普通用户操作区仍为历史可编辑表单。测试不读取真实文件。</p>');
 const chatEntry=document.querySelector('.sidebar .nav');if(chatEntry){chatEntry.setAttribute('role','button');chatEntry.tabIndex=0;chatEntry.addEventListener('click',()=>beginOnboarding('MCP',null,'webchat'));chatEntry.addEventListener('keydown',e=>{if(e.key==='Enter')beginOnboarding('MCP',null,'webchat');});}
 
 </script>
