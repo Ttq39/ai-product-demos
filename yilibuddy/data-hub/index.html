@@ -210,39 +210,42 @@ function formFailure(box,text){box.innerHTML='<div class="error ak-error-attenti
 function referenceIds(){return [...new Set(state.selectedHubs?.length?state.selectedHubs:state.selectedHub?[state.selectedHub]:[])];}
 function referenceChips(){return referenceIds().map(id=>'<span class="chip reference-chip">@ '+esc(assets.find(a=>a.id===id)?.published?.name||'数据集')+btn('×','clearHub','data-id="'+id+'" aria-label="移除该数据集引用"')+'</span>').join('');}
 function issueFocusBanner(a){const m=state.issueFocus;if(!m||m.asset!==a.id)return '';return '<div class="old-resource"><b>本次异常定位</b><p>'+esc(m.text)+'</p><p class="mini">'+(a.status==='已上线'?'请先申请下线，审核通过后编辑，使用“获取最新库表结构”对比并修正。':a.pending?'已有申请待审核，完成审核后再按资产状态处理。':'点击编辑，获取最新库表结构后处理失效引用。')+'</p></div>';}
-function metadataToolbar(){const e=state.editor;return '<div class="metadata-toolbar row between wrap"><div><b>库表结构</b><p class="mini muted">获取当前本人有权资源并对比；确认更新后才改变本次配置，不修改已发布内容。</p></div><div class="row">'+btn(state.refreshBusy?'获取中…':'获取最新库表结构','refreshResources',state.refreshBusy?'disabled':'')+(e.resourceDiff?btn('查看差异','reopenResourceDiff'):'')+mark(25)+'</div></div>'+(e.metadataInvalid?.some(id=>e.fields.includes(id))?'<div class="old-resource">原配置中有当前无法使用的对象，已保留供核对。可移除原引用或确认采用最新结构后提交。</div>':'');}
+function metadataToolbar(){const e=state.editor;return (e.refreshRequired?'<div class="old-resource">本次更新未完成，请查看差异并确认更新，完成前不能下一步或提交。</div>':'')+'<div class="metadata-toolbar row between wrap"><div><b>库表结构</b><p class="mini muted">获取当前本人有权资源并对比；确认更新后才改变本次配置，不修改已发布内容。</p></div><div class="row">'+btn(state.refreshBusy?'获取中…':'获取最新库表结构','refreshResources',state.refreshBusy?'disabled':'')+(e.resourceDiff?btn('查看差异','reopenResourceDiff'):'')+mark(25)+'</div></div>'+(e.metadataInvalid?.some(id=>e.fields.includes(id))?'<div class="old-resource">原配置中有当前无法使用的对象，已保留供核对。可移除原引用或确认采用最新结构后提交。</div>':'');}
 async function refreshResources(){
- const e=state.editor;if(!e)return;if(!state.credentials[current().id]){editorError('本人AK尚未配置。请先在AK信息维护中完成连接；原配置与填写内容已保留。');return}
- if(state.scene.ak!=='正常'){editorError(state.scene.ak==='凭据无效'?'本人AK认证失败，请更新本人凭据。原资源目录和填写内容已保留。':'当前无法连接中台，请稍后重试。原资源目录和填写内容已保留。');return}
- state.refreshBusy=true;render();await new Promise(resolve=>setTimeout(resolve,180));state.refreshBusy=false;
- if(state.metadataScenario==='网络失败'){render();editorError('获取最新库表结构失败，请稍后重试；未清空原目录，未覆盖填写内容。');return}
- const key=e.fields[0]||'sales.orders.amount',parts=key.split('.'),db=resources.find(x=>x.id===parts[0])||resources[0],tb=db.tables.find(x=>x.id===parts[1])||db.tables[0],ids=allFields.filter(id=>id.startsWith(db.id+'.'+tb.id+'.')),field=ids.find(id=>/amount|quantity/.test(id))||ids[0],kind=state.metadataScenario;
- if(['库无法访问','库改名','表无法访问','表改名'].includes(kind)){const missing=kind.startsWith('库')?db.id:db.id+'.'+tb.id;state.catalogUnavailable=[...new Set([...state.catalogUnavailable,missing])];}const obj=fieldMap[field];e.resourceDiff={kind,db:db.id,tb:tb.id,ids,field,oldName:obj.name,oldType:obj.type,time:nowText(),applied:false};
- if(['字段删除','字段改名','字段类型变化','权限收回'].includes(kind))e.metadataInvalid=[...new Set([...(e.metadataInvalid||[]),field])];
- if(['表改名','表无法访问','库改名','库无法访问'].includes(kind))e.metadataInvalid=[...new Set([...(e.metadataInvalid||[]),...e.fields.filter(id=>id.startsWith(db.id+(kind.startsWith('库')?'.':'.'+tb.id+'.')))])];
- if(e.id&&kind!=='无变化'&&kind!=='权限收回'&&!kind.includes('无法访问')){recordIssue(e.id,kind.startsWith('库')?db.id:kind==='新增字段'?db.id+'.'+tb.id:kind.includes('字段')?field:db.id+'.'+tb.id,kind==='新增字段'?'新增字段business_unit':kind,e.owner)}
- render();openModal('resourceDiff');
+const e=state.editor;if(!e||state.refreshBusy)return;
+if(!state.credentials[current().id]){editorError('本人AK尚未配置，请先完成校验；原配置和输入已保留。');return}
+if(state.scene.ak!=='正常'){editorError('本人AK认证或连接校验失败，本次未更新；原目录和输入已保留。');return}
+state.refreshBusy=true;render();await new Promise(r=>setTimeout(r,180));state.refreshBusy=false;
+if(state.metadataScenario==='网络失败'){render();editorError('获取最新库表结构失败；未清空原目录，未覆盖填写内容。');return}
+const key=e.fields[0]||'sales.orders.amount',parts=key.split('.'),db=resources.find(x=>x.id===parts[0])||resources[0],tb=db.tables.find(x=>x.id===parts[1])||db.tables[0],ids=allFields.filter(id=>id.startsWith(db.id+'.'+tb.id+'.')),field=ids.find(id=>/amount|quantity/.test(id))||ids[0],kind=state.metadataScenario,obj=fieldMap[field];
+if(kind==='权限恢复'){state.catalogUnavailable=[];state.currentUnavailable=[];}
+if(['库无法访问','库改名','表无法访问','表改名'].includes(kind))state.catalogUnavailable=[...new Set([...state.catalogUnavailable,kind.startsWith('库')?db.id:db.id+'.'+tb.id])];
+if(kind==='新增字段'){if(!tb.fields.some(x=>x[0]==='business_unit'))tb.fields.push(['business_unit','业务单元','string']);addMetadataFields(db,tb);}
+if(kind==='新增库表'&&!resources.some(x=>x.id==='new_catalog')){const n={...clone(db),id:'new_catalog',name:'new_business_dw',label:'新增业务库',tables:[{...clone(tb),id:'new_table',name:'new_business_fact',label:'新增业务表'}]};resources.push(n);n.tables.forEach(x=>addMetadataFields(n,x));}
+if(['字段删除','字段改名','权限收回'].includes(kind))state.currentUnavailable=[...new Set([...state.currentUnavailable,field])];
+if(kind==='字段改名'){const name=obj.name+'_new';if(!tb.fields.some(x=>x[0]===name))tb.fields.push([name,obj.label+'（新字段）',obj.type]);addMetadataFields(db,tb);}
+if(kind==='字段类型变化'){obj.type='string';const row=tb.fields.find(x=>x[0]===obj.name);if(row)row[2]='string';}
+const latest=allowedFields(),invalid=e.fields.filter(id=>!latest.includes(id));e.metadataInvalid=invalid;
+e.resourceDiff={kind,db:db.id,tb:tb.id,ids,field,oldName:obj.name,invalid,latest,time:nowText(),applied:false};e.refreshRequired=true;
+if(e.id&&kind!=='无变化'&&kind!=='权限恢复'&&kind!=='权限收回'&&!kind.includes('无法访问'))recordIssue(e.id,kind.startsWith('库')?db.id:kind==='新增字段'?db.id+'.'+tb.id:field,kind,e.owner);
+render();openModal('resourceDiff');
 }
+
 function metadataDiffModal(){
- const d=state.editor.resourceDiff,db=resources.find(x=>x.id===d.db),tb=db.tables.find(x=>x.id===d.tb),object=d.kind.startsWith('库')?db.name:d.kind.startsWith('表')?db.name+'.'+tb.name:fieldLabel(d.field),newValue=d.kind==='新增字段'?'新增 business_unit（业务单元，string）':d.kind==='字段类型变化'?d.oldType+' → string':d.kind==='字段改名'?'原字段无法匹配；新结构包含 '+d.oldName+'_new（须核对，不自动认定等价）':d.kind.includes('改名')?'原引用无法匹配；可重新关联最新库表':d.kind==='无变化'?'所选范围未发现变化':'当前对象无法访问或匹配，不直接认定删除';
- return modalFrame('最新库表结构差异','<p class="mini muted">仅比较并展示，本次尚未改变已选范围；未变化对象和已填写说明保留。</p><div class="structure-diff"><table class="diff-table"><thead><tr><th>对象</th><th>变化</th><th>最新情况</th></tr></thead><tbody><tr><td>'+esc(object)+'</td><td>'+esc(d.kind)+'</td><td>'+esc(newValue)+'</td></tr></tbody></table></div><p>整表使用当前有权字段，不逐字段勾选。旧失效引用保持可见，更新前请核对关联能力和业务口径。</p><p class="mini muted">重新关联的对象不自动套用旧增强说明；原说明保留供参考。确认修改仅影响当前表单，仍须提交审核。</p>',btn('取消','closeModal')+(d.kind!=='无变化'?btn(d.kind.includes('无法访问')?'移除失效引用':d.kind.includes('改名')&&!d.kind.startsWith('字段')?'重新关联最新对象':'确认采用最新结构','applyResourceDiff','','primary'):btn('知道了','closeModal','','primary')),'900px');
+const d=state.editor.resourceDiff,invalid=d.invalid||[],rows=invalid.length?invalid.map(id=>'<tr><td>'+esc(fieldLabel(id))+'</td><td>原引用当前不可用</td><td>确认更新时自动移除，不映射至其他库表</td></tr>').join(''):'<tr><td>当前可用目录</td><td>'+esc(d.kind)+'</td><td>有效历史选择保留；新增库表默认不勾选</td></tr>';
+return modalFrame('最新库表结构差异','<p>已使用本人AK获取最新有权资源。确认前保留原选择；取消或关闭后，本次更新未完成，不能下一步或提交。</p><div class="structure-diff"><table><thead><tr><th>对象</th><th>变化</th><th>处理</th></tr></thead><tbody>'+rows+'</tbody></table></div><p>确认后自动移除全部失效引用，保留仍有效的历史库表勾选和增强说明；未选及新增库表仅同步目录，默认不选。已选表整体采用最新有权字段，无字段勾选。只修改当前表单，审核前原生效配置不变。</p>',btn('取消更新','closeModal')+btn(invalid.length?'移除失效引用并更新':'确认更新','applyResourceDiff','','primary'),'900px');
 }
+
 function addMetadataFields(db,tb){tb.fields.forEach(([name,label,type])=>{const id=db.id+'.'+tb.id+'.'+name;if(!allFields.includes(id))allFields.push(id);fieldMap[id]={id,db,tb,name,label,type}});}
 function applyResourceDiff(){
- const e=state.editor,d=e.resourceDiff;if(!d)return;const db=resources.find(x=>x.id===d.db),tb=db.tables.find(x=>x.id===d.tb),oldPrefix=db.id+'.'+tb.id+'.',obj=fieldMap[d.field];
- let targetDb=db,targetTb=tb,removeIds=[];
- if(d.kind==='新增字段'){if(!tb.fields.some(x=>x[0]==='business_unit'))tb.fields.push(['business_unit','业务单元','string']);addMetadataFields(db,tb)}
- if(d.kind==='字段删除'||d.kind==='权限收回'){removeIds=[d.field];state.currentUnavailable=[...new Set([...state.currentUnavailable,d.field])];}
- if(d.kind==='字段改名'){removeIds=[d.field];state.currentUnavailable=[...new Set([...state.currentUnavailable,d.field])];const newName=d.oldName+'_new';if(!tb.fields.some(x=>x[0]===newName))tb.fields.push([newName,obj.label+'（新字段）',obj.type]);addMetadataFields(db,tb)}
- if(d.kind==='字段类型变化'){obj.type='string';const f=tb.fields.find(x=>x[0]===obj.name);if(f)f[2]='string'}
- if(d.kind==='表改名'){targetTb=db.tables.find(x=>x.id===tb.id+'_latest');if(!targetTb){targetTb={...clone(tb),id:tb.id+'_latest',name:tb.name+'_latest',label:tb.label+'（新表）'};db.tables.push(targetTb);addMetadataFields(db,targetTb)}removeIds=e.fields.filter(id=>id.startsWith(oldPrefix));}
- if(d.kind==='库改名'){targetDb=resources.find(x=>x.id===db.id+'_latest');if(!targetDb){targetDb={...clone(db),id:db.id+'_latest',name:db.name+'_latest',label:db.label+'（新库）'};resources.push(targetDb);targetDb.tables.forEach(t=>addMetadataFields(targetDb,t))}targetTb=targetDb.tables.find(t=>t.id===tb.id);removeIds=e.fields.filter(id=>id.startsWith(db.id+'.'));}
- if(d.kind==='表无法访问'||d.kind==='库无法访问')removeIds=e.fields.filter(id=>id.startsWith(db.id+(d.kind.startsWith('库')?'.':'.'+tb.id+'.')));
- if(d.kind.includes('无法访问')||d.kind==='表改名'||d.kind==='库改名'){const prefix=db.id+(d.kind.startsWith('库')?'.':'.'+tb.id+'.');state.currentUnavailable=[...new Set([...state.currentUnavailable,...allFields.filter(id=>id.startsWith(prefix))])];}e.fields=e.fields.filter(id=>!removeIds.includes(id));
- if(!d.kind.includes('无法访问')){const latest=allFields.filter(id=>id.startsWith(targetDb.id+'.'+targetTb.id+'.')&&!removeIds.includes(id)&&!state.currentUnavailable.includes(id));e.fields=[...new Set([...e.fields,...latest])];}
- e.metadataInvalid=(e.metadataInvalid||[]).filter(id=>!removeIds.includes(id)&&d.kind!=='字段类型变化');e.acceptedStructureChanges=[...new Set([...(e.acceptedStructureChanges||[]),d.db,d.db+'.'+d.tb,d.field])];d.applied=true;
- ensureEnhancements(e);state.node=e.fields[0]?.split('.').slice(0,2).join('.')||availableResourceNode();closeModal();render();toast('最新结构已用于本次编辑，请核对说明及关联能力后提交审核。');
+const e=state.editor,d=e?.resourceDiff;if(!d||d.applied)return;
+const tables=[...new Set(e.fields.map(id=>id.split('.').slice(0,2).join('.')))];
+e.fields=[...new Set(tables.flatMap(key=>d.latest.filter(id=>id.startsWith(key+'.'))))];
+e.resourceSchema=Object.fromEntries(e.fields.map(id=>[id,fieldMap[id]?.type||'']));
+e.metadataInvalid=[];e.refreshRequired=false;e.acceptedStructureChanges=[...new Set([...(e.acceptedStructureChanges||[]),...d.invalid,d.db,d.db+'.'+d.tb,d.field])];d.applied=true;
+ensureEnhancements(e);state.node=e.fields[0]?.split('.').slice(0,2).join('.')||availableResourceNode();closeModal();render();toast('目录已更新：失效引用已移除，有效历史选择保留，新增库表未勾选。');
 }
+
 function permissionLinks(){return permissionRequestContent();}
 function permissionRequestContent(){
  const q=state.lastQuery,ids=q?.missingIds||((q?.asset?.published?.fields||chooseCandidate(q?.question||'销售额',allFields)||[]).filter(id=>!allowedFields().includes(id))),groups=new Map();
@@ -512,7 +515,7 @@ else if(state.panel==='source'){title='数据来源';content=sourcePanelContent(
 else{
 title='目录与演示场景';
 const sceneInputs=[['enhancement','增强信息 AI（模拟）',['正常生成','生成失败']],['ak','本人 AK 校验状态（保存及查询生效）',['正常','未配置','凭据无效','网络失败']],['access','使用者当前数据权限',['全部有权','部分有权','完全无权','仅替代来源有权']],['schema','资源结构（持续生效）',['正常','字段已删除','字段已改名','类型不兼容','无法校验']],['depEligibility','关联能力订阅资格（模拟）',['按样例','可自行订阅','可申请','不可申请','不可见']],['dependency','使用者依赖权限',['按样例','全部可用','无 Skill 权限','无知识库权限','均无权限']],['sql','SQL 处理',['正常','修复后成功','修复失败']],['search','候选搜索',['匹配成功','无相关候选','服务超时']],['owner','提交人资源权限',['正常','已被收回']]];
-content='<div class="help">纯本地交互；使用虚构样例，不连接 Dataphin、不发送真实消息。演示场景下拉仅播放预置结果，不改变本人的AK配置；正常问数仍须本人有效AK。刷新会重置模拟状态，勿填真实凭据。身份切换保留已提交业务数据，新建草稿仅在本页内存模拟；正式产品由服务端持久化，不模拟真实登录或跨浏览器恢复。编辑已有资产只有提交。</div><h3 style="margin-top:18px">旅程目录</h3><div class="row wrap">'+[['admin','配置中心'],['shop','能力商店'],['chat','对话问数'],['review','审核'],['messages','消息中心']].map(([r,l])=>btn(l,'route','data-route="'+r+'"')).join('')+'</div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0">'+sceneInputs.map(([k,l,opts])=>'<div class="field"><label>'+l+'</label><select data-scene="'+k+'">'+opts.map(x=>'<option '+(state.scene[k]===x?'selected':'')+'>'+x+'</option>').join('')+'</select></div>').join('')+'<div class="help">所有异常场景持续生效；演示结束点击“恢复默认场景”，再继续正常流程。消息仅通知；恢复判断并入配置校验及审核生效，后台保留去重记录。</div><h3 style="margin-top:18px">用户故事</h3><p class="mini">问上个月区域销售额 → 结果表与来源；问销售和库存 → 两组结果、两个来源；无权 → 中台申请链接。HTML / 文档可交给已有能力，按文档维度保留来源，本演示不新增文件制作。</p><h3 style="margin-top:18px">资源更新演示</h3><label>中台最新结构变化</label><select id="metadataScenario">'+['新增字段','字段删除','字段改名','字段类型变化','表改名','表无法访问','库改名','库无法访问','权限收回','无变化','网络失败'].map(t=>'<option '+(state.metadataScenario===t?'selected':'')+'>'+t+'</option>').join('')+'</select><p class="mini muted">选择场景后，在新建或编辑页点击“获取最新库表结构”。模拟响应，不修改中台。</p><h3 style="margin-top:18px">快捷准备</h3><div class="row wrap">'+btn('编辑：原10项现6项权限','sceneEditRights')+btn('资产空列表','sceneEmpty')+btn('仅 AK 问数','sceneOnlyAk')+btn('权限申请示例','sceneApplication')+btn('恢复默认场景','normalScenes')+btn('加载异常消息示例','loadMessageExamples')+btn('重置整个 Demo','resetDemo')+'</div><h3 style="margin-top:18px">当前验证记录 '+mark(20)+'</h3><div class="mini muted">查询 '+state.audit.length+' 次 · 未关闭异常 '+state.events.filter(x=>!x.closed).length+' 条 · 共享更新序号 '+seq+'</div><details><summary class="mini">查看最近模拟查询记录</summary><pre style="font-size:11px;white-space:pre-wrap">'+esc(JSON.stringify(state.audit.slice(-3),null,2))+'</pre></details>';
+content='<div class="help">纯本地交互；使用虚构样例，不连接 Dataphin、不发送真实消息。演示场景下拉仅播放预置结果，不改变本人的AK配置；正常问数仍须本人有效AK。刷新会重置模拟状态，勿填真实凭据。身份切换保留已提交业务数据，新建草稿仅在本页内存模拟；正式产品由服务端持久化，不模拟真实登录或跨浏览器恢复。编辑已有资产只有提交。</div><h3 style="margin-top:18px">旅程目录</h3><div class="row wrap">'+[['admin','配置中心'],['shop','能力商店'],['chat','对话问数'],['review','审核'],['messages','消息中心']].map(([r,l])=>btn(l,'route','data-route="'+r+'"')).join('')+'</div><hr style="border:0;border-top:1px solid var(--line);margin:18px 0">'+sceneInputs.map(([k,l,opts])=>'<div class="field"><label>'+l+'</label><select data-scene="'+k+'">'+opts.map(x=>'<option '+(state.scene[k]===x?'selected':'')+'>'+x+'</option>').join('')+'</select></div>').join('')+'<div class="help">所有异常场景持续生效；演示结束点击“恢复默认场景”，再继续正常流程。消息仅通知；恢复判断并入配置校验及审核生效，后台保留去重记录。</div><h3 style="margin-top:18px">用户故事</h3><p class="mini">问上个月区域销售额 → 结果表与来源；问销售和库存 → 两组结果、两个来源；无权 → 中台申请链接。HTML / 文档可交给已有能力，按文档维度保留来源，本演示不新增文件制作。</p><h3 style="margin-top:18px">资源更新演示</h3><label>中台最新结构变化</label><select id="metadataScenario">'+['新增字段','字段删除','字段改名','字段类型变化','表改名','表无法访问','库改名','库无法访问','权限收回','权限恢复','新增库表','无变化','网络失败'].map(t=>'<option '+(state.metadataScenario===t?'selected':'')+'>'+t+'</option>').join('')+'</select><p class="mini muted">选择场景后，在新建或编辑页点击“获取最新库表结构”。模拟响应，不修改中台。</p><h3 style="margin-top:18px">快捷准备</h3><div class="row wrap">'+btn('编辑：原10项现6项权限','sceneEditRights')+btn('资产空列表','sceneEmpty')+btn('仅 AK 问数','sceneOnlyAk')+btn('权限申请示例','sceneApplication')+btn('恢复默认场景','normalScenes')+btn('加载异常消息示例','loadMessageExamples')+btn('重置整个 Demo','resetDemo')+'</div><h3 style="margin-top:18px">当前验证记录 '+mark(20)+'</h3><div class="mini muted">查询 '+state.audit.length+' 次 · 未关闭异常 '+state.events.filter(x=>!x.closed).length+' 条 · 共享更新序号 '+seq+'</div><details><summary class="mini">查看最近模拟查询记录</summary><pre style="font-size:11px;white-space:pre-wrap">'+esc(JSON.stringify(state.audit.slice(-3),null,2))+'</pre></details>';
 }
 root.innerHTML='<aside class="floatPanel '+(state.panel==='demo'?'demoPanel':state.panel==='source'?'sourcePanel':'')+'" aria-label="'+title+'"><div class="panelhead row between"><b>'+title+'</b>'+btn('×','closePanel','aria-label="关闭面板"','close')+'</div><div class="panelbody">'+content+'</div></aside>';
 }
@@ -545,14 +548,15 @@ function showChatScenario(id){if(!id){leaveChatScenario();return}if(!state.demoS
  }else {const messages={clarify:['查看净销售额','当前信息不能确定“净销售额”的定义，请补充计算口径、统计时间和必要条件。'],schema:['分析客户渠道构成','本次所需字段结构已变化，无法继续使用。可以尝试本人有权的其他来源；未找到足够依据时将说明无法回答。'], 'sql-failed':['查询上个月销售额','查询修正后仍未通过校验，已结束本次查询；未修改数据库或取消订阅。'],empty:['查询指定条件下的销售额','当前筛选条件下未查询到记录，请核对时间和条件。无记录不等于指标为0。'],timeout:['查询全年销售明细','查询服务超时，本次未返回完整结果。请缩小范围或稍后重试。'],'source-outside':['使用其他类型数据库查询','该数据源类型不在本期支持范围，不进行查询。可使用MySQL、StarRocks、Hive、MaxCompute、PostgreSQL、MongoDB或Oracle。']};[question,html]=messages[id]||['查看数据','请选择场景'];html='<p>'+html+'</p>'}
  indices.forEach(i=>state.sources[i].requestSources=indices);state.lastQuery.question=question;state.chat.push({role:'user',text:question},{role:'assistant',demoOnly:true,html:html+feedbackToolbar(state.chat.length+1,indices)});render();$('#chatMessages')?.scrollTo({top:0});}
 
+function resourceSignature(p){if(!p)return '';const fields=[...p.fields].sort(),keys=[...new Set(fields.flatMap(id=>{const x=id.split('.');return [x[0],x.slice(0,2).join('.'),id]}))].sort();return JSON.stringify({name:p.name,desc:p.desc,fields,skills:[...(p.skills||[])].sort(),knowledge:[...(p.knowledge||[])].sort(),enh:keys.map(k=>[k,enhancementText(p.enh?.[k])]),schema:fields.map(k=>[k,p.resourceSchema?.[k]||fieldMap[k]?.type||''])});}
 function makeEditor(a){
 const v=a?clone(a.draft||a.pending||a.published):{name:'',desc:'',fields:[],enh:clone(state.shared),skills:[],knowledge:[],channels:['yilibuddy'],visibleMode:'all',visibleKind:'public',visibleUsers:['b','p','u'],visibleGroups:[],subMode:'all',subUsers:['b','p','u'],subGroups:[],allowApply:true,force:false};
-return {...v,identifier:v.identifier||(a?generateIdentifier(v.name):''),id:a?.id||null,owner:a?.owner||current().id};
+return {...v,originalResourceSignature:resourceSignature(v),identifier:v.identifier||(a?generateIdentifier(v.name):''),id:a?.id||null,owner:a?.owner||current().id};
 }
 function editorError(text){openModal('validationError',{text})}
 
 function validateEditor(final=false){
-const e=state.editor;if(final&&state.scene.ak!=='正常')return state.scene.ak==='凭据无效'?'本人AK认证失败，请更新本人凭据后重试，原配置与输入已保留。':'本次无法校验本人AK，未继续检查资源权限，请稍后重试。';if(final&&!state.credentials[current().id])return '请先维护并校验本人AccessKey；原配置已回显，未执行权限查询。';if(final&&e.fields.some(id=>state.currentUnavailable.includes(id)))return '配置仍包含无法访问或匹配的旧字段，请获取最新结构并调整后提交。';if(final&&state.editor.metadataInvalid?.some(id=>state.editor.fields.includes(id)))return '当前配置仍包含无法使用的旧对象：\n'+state.editor.metadataInvalid.filter(id=>state.editor.fields.includes(id)).map(fieldLabel).join('、')+'\n请移除失效引用、采用最新结构或重新选择库表后提交。';if(final&&state.editDeniedFields?.some(id=>e.fields.includes(id)))return '原配置10项资源中，当前仅6项有权，另4项已无访问权限：\n'+state.editDeniedFields.map(fieldLabel).join('、')+'\n请移除无权资源或恢复权限后重新提交。';const ie=identifierError(e);if(ie)return ie;if(!e.name.trim())return '请填写能力名称。';if(!e.identifier?.trim())return '请填写标识名。';
+const e=state.editor;if(e.refreshRequired)return '本次库表更新尚未完成，请查看差异并确认移除失效引用和更新后再继续。';if(final&&state.scene.ak!=='正常')return state.scene.ak==='凭据无效'?'本人AK认证失败，请更新本人凭据后重试，原配置与输入已保留。':'本次无法校验本人AK，未继续检查资源权限，请稍后重试。';if(final&&!state.credentials[current().id])return '请先维护并校验本人AccessKey；原配置已回显，未执行权限查询。';if(final&&e.fields.some(id=>state.currentUnavailable.includes(id)))return '配置仍包含无法访问或匹配的旧字段，请获取最新结构并调整后提交。';if(final&&state.editor.metadataInvalid?.some(id=>state.editor.fields.includes(id)))return '当前配置仍包含无法使用的旧对象：\n'+state.editor.metadataInvalid.filter(id=>state.editor.fields.includes(id)).map(fieldLabel).join('、')+'\n请移除失效引用、采用最新结构或重新选择库表后提交。';if(final&&state.editDeniedFields?.some(id=>e.fields.includes(id)))return '原配置10项资源中，当前仅6项有权，另4项已无访问权限：\n'+state.editDeniedFields.map(fieldLabel).join('、')+'\n请移除无权资源或恢复权限后重新提交。';const ie=identifierError(e);if(ie)return ie;if(!e.name.trim())return '请填写能力名称。';if(!e.identifier?.trim())return '请填写标识名。';
 if(!state.credentials[current().id]&&(final||!e.id))return '请先配置并校验本人 AccessKey。';
 if(!e.fields.length)return '请至少选择需要使用的数据资源。';
 if(state.scene.owner==='已被收回')return '当前配置包含本人已无权限的资源，本次提交未生效。请调整资源或恢复权限后重新提交。';
@@ -562,7 +566,7 @@ if(final){if(e.visibleMode==='selected'&&!e.visibleUsers.length)return '请添�
 return '';
 }
 
-function strippedEditor(){const {id,owner,identifierManual,systemPrompt,resourceDiff,metadataInvalid,...p}=state.editor;return clone(p)}
+function strippedEditor(){const {id,owner,identifierManual,systemPrompt,resourceDiff,metadataInvalid,refreshRequired,originalResourceSignature,...p}=state.editor;return clone(p)}
 function saveDraft(){if(state.editor?.id){toast('编辑已有资产请提交审核，不保存新建草稿。');return false}const e=clone(state.editor);state.creationDrafts[current().id]={config:e,savedAt:nowText(),step:state.step};toast('本人新建草稿已保存；仅保留一份，不进入资产列表。');return true;}
 function beginCreate(resume=false){state.editDeniedFields=[];const d=state.creationDrafts[current().id];state.advancedOpen=false;state.editor=resume&&d?clone(d.config):makeEditor();state.step=resume&&d?d.step:0;state.node=state.editor.fields[0]?.split('.')[0]||'sales';state.resourceFilter='';state.route='editor';closeModal();render()}
 function saveNewDraft(leave=false){if(state.creationDrafts[current().id]){openModal('overwriteDraft',{leave});return}if(saveDraft()){if(leave){state.editor=null;closeModal();route('admin')}else render()}}
@@ -571,7 +575,7 @@ function saveNewDraft(leave=false){if(state.creationDrafts[current().id]){openMo
 function submitEditor(){
 const error=validateEditor(true);if(error){editorError(error);return}
 let a=assets.find(x=>x.id===state.editor.id);if(a?.status==='已上线'){editorError('已上线资产不可提交修改，请先完成下线审核。');return}if(a?.pending){editorError('该资产已有待审核提交，请先完成当前审核。');return}
-if(!a){a={id:String(Date.now()),createdAt:new Date().toISOString(),owner:current().id,status:'草稿',published:null,pending:null,draft:null,version:0,versions:[]};assets.push(a);delete state.creationDrafts[current().id]}a.pending=strippedEditor();a.submitter=current().id;a.submittedAt=nowText();a.updatedAt=a.submittedAt;a.reviewBaseStatus=a.status;a.statusRequest=false;a.submitOperation=a.published?'重新上线':'上线';a.draft=null;if(!a.published)a.status='待审核';state.editor=null;state.route='admin';render();toast('已提交审核，审批通过并发布后才生效。');
+if(!a){a={id:String(Date.now()),createdAt:new Date().toISOString(),owner:current().id,status:'草稿',published:null,pending:null,draft:null,version:0,versions:[]};assets.push(a);delete state.creationDrafts[current().id]}a.pending=strippedEditor();a.pending.resourceSchema=Object.fromEntries(a.pending.fields.map(id=>[id,fieldMap[id]?.type||'']));a.pending.resourceChanged=!a.published||resourceSignature(a.pending)!==state.editor.originalResourceSignature;a.pending.sharedChanges=Object.fromEntries(Object.entries(a.pending.enh||{}).filter(([k,v])=>state.editor.enhOrigins?.[k]==='本次人工维护'&&enhancementText(v)!==enhancementText(a.published?.enh?.[k])));a.submitter=current().id;a.submittedAt=nowText();a.updatedAt=a.submittedAt;a.reviewBaseStatus=a.status;a.statusRequest=false;a.submitOperation=a.published?'重新上线':'上线';a.draft=null;if(!a.published)a.status='待审核';state.editor=null;state.route='admin';render();toast('已提交审核，审批通过并发布后才生效。');
 }
 function recordIssue(assetId,resource,type,owner){
 if(!assetId)return;const a=assets.find(x=>x.id===assetId);if(!a)return;
@@ -587,9 +591,9 @@ function approve(id,remark=''){
 if(state.identity!=='platform'){toast('当前角色没有审核权限。');return}
 const a=assets.find(x=>x.id===id);if(!a?.pending){toast('该申请已处理，请刷新列表。');return}
 if(a.statusRequest){const op=a.submitOperation;state.history.unshift(makeAuditRecord(a,'通过',remark));a.pending=null;a.status=op==='下线'?'已下线':'已上线';a.updatedAt=nowText();a.reviewBaseStatus=null;closeModal();render();toast(op+'审核已通过，已生效。');return}
-state.history.unshift(makeAuditRecord(a,'通过',remark));a.published=clone(a.pending);a.pending=null;a.status='已上线';if(a.submitOperation!=='权限变更')a.version++;a.updatedAt=nowText();if(a.submitOperation!=='权限变更'){a.versions=a.versions||[];a.versions.unshift({id:String(Date.now()),number:a.version,status:'已生效',time:a.updatedAt,remark:a.version===1?'首次上线':'资源配置更新'})}seq++;
+state.history.unshift(makeAuditRecord(a,'通过',remark));a.published=clone(a.pending);a.pending=null;a.status='已上线';if(a.submitOperation!=='权限变更'&&a.published.resourceChanged!==false)a.version++;a.updatedAt=nowText();if(a.submitOperation!=='权限变更'&&a.published.resourceChanged!==false){a.versions=a.versions||[];a.versions.unshift({id:String(Date.now()),number:a.version,status:'已生效',time:a.updatedAt,remark:a.version===1?'首次上线':'资源配置更新'})}seq++;
 if(a.submitOperation!=='权限变更')state.events.filter(e=>e.asset===a.id&&!e.closed).forEach(e=>{if((a.published.acceptedStructureChanges||[]).includes(e.resource)||!a.published.fields.some(id=>id===e.resource||id.startsWith(e.resource+'.'))){e.closed=true;const m=state.messages.find(m=>m.id===e.id);if(m)m.closed=true}});
-Object.entries(a.published.enh).forEach(([k,v])=>{if(a.published.fields.some(f=>f===k||f.startsWith(k+'.')))state.shared[k]=clone(v)});
+if(a.submitOperation!=='权限变更')Object.entries(a.published.sharedChanges||{}).forEach(([k,v])=>{if(a.published.fields.some(f=>f===k||f.startsWith(k+'.')))state.shared[k]=clone(v)});
 for(const u of Object.values(people)){const p=a.published,visible=p.visibleMode==='all'||p.visibleMode==='selected'&&p.visibleUsers.includes(u.id)||a.owner===u.id,sub=p.subMode==='all'||p.subUsers.includes(u.id)||a.owner===u.id;if(!visible||!sub)state.subscriptions[u.id]=(state.subscriptions[u.id]||[]).filter(x=>x!==id);}
 closeModal();render();toast('审核已通过，资产已发布。');
 }
@@ -671,7 +675,7 @@ case 'marketTab':state.marketTab=b.dataset.name;render();break;
 case 'legacyFilter':toast('筛选条件沿用现有能力商店。');break;
 case 'deleteCreationDraft':openModal('deleteCreationDraft');break;
 case 'confirmDeleteCreationDraft':delete state.creationDrafts[current().id];state.editor=null;closeModal();route('admin');toast('本人新建草稿已删除。');break;
-case 'removeUnavailableResource':{const e=state.editor;e.fields=e.fields.filter(f=>!f.startsWith(id+'.'));e.metadataInvalid=(e.metadataInvalid||[]).filter(f=>!f.startsWith(id+'.'));state.node=e.fields[0]?.split('.').slice(0,2).join('.')||availableResourceNode();render();break}
+case 'removeUnavailableResource':{const e=state.editor;if(e.refreshRequired){openModal('resourceDiff');break}e.fields=e.fields.filter(f=>!f.startsWith(id+'.'));e.metadataInvalid=(e.metadataInvalid||[]).filter(f=>!f.startsWith(id+'.'));state.node=e.fields[0]?.split('.').slice(0,2).join('.')||availableResourceNode();render();break}
 case 'refreshResources':await refreshResources();break;
 case 'applyResourceDiff':applyResourceDiff();break;
 case 'reopenResourceDiff':if(state.editor?.resourceDiff)openModal('resourceDiff');break;
