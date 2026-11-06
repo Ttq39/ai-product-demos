@@ -132,7 +132,7 @@
 .resource-refresh-result{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:0 0 20px}.resource-refresh-result svg{width:18px;height:18px}.resource-refresh-result.is-success{color:#16a34a}.resource-refresh-result.is-failure{color:#dc3545}.resource-wait-hint .mark{vertical-align:middle}
 .personal-reference.reference-cascade{display:grid;grid-template-columns:210px minmax(0,1fr);gap:5px;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible;min-height:0}.reference-cascade.cascade-root-only{grid-template-columns:minmax(0,1fr)}.reference-cascade.cascade-level-detail{grid-template-columns:210px minmax(0,1fr) minmax(0,1.05fr)}.cascade-pane{background:white;border:1px solid #e9ebef;border-radius:12px;min-width:0;min-height:0;overflow:auto;max-height:inherit;padding:6px;box-shadow:0 2px 8px #15223b12}.cascade-heading{font-size:12px;color:#878d98;padding:6px 10px}.cascade-divider{border-top:1px solid #eff0f2;margin-top:5px}.cascade-existing,.cascade-row{display:flex;width:100%;align-items:center;gap:8px;padding:6px 10px;min-height:30px;text-align:left;font-size:13px}.cascade-row{justify-content:space-between;border:0;background:white;border-radius:6px}.cascade-row:hover,.cascade-row.active{background:#f3f4f6}.cascade-resource{display:flex;align-items:center}.cascade-name{min-width:0;overflow-wrap:anywhere}.cascade-name b{font-weight:500}.cascade-name small{display:block;font-size:11px}.cascade-detail-head,.cascade-pagination{display:flex;gap:6px;align-items:center;padding:3px}.cascade-pagination{justify-content:space-between}.cascade-pagination button{padding:3px 6px;font-size:12px}.cascade-mobile-back{display:none}.cascade-detail #personalRefSearch{margin:4px 0}.cascade-detail .personal-ref-list{min-height:0}.cascade-pane .reference-empty{padding:12px 8px;font-size:12px}@media(max-width:779px){.personal-reference.reference-cascade{display:block}.cascade-level-groups .cascade-root,.cascade-level-detail .cascade-root,.cascade-level-detail .cascade-groups{display:none}.cascade-mobile-back{display:block}}
 .cascade-detail{display:flex;flex-direction:column}.cascade-detail>.personal-ref-list{min-height:0;overflow:auto}.cascade-detail>.cascade-detail-head,.cascade-detail>#personalRefSearch,.cascade-detail>[data-action="atPickResource"]{flex-shrink:0}.cascade-pagination{position:sticky;bottom:0;background:white;border-top:1px solid #eff0f2}
-</style></head><body><header class="demoBar"><strong>数据中心 · 交互体验</strong><span>模拟数据 · 不连接 Dataphin · 不发送真实消息</span><div class="spacer"></div><select id="identity" aria-label="演示身份"><option value="business">业务管理员 · 资产所有人</option><option value="platform">平台管理员</option><option value="consumer">普通使用者 · 营销事业部</option><option value="other">普通使用者 · 供应链事业部</option></select><button data-action="sourceAdmin">配置中心</button><button data-action="sourceUser">用户端</button><button data-action="toggleMarks" id="marksToggle">隐藏编号说明</button><button data-action="demoPanel">目录与演示场景</button></header><div id="app"></div><div id="modalRoot"></div><div id="panelRoot"></div><div id="toastRoot"></div><script>
+.reference-cascade input[data-reference-filter]{width:100%;min-width:0;flex-shrink:0}.cascade-resource>.cascade-row,.cascade-detail-head>b{min-width:0;flex:1}.cascade-resource>.cascade-pick,.cascade-detail-head>.cascade-pick{flex:none;white-space:nowrap;padding-inline:8px}.cascade-detail-head>b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}</style></head><body><header class="demoBar"><strong>数据中心 · 交互体验</strong><span>模拟数据 · 不连接 Dataphin · 不发送真实消息</span><div class="spacer"></div><select id="identity" aria-label="演示身份"><option value="business">业务管理员 · 资产所有人</option><option value="platform">平台管理员</option><option value="consumer">普通使用者 · 营销事业部</option><option value="other">普通使用者 · 供应链事业部</option></select><button data-action="sourceAdmin">配置中心</button><button data-action="sourceUser">用户端</button><button data-action="toggleMarks" id="marksToggle">隐藏编号说明</button><button data-action="demoPanel">目录与演示场景</button></header><div id="app"></div><div id="modalRoot"></div><div id="panelRoot"></div><div id="toastRoot"></div><script>
 
 
 'use strict';
@@ -581,6 +581,15 @@ document.addEventListener('compositionstart',ev=>{ev.target.dataset.composing='t
 document.addEventListener('compositionend',ev=>{delete ev.target.dataset.composing;ev.target.dispatchEvent(new Event('input',{bubbles:true}))});
 document.addEventListener('input',ev=>{
 if(ev.isComposing||ev.target.dataset.composing==='true')return;
+if(ev.target.dataset.referenceFilter){
+ const {id,value,selectionStart}=ev.target;
+ (state.atFilters||={})[id]=value;
+ renderModal();
+ const input=document.getElementById(id);
+ input?.focus();
+ input?.setSelectionRange(selectionStart,selectionStart);
+ return;
+}
 if(ev.target.id==='personalRefSearch'){state.atSearch=ev.target.value;state.atPage=1;updateReferenceSearch();return}
 
 if(ev.target.dataset.fieldEnh&&state.editor){const id=ev.target.dataset.fieldEnh;state.editor.enh[id]={text:ev.target.value};state.editor.enhOrigins[id]='本次人工维护';return}
@@ -955,18 +964,20 @@ function personalReferencePopover(){
  const title=db?resourceEnglishName(db):a?.published.name;
  const root=(label,icon)=>'<div class="cascade-existing"><span aria-hidden="true">'+icon+'</span>'+label+'</div>';
  const names=(en,cn)=>'<span class="cascade-name"><b>'+esc(en)+'</b>'+(cn&&cn!==en?'<small>'+esc(cn)+'</small>':'')+'</span>';
- const rows=(list,isAk)=>list.filter((r,i,all)=>sourceKind(r)!=='数据中台项目'||all.findIndex(x=>x.project===r.project&&sourceKind(x)==='数据中台项目')===i).map(r=>'<div class="cascade-resource">'+btn(names(resourceEnglishName(r),sourceName(r))+'<span>›</span>',isAk?'atDirectResource':'atPersonalResource','data-id="'+r.id+'"','cascade-row '+(db?.id===r.id?'active':''))+(!isAk&&referenceTableEntries(r).length?btn('引用','atPickResource','data-asset="'+key+'" data-id="'+r.id+'"','link cascade-pick'):'')+'</div>').join('');
- const mine=(state.atEmptyDemo?[]:assets.filter(usable)).map(x=>btn('<span>'+esc(x.published.name)+'</span><span>›</span>','atPersonalAsset','data-id="'+x.id+'"','cascade-row '+(a?.id===x.id?'active':''))).join('');
- const groups='<section class="cascade-pane cascade-groups"><div class="cascade-mobile-back">'+btn('‹ 返回','atRoot','','link')+'</div><div class="cascade-heading">我的数据源</div>'+(mine||'<div class="reference-empty">暂无个人数据源</div>')+'<div class="cascade-heading cascade-divider">AK有权资源</div>'+(error?'<div class="reference-empty">'+esc(error)+btn('维护AK','key','data-context="consumer"','link')+'</div>':rows(akReferenceResources(),true)||'<div class="reference-empty">暂无有权资源</div>')+'</section>';
+ const term=id=>(state.atFilters?.[id]||'').trim().toLowerCase();
+ const search=(id,label)=>'<input id="'+id+'" data-reference-filter="true" aria-label="'+label+'" placeholder="'+label+'" value="'+esc(state.atFilters?.[id]||'')+'">';
+ const empty=(id,label)=>'<div class="reference-empty">'+(term(id)?'未找到匹配项':label)+'</div>';
+ const rows=(list,isAk)=>list.filter(r=>(resourceEnglishName(r)+' '+sourceName(r)).toLowerCase().includes(term(isAk?'refAk':'refResources'))).filter((r,i,all)=>sourceKind(r)!=='数据中台项目'||all.findIndex(x=>x.project===r.project&&sourceKind(x)==='数据中台项目')===i).map(r=>'<div class="cascade-resource">'+btn(names(resourceEnglishName(r),sourceName(r))+'<span>›</span>',isAk?'atDirectResource':'atPersonalResource','data-id="'+r.id+'"','cascade-row '+(db?.id===r.id?'active':''))+(!isAk&&referenceTableEntries(r).length?btn('引用','atPickResource','data-asset="'+key+'" data-id="'+r.id+'"','link cascade-pick'):'')+'</div>').join('');
+ const mine=(state.atEmptyDemo?[]:assets.filter(usable)).filter(x=>x.published.name.toLowerCase().includes(term('refMine'))).map(x=>btn('<span>'+esc(x.published.name)+'</span><span>›</span>','atPersonalAsset','data-id="'+x.id+'"','cascade-row '+(a?.id===x.id?'active':''))).join('');
+ const groups='<section class="cascade-pane cascade-groups"><div class="cascade-mobile-back">'+btn('‹ 返回','atRoot','','link')+'</div><div class="cascade-heading">我的数据源</div>'+search('refMine','搜索我的数据源')+(mine||empty('refMine','暂无个人数据源'))+'<div class="cascade-heading cascade-divider">AK有权资源</div>'+search('refAk','搜索项目或数据源')+(error?'<div class="reference-empty">'+esc(error)+btn('维护AK','key','data-context="consumer"','link')+'</div>':rows(akReferenceResources(),true)||empty('refAk','暂无有权资源'))+'</section>';
  let detail='';
  if(a||db){
-  detail='<section class="cascade-pane cascade-detail"><div class="cascade-detail-head">'+btn('‹','atBack','aria-label="返回上一级"','link')+'<b>'+esc(title||'')+'</b></div>';
+  detail='<section class="cascade-pane cascade-detail"><div class="cascade-detail-head">'+btn('‹','atBack','aria-label="返回上一级"','link')+'<b>'+esc(title||'')+'</b>'+(!error&&db?btn('引用','atPickResource','aria-label="引用整个'+(sourceKind(db)==='数据中台项目'?'项目':'数据源')+'" data-asset="'+key+'" data-id="'+db.id+'"','link cascade-pick'):'')+'</div>';
   if(error)detail+='<div class="reference-empty">'+esc(error)+'</div>';
   else if(db){
-   detail+=btn('引用'+(sourceKind(db)==='数据中台项目'?'项目':'数据源'),'atPickResource','data-asset="'+key+'" data-id="'+db.id+'"','link');
-   if(direct)detail+='<input id="personalRefSearch" aria-label="搜索表名" placeholder="搜索表名或中文名称" value="'+esc(state.atSearch||'')+'">';
+   detail+='<input id="personalRefSearch" aria-label="搜索表名" placeholder="搜索表名或中文名称" value="'+esc(state.atSearch||'')+'">';
    detail+='<div class="personal-ref-list">'+referenceCascadeTables(db,key,direct)+'</div>';
-  }else detail+=rows(available,false)||'<div class="reference-empty">暂无可引用资源</div>';
+  }else detail+=search('refResources','搜索项目或数据源')+(rows(available,false)||empty('refResources','暂无可引用资源'));
   detail+='</section>';
  }
  return '<div class="reference-dismiss" data-action="closeModal"></div><div class="personal-reference reference-cascade '+(!state.atCascadeOpen?'cascade-root-only':detail?'cascade-level-detail':'cascade-level-groups')+'" role="dialog" aria-label="选择内容与能力"><section class="cascade-pane cascade-root"><div class="cascade-heading">添加内容</div>'+root('上传文件或图片','♧')+root('从资源或聊天选择文件','▱')+root('引用聊天消息','▤')+root('引用任务对话','▤')+root('引用知识库','▣')+'<div class="cascade-heading cascade-divider">选择能力</div>'+root('技能','ϟ')+root('工具','◇')+root('智能体','□')+btn('<span>▥　数据源</span><span>›</span>','atOpenSources','','cascade-row '+(state.atCascadeOpen?'active':''))+'</section>'+(state.atCascadeOpen?groups+detail:'')+'</div>';
@@ -999,7 +1010,7 @@ function openReferencePagingDemo(){
  resetReferenceCascade();state.atCascadeOpen=true;state.atMode='ak';state.atResource=id;openModal('at');
 }
 function resetReferenceCascade(){
- state.atEmptyDemo=!!state.atEmptyOnce;state.atEmptyOnce=false;state.atCascadeOpen=false;state.atAsset=null;state.atResource=null;state.atMode='mine';state.atPage=1;state.atSearch='';
+ state.atFilters={};state.atEmptyDemo=!!state.atEmptyOnce;state.atEmptyOnce=false;state.atCascadeOpen=false;state.atAsset=null;state.atResource=null;state.atMode='mine';state.atPage=1;state.atSearch='';
  state.atAkCatalogue={actor:current().id,ids:state.atEmptyDemo||validatePersonalCredential()?[]:resources.filter(r=>referenceTableEntries(r).length).map(r=>r.id)};
 }
 
