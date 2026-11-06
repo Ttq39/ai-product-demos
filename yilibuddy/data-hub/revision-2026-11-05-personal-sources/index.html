@@ -956,6 +956,21 @@ function savePersonalSource(){const e=state.editor;if(!e)return;if(state.resourc
 function deletePersonalSource(id){const a=assets.find(x=>x.id===id);if(!a||(!sourceCanManage(a)&&!usable(a))){toast('当前无权删除该资产。');return}assets.splice(assets.indexOf(a),1);state.referenceSelections=(state.referenceSelections||[]).filter(r=>r.asset!==id);syncPersonalReferences();closeModal();state.route=state.identity==='consumer'||state.identity==='other'?'shop':'admin';state.marketMine=true;state.myAbilityType='数据源';render();toast('资产已删除。')}
 function syncPersonalReferences(){state.selectedHubs=[...new Set((state.referenceSelections||[]).map(r=>r.asset))];state.selectedHub=state.selectedHubs[0]||null}
 function referenceTableEntries(db){const rights=allowedFields();return personalGroupResources(db).flatMap(r=>r.tables.map(t=>({db:r,table:t,ids:rights.filter(id=>id.startsWith(r.id+'.'+t.id+'.'))}))).filter(t=>t.ids.length)}
+document.addEventListener('pointerover',event=>{
+ if(event.pointerType!=='mouse'||matchMedia('(max-width:779px)').matches)return;
+ const row=event.target.closest('.reference-cascade .cascade-row[data-action]');
+ if(!row||row.contains(event.relatedTarget))return;
+ const action=row.dataset.action;
+ if(!['atOpenSources','atPersonalAsset','atPersonalResource','atDirectResource'].includes(action))return;
+ if(row.classList.contains('active'))return;
+ const selectors=['.cascade-root','.cascade-groups','.cascade-detail'];
+ const offsets=selectors.map(selector=>document.querySelector('.reference-cascade '+selector)?.scrollTop||0);
+ row.click();
+ selectors.forEach((selector,index)=>{
+  const pane=document.querySelector('.reference-cascade '+selector);
+  if(pane&&(index<2||action==='atPersonalResource'))pane.scrollTop=offsets[index];
+ });
+});
 function personalReferencePopover(){
  const error=validatePersonalCredential(), a=assets.find(x=>x.id===state.atAsset), db=resources.find(x=>x.id===state.atResource), direct=state.atMode==='ak';
  const available=a?personalResources(a.published):[];
