@@ -786,9 +786,10 @@ case 'eye':{const i=$('#akSecret');i.type=i.type==='password'?'text':'password';
 case 'saveKey':{
  const keyActor=current().id,validationModal=state.modal;const key=$('#akId').value.trim(),secret=$('#akSecret').value.trim();const box=$('#keyError');
  if(!key||!secret){formFailure(box,'请填写 AccessKey 和 AccessKey Secret。');return}
+ if([key,secret].some(value=>/[\s`]/.test(value))){formFailure(box,'AccessKey 校验失败，请核对本人凭据。本次修改未保存。');return}
  b.disabled=true;b.textContent='校验中…';await new Promise(r=>setTimeout(r,250));
  if(current().id!==keyActor||state.modal!==validationModal)return;
- if(!['正常','未配置','凭据无效'].includes(state.scene.ak)){b.disabled=false;b.textContent='校验并保存';formFailure(box,(state.scene.ak==='凭据无效'?'AccessKey 校验失败，请核对本人凭据。':'暂时无法连接 Dataphin，请稍后重试。')+' 本次修改未保存，原有效绑定不变。');return}
+ if(!['正常','未配置'].includes(state.scene.ak)){b.disabled=false;b.textContent='校验并保存';formFailure(box,(state.scene.ak==='凭据无效'?'AccessKey 校验失败，请核对本人凭据。':'暂时无法连接 Dataphin，请稍后重试。')+' 本次修改未保存，原有效绑定不变。');return}
  state.scene.ak='正常';(validationModal.context==='owner'?state.adminCredentials:state.credentials)[keyActor]=true;if(validationModal.context!=='owner')reconcileCredentialNotices();closeModal();const next=state.afterKey;state.afterKey=null;render();toast('本人 AK 校验成功，已保存。');if(next?.type==='subscribe')subscribe(next.id);else if(next?.type==='query')await resumeCredentialQuery(next.token);else if(next?.type==='personalAction'){state.pendingPersonalAction=null;if(next.action?.type==='edit')openPersonalEdit(next.action.id,next.action.origin);else beginPersonalCreate()}break;
 }
 case 'closeModal':{const parent=state.modal?.type==='dependencyInfo'?state.dependencyInfoParent:null;state.afterKey=null;closeModal();if(parent)openModal(parent.type,parent);break}
