@@ -132,7 +132,12 @@
 .resource-refresh-result{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;flex:0 0 20px}.resource-refresh-result svg{width:18px;height:18px}.resource-refresh-result.is-success{color:#16a34a}.resource-refresh-result.is-failure{color:#dc3545}.resource-wait-hint .mark{vertical-align:middle}
 .personal-reference.reference-cascade{display:grid;grid-template-columns:210px minmax(0,1fr);gap:5px;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;overflow:visible;min-height:0}.reference-cascade .cascade-root{align-self:end}.reference-cascade.cascade-root-only{grid-template-columns:minmax(0,1fr)}.reference-cascade.cascade-level-detail{grid-template-columns:210px minmax(0,1fr) minmax(0,1.05fr)}.cascade-pane{background:white;border:1px solid #e9ebef;border-radius:12px;min-width:0;min-height:0;overflow:auto;max-height:inherit;padding:6px;box-shadow:0 2px 8px #15223b12}.cascade-heading{font-size:12px;color:#878d98;padding:6px 10px}.cascade-divider{border-top:1px solid #eff0f2;margin-top:5px}.cascade-existing,.cascade-row{display:flex;width:100%;align-items:center;gap:8px;padding:6px 10px;min-height:30px;text-align:left;font-size:13px}.cascade-row{justify-content:space-between;border:0;background:white;border-radius:6px}.cascade-row:hover,.cascade-row.active{background:#f3f4f6}.cascade-resource{display:flex;align-items:center}.cascade-name{min-width:0;overflow-wrap:anywhere}.cascade-name b{font-weight:500}.cascade-name small{display:block;font-size:11px}.cascade-detail-head,.cascade-pagination{display:flex;gap:6px;align-items:center;padding:3px}.cascade-pagination{justify-content:space-between}.cascade-pagination button{padding:3px 6px;font-size:12px}.cascade-mobile-back{display:none}.cascade-detail #personalRefSearch{margin:4px 0}.cascade-detail .personal-ref-list{min-height:0}.cascade-pane .reference-empty{padding:12px 8px;font-size:12px}@media(max-width:779px){.personal-reference.reference-cascade{display:block}.cascade-level-groups .cascade-root,.cascade-level-detail .cascade-root,.cascade-level-detail .cascade-groups{display:none}.cascade-mobile-back{display:block}}
 .cascade-detail{display:flex;flex-direction:column}.cascade-detail>.personal-ref-list{min-height:0;overflow:auto}.cascade-detail>.cascade-detail-head,.cascade-detail>#personalRefSearch,.cascade-detail>[data-action="atPickResource"]{flex-shrink:0}.cascade-pagination{position:sticky;bottom:0;background:white;border-top:1px solid #eff0f2}
-.reference-cascade input[data-reference-filter]{width:100%;min-width:0;flex-shrink:0}.cascade-resource>.cascade-row,.cascade-detail-head>b{min-width:0;flex:1}.cascade-resource>.cascade-pick,.cascade-detail-head>.cascade-pick{flex:none;white-space:nowrap;padding-inline:8px}.cascade-detail-head>b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}button[data-action="sourceSelect"][aria-pressed="true"],button[data-action="sourceTable"][aria-pressed="true"]{background:#eaf1ff;border-color:#3974e9;color:#174caf;font-weight:700}.resource-loading{display:flex;align-items:center;gap:10px;padding:36px 12px}.resource-loading span{width:18px;height:18px;border:2px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:resource-spin .7s linear infinite}@keyframes resource-spin{to{transform:rotate(360deg)}}.resource-english{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeitem button{min-width:0}.personal-reference.reference-cascade.cascade-flat{display:block}.treeitem:has([data-action="sourceSelectRow"]){cursor:pointer}.cascade-flat>.cascade-pane{max-height:inherit;overflow:auto}.source-calculation{margin:16px 0;border:1px solid #e1e8f3;border-radius:10px;background:#f7f9fd;padding:12px 14px}.source-calculation summary{cursor:pointer;color:#243954;font-weight:600}.source-calculation-body{margin-top:12px;font-size:13px;color:#45566e}.source-calculation-body ul{list-style:none;margin:8px 0 12px;padding:0}.source-calculation-body li{margin:6px 0;overflow-wrap:anywhere}.source-calculation-body p{margin-bottom:0}</style></head><body><header class="demoBar"><strong>数据中心 · 交互体验</strong><span>模拟数据 · 不连接 Dataphin · 不发送真实消息</span><div class="spacer"></div><button data-action="sourceAdmin">配置中心</button><button data-action="sourceUser">用户端</button><button data-action="toggleMarks" id="marksToggle">隐藏编号说明</button><button data-action="demoPanel">目录与演示场景</button></header><div id="app"></div><div id="modalRoot"></div><div id="panelRoot"></div><div id="toastRoot"></div><script>
+.reference-cascade input[data-reference-filter]{width:100%;min-width:0;flex-shrink:0}.cascade-resource>.cascade-row,.cascade-detail-head>b{min-width:0;flex:1}.cascade-resource>.cascade-pick,.cascade-detail-head>.cascade-pick{flex:none;white-space:nowrap;padding-inline:8px}.cascade-detail-head>b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}button[data-action="sourceSelect"][aria-pressed="true"],button[data-action="sourceTable"][aria-pressed="true"]{background:#eaf1ff;border-color:#3974e9;color:#174caf;font-weight:700}.resource-loading{display:flex;align-items:center;gap:10px;padding:36px 12px}.resource-loading span{width:18px;height:18px;border:2px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:resource-spin .7s linear infinite}@keyframes resource-spin{to{transform:rotate(360deg)}}.resource-english{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.treeitem button{min-width:0}.personal-reference.reference-cascade.cascade-flat{display:block}.treeitem:has([data-action="sourceSelectRow"]){cursor:pointer}.cascade-flat>.cascade-pane{max-height:inherit;overflow:auto}.source-calculation{margin:16px 0;border:1px solid #e1e8f3;border-radius:10px;background:#f7f9fd;padding:12px 14px}.source-calculation summary{cursor:pointer;color:#243954;font-weight:600}.source-calculation-body{margin-top:12px;font-size:13px;color:#45566e}.source-calculation-body ul{list-style:none;margin:8px 0 12px;padding:0}.source-calculation-body li{margin:6px 0;overflow-wrap:anywhere}.source-calculation-body p{margin-bottom:0}.sent-query{max-width:100%}.sent-reference-list{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin:0 0 8px}.sent-reference{display:inline-flex;align-items:center;gap:4px;padding:9px 12px;border-radius:10px;background:#f4f5f7;color:#2563eb;overflow-wrap:anywhere}.sent-reference-file{border:1px solid #e2e8f0;background:#fff;color:#17243a}.sent-table-ref{color:#2563eb}.review-sql-text,.review-sql-draft{display:block;width:100%;padding:12px;margin:10px 0;box-sizing:border-box;background:#f6f8fb;border:1px solid #e2e8f0;border-radius:8px;font-family:ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.review-sql-draft{min-height:128px;resize:vertical;background:#fff}
+@media(min-width:780px){.personal-reference.reference-cascade{align-items:end}}
+.reference-cascade .cascade-root .cascade-row{min-height:34px;padding:6px 12px;border-radius:8px;color:#242424}
+.reference-cascade .cascade-root .cascade-row>span:last-child:not(:first-child){color:#929292}
+.cascade-root-label{display:inline-flex;align-items:center;gap:9px}.cascade-root-label svg{color:#737373;flex:none}
+</style></head><body><header class="demoBar"><strong>数据中心 · 交互体验</strong><span>模拟数据 · 不连接 Dataphin · 不发送真实消息</span><div class="spacer"></div><button data-action="sourceAdmin">配置中心</button><button data-action="sourceUser">用户端</button><button data-action="toggleMarks" id="marksToggle">隐藏编号说明</button><button data-action="demoPanel">目录与演示场景</button></header><div id="app"></div><div id="modalRoot"></div><div id="panelRoot"></div><div id="toastRoot"></div><script>
 
 
 'use strict';
@@ -263,7 +268,7 @@ e.metadataInvalid=[];e.refreshRequired=false;e.acceptedStructureChanges=[...new 
 ensureEnhancements(e);state.node=e.fields[0]?.split('.').slice(0,2).join('.')||availableResourceNode();closeModal();render();toast('目录已更新：失效引用已移除，有效历史选择保留，新增库表未勾选。');
 }
 
-function permissionLinks(){return permissionRequestContent();}
+function permissionLinks(){return '';}
 function permissionRequestContent(){
  const q=state.lastQuery,ids=q?.missingIds||((q?.asset?.published?.fields||chooseCandidate(q?.question||'销售额',allFields)||[]).filter(id=>!allowedFields().includes(id))),groups=new Map();
  ids.forEach(id=>{const f=fieldMap[id];if(!f)return;const key=f.db.name+'|'+f.tb.name;if(!groups.has(key))groups.set(key,{db:f.db.name,table:f.tb.name,fields:[]});groups.get(key).fields.push(f.name+'（'+f.label+'）')});
@@ -275,28 +280,24 @@ function installMetricResources(){
 }
 async function combinedMetricAnswer(demoOnly=false){
  const q=state.lastQuery,period='2026-09-01 至 2026-09-30',groups=[['sales.orders.amount','sales.orders.region','sales.orders.order_date'],['metric.volume.sales_volume','metric.volume.region','metric.volume.month'],['metric.orders.order_count','metric.orders.region','metric.orders.month']];
- if(!demoOnly){if(stopForCredential())return;if(explicitScope()){const scope=new Set(q.assets.flatMap(a=>a.published.fields));if(groups.flat().some(id=>!scope.has(id))){scopeFailure('所引用范围不足以提供全部所需指标。');return}}await stage('正在查询 sales_dw.order_fact、marketing_metrics.regional_volume、marketing_metrics.regional_orders');const missing=groups.flat().filter(id=>!allowedFields().includes(id));if(missing.length){q.missingIds=missing;answer('<p>本次所需指标存在权限缺失，未返回完整表格。</p>'+permissionLinks());return}}
+ if(!demoOnly){if(stopForCredential())return;if(explicitScope()){const scope=new Set(q.assets.flatMap(a=>a.published.fields));if(groups.flat().some(id=>!scope.has(id))){scopeFailure('所引用范围不足以提供全部所需指标。');return}}await stage('正在核对销售、销量和有效订单数所需字段');const missing=groups.flat().filter(id=>!allowedFields().includes(id));if(missing.length){q.missingIds=missing;answer('<p>未查询到匹配数据。</p>');return}if(!await confirmDemoSql(groups.map(ids=>selectForFields(ids)).join('\n\n'),groups.flat()))return;}
  const indices=groups.map((ids,n)=>{const f=fieldMap[ids[0]],i=state.sources.length;state.sources.push({demoOnly,demoAllowedIds:ids,ids,origin:demoOnly?'示例多指标查询':(q.assets||[]).some(a=>ids.every(id=>a.published.fields.includes(id)))?'个人数据源':'本人AK候选搜索',asset:demoOnly?'经营多指标分析':((q.assets||[]).find(a=>ids.every(id=>a.published.fields.includes(id)))?.published.name||null),project:f.db.project,path:f.db.name+'.'+f.tb.name,metric:['实收销售额，已支付订单、不含取消订单','销量，按销售件数汇总','有效订单数，客单价=实收销售额÷有效订单数'][n],period,time:nowText(),requestSources:[],resultColumns:['区域',['实收销售额','销量','有效订单数'][n]],resultRows:[['华北',['1286000','12500','1286'][n]],['华东',['962000','9800','962'][n]]]});return i});
  const derivedFields=[...groups[0],...groups[2]];
  indices.push(state.sources.length);
  state.sources.push({ids:derivedFields,demoOnly,demoAllowedIds:derivedFields,inputs:[indices[0],indices[2]],formula:'实收销售额 ÷ 有效订单数'});
- let shownSources=indices,overviewIndex=indices[1],stockIndex;
+ const [a,b,c,derived]=indices;
+ let stockIndex;
+ const shownSources=[a,b,derived];
  if(demoOnly){
-  const addTable=(ids)=>{
-   const i=state.sources.length;
-   state.sources.push({ids,demoOnly:true,demoAllowedIds:ids});
-   return i;
-  };
-  const summaryIndex=addTable(allFields.filter(id=>id.startsWith('summary.daily.')).sort((a,b)=>Number(b.endsWith('.sales_total'))-Number(a.endsWith('.sales_total'))));
-  stockIndex=addTable(allFields.filter(id=>id.startsWith('inventory.stock.')));
-  Object.assign(state.sources[indices[3]],{inputs:[summaryIndex,indices[2]],formula:'实收销售额 ÷ 有效订单数'});
-  overviewIndex=state.sources.length;
-  state.sources.push({demoOnly:true,inputs:[indices[0],indices[1],summaryIndex,indices[2],stockIndex]});
-  shownSources=[overviewIndex,indices[3],indices[0],stockIndex];
-  shownSources.forEach((i,n)=>state.sources[i].badge=n+1);
+  stockIndex=state.sources.length;
+  const ids=allFields.filter(id=>id.startsWith('inventory.stock.'));
+  state.sources.push({ids,demoOnly:true,demoAllowedIds:ids});
+  shownSources.push(stockIndex);
  }
- shownSources.forEach(i=>state.sources[i].requestSources=shownSources);const cite=i=>'<button class="source" data-action="source" data-index="'+i+'">'+(state.sources[i].badge||i+1)+'</button>',[a,b,c,derived]=indices;
- const html=(demoOnly?'<p>本次问数来源 '+cite(overviewIndex)+' · 华北仓可用库存 2,400 件 '+cite(stockIndex)+'</p>':'')+'<p>按相同统计月份和区域汇总后，将三个来源的指标对齐展示。客单价使用有效订单数计算，不使用销量作分母。</p><div class="tablewrap"><table><thead><tr><th>区域</th><th>实收销售额（元）</th><th>销量（件）</th><th>客单价（元／单）</th></tr></thead><tbody><tr><td>华北</td><td>1,286,000 '+cite(a)+'</td><td>12,500 '+cite(overviewIndex)+'</td><td>1,000 '+cite(derived)+'</td></tr><tr><td>华东</td><td>962,000 '+cite(a)+'</td><td>9,800 '+cite(overviewIndex)+'</td><td>1,000 '+cite(derived)+'</td></tr></tbody></table></div><p class="mini muted">统计月份：2026年9月。无法对齐或没有数据的指标应显示未提供，不以0补齐。</p>';
+ shownSources.forEach((i,n)=>{state.sources[i].badge=n+1;state.sources[i].requestSources=shownSources});
+ state.sources[c].requestSources=shownSources;
+ const cite=i=>'<button class="source" data-action="source" data-index="'+i+'">'+state.sources[i].badge+'</button>';
+ const html='<p>按相同统计月份和区域汇总后，将三个来源的指标对齐展示。客单价使用有效订单数计算，不使用销量作分母。</p><div class="tablewrap"><table><thead><tr><th>区域</th><th>实收销售额（元）</th><th>销量（件）</th><th>客单价（元／单）</th></tr></thead><tbody><tr><td>华北</td><td>1,286,000 '+cite(a)+'</td><td>12,500 '+cite(b)+'</td><td>1,000 '+cite(derived)+'</td></tr><tr><td>华东</td><td>962,000 '+cite(a)+'</td><td>9,800 '+cite(b)+'</td><td>1,000 '+cite(derived)+'</td></tr></tbody></table></div><p class="mini muted">统计月份：2026年9月。无法对齐或没有数据的指标应显示未提供，不以0补齐。</p>' +(demoOnly?'<div class="tablewrap"><table><thead><tr><th>仓库</th><th>可用库存（件）</th></tr></thead><tbody><tr><td>华北仓</td><td>2,400 '+cite(stockIndex)+'</td></tr></tbody></table></div>':'');
  if(demoOnly){state.chat.push({role:'assistant',demoOnly:true,html:queryProgressView(state.querySteps,true)+html+feedbackToolbar(state.chat.length,shownSources)});return}
  logQuery('成功','中台只读查询（多指标来源演示）',state.sources[a]);answer(html);
 }
@@ -429,7 +430,7 @@ function messagesPageCards(){return empty('暂无消息')}
 
 function chatPage(){
 if(!state.demoScenario)reconcileCredentialNotices();
-return '<div class="chat"><div class="chathead row between"><div><b>数据问数</b> '+mark(12)+' '+mark(13)+'</div><div class="chat-demo-actions">'+demoScenarioPicker()+btn('新对话','newChat','','link')+'</div></div><div class="chatMessages" id="chatMessages">'+(!state.chat.length?'<div class="welcome"><div class="assetIcon" style="margin:auto auto 15px">▥</div><h1>让数据回答你的问题</h1><p class="muted">直接描述业务问题，AI检索本人可用的数据源。也可输入 @inventory_dw.stock_detail 查看未缓存表的查询示例。</p><div class="suggestions">'+btn('上个月各区域销售额','suggest','data-text="查看上个月各区域实收销售额"')+btn('当前各仓库可用库存','suggest','data-text="查询各仓库当前可用库存"')+btn('试用：查询未缓存表','demoUncached','data-mode="allow"')+'</div></div>':state.chat.map(m=>m.role==='user'?'<div class="bubbleUser">'+esc(m.text)+'</div>':'<div class="answer"><strong>YiliBuddy</strong>'+m.html+'</div>').join(''))+(state.busy?queryProgressView(state.querySteps):'')+'</div><div class="composer"><div class="composebox"><div class="chips">'+referenceChips()+'</div><textarea id="question" placeholder="输入需要查询或分析的业务问题" aria-label="问数内容" '+(state.busy?'disabled':'')+'>'+esc(state.question)+'</textarea><div class="row" style="justify-content:flex-end"><div class="row">'+btn(state.busy?'查询中':'发送','send',state.busy?'disabled':'','primary')+'</div></div></div></div></div>';
+return '<div class="chat"><div class="chathead row between"><div><b>数据问数</b> '+mark(12)+' '+mark(13)+'</div><div class="chat-demo-actions">'+demoScenarioPicker()+btn('新对话','newChat','','link')+'</div></div><div class="chatMessages" id="chatMessages">'+(!state.chat.length?'<div class="welcome"><div class="assetIcon" style="margin:auto auto 15px">▥</div><h1>让数据回答你的问题</h1><p class="muted">直接描述业务问题，AI检索本人可用的数据源。也可输入 @inventory_dw.stock_detail 查看未缓存表的查询示例。</p><div class="suggestions">'+btn('上个月各区域销售额','suggest','data-text="查看上个月各区域实收销售额"')+btn('当前各仓库可用库存','suggest','data-text="查询各仓库当前可用库存"')+btn('试用：查询未缓存表','demoUncached','data-mode="allow"')+'</div></div>':state.chat.map(m=>m.role==='user'?sentQueryMessage(m):'<div class="answer"><strong>YiliBuddy</strong>'+m.html+'</div>').join(''))+(state.busy?queryProgressView(state.querySteps):'')+queryRunControls()+'</div><div class="composer"><div class="composebox"><div class="chips">' +referenceChips()+analysisReferenceChips()+'</div><textarea id="question" placeholder="输入需要查询或分析的业务问题" aria-label="问数内容" '+(state.busy?'disabled':'')+'>'+esc(state.question)+'</textarea><div class="row" style="justify-content:flex-end"><div class="row">'+btn(state.busy?'查询中':'发送','send',state.busy?'disabled':'','primary')+'</div></div></div></div></div>';
 }
 function openModal(type,data={}){state.modal={type,...data};renderModal();setTimeout(()=>$('#modalRoot input')?.focus(),30)}
 function closeModal(){state.modal=null;$('#modalRoot').innerHTML=''}
@@ -467,7 +468,7 @@ function renderScopeBody(m){const e=state.editor,sub=m.target==='sub',q=state.te
 function renderModal(){
 const m=state.modal;if(!m){$('#modalRoot').innerHTML='';return}
 let html='';
-if(m.type==='personalEditor'){html=personalEditorBody(true);}else if(m.type==='personalGate'){html=modalFrame('请先维护本人AK','<p>'+esc(m.message)+'</p>',btn('关闭','closeModal')+btn('AK信息维护','personalGateKey','','primary'));}else if(m.type==='personalMore'){html=personalMoreMenu(m.id);}else if(m.type==='personalDelete'){html=modalFrame('删除个人数据源','<p>确认删除该个人数据源？删除后无法恢复。</p>',btn('取消','closeModal')+btn('确认删除','personalConfirmDelete','data-id="'+m.id+'"','danger'));}else if(m.type==='mySourceDetail'){const a=assets.find(x=>x.id===m.id);html=mySourceBrief(a);}else if(m.type==='regenerateEnh'){html=modalFrame('重新生成增强信息','<p>AI 生成建议将替换本对象当前输入，是否继续？</p>',btn('取消','closeModal')+btn('确认生成','confirmRegenerateEnh','','primary'),'480px');}else if(m.type==='dependencyInfo'){const item=(m.kind==='skills'?skills:knowledges).find(x=>x.name===m.name);html=modalFrame('能力说明','<div class="consumer-asset-head"><div class="consumer-logo">'+(m.kind==='skills'?'ϟ':'▤')+'</div><div><h2>'+esc(m.name)+'</h2><span class="tag">'+(m.kind==='skills'?'技能':'知识库')+'</span></div></div><p class="consumer-description">'+esc(dependencyDescriptions[m.name]||'暂无说明')+'</p><p class="mini muted">适用渠道：'+(item?.channels.includes('yilibuddy')?'YiliBuddy（含 HR 渠道）':'YiliBuddy-HR')+'</p>',btn('关闭','closeModal'),'620px');}else if(m.type==='applyDependency'){html=modalFrame('申请订阅','<p>申请订阅 <b>'+esc(m.name)+'</b>？</p><p class="muted">确认后提交该能力创建人审批。</p>',btn('取消','closeModal')+btn('确认申请','confirmDependency','data-kind="'+m.kind+'" data-name="'+esc(m.name)+'"','primary'));}else if(m.type==='deleteAsset'){const a=assets.find(x=>x.id===m.id);html=modalFrame('确认删除资产？','<p>删除“'+esc(aConfig(a).name)+'”后不可恢复，已有订阅将失效。审核记录保留。</p>',btn('取消','closeModal')+btn('确认删除','confirmDeleteAsset','data-id="'+m.id+'"','danger'));}else if(m.type==='adoptShared'){
+if(m.type==='reviewFile'){html=reviewFileModal(m);}else if(m.type==='personalEditor'){html=personalEditorBody(true);}else if(m.type==='personalGate'){html=modalFrame('请先维护本人AK','<p>'+esc(m.message)+'</p>',btn('关闭','closeModal')+btn('AK信息维护','personalGateKey','','primary'));}else if(m.type==='personalMore'){html=personalMoreMenu(m.id);}else if(m.type==='personalDelete'){html=modalFrame('删除个人数据源','<p>确认删除该个人数据源？删除后无法恢复。</p>',btn('取消','closeModal')+btn('确认删除','personalConfirmDelete','data-id="'+m.id+'"','danger'));}else if(m.type==='mySourceDetail'){const a=assets.find(x=>x.id===m.id);html=mySourceBrief(a);}else if(m.type==='regenerateEnh'){html=modalFrame('重新生成增强信息','<p>AI 生成建议将替换本对象当前输入，是否继续？</p>',btn('取消','closeModal')+btn('确认生成','confirmRegenerateEnh','','primary'),'480px');}else if(m.type==='dependencyInfo'){const item=(m.kind==='skills'?skills:knowledges).find(x=>x.name===m.name);html=modalFrame('能力说明','<div class="consumer-asset-head"><div class="consumer-logo">'+(m.kind==='skills'?'ϟ':'▤')+'</div><div><h2>'+esc(m.name)+'</h2><span class="tag">'+(m.kind==='skills'?'技能':'知识库')+'</span></div></div><p class="consumer-description">'+esc(dependencyDescriptions[m.name]||'暂无说明')+'</p><p class="mini muted">适用渠道：'+(item?.channels.includes('yilibuddy')?'YiliBuddy（含 HR 渠道）':'YiliBuddy-HR')+'</p>',btn('关闭','closeModal'),'620px');}else if(m.type==='applyDependency'){html=modalFrame('申请订阅','<p>申请订阅 <b>'+esc(m.name)+'</b>？</p><p class="muted">确认后提交该能力创建人审批。</p>',btn('取消','closeModal')+btn('确认申请','confirmDependency','data-kind="'+m.kind+'" data-name="'+esc(m.name)+'"','primary'));}else if(m.type==='deleteAsset'){const a=assets.find(x=>x.id===m.id);html=modalFrame('确认删除资产？','<p>删除“'+esc(aConfig(a).name)+'”后不可恢复，已有订阅将失效。审核记录保留。</p>',btn('取消','closeModal')+btn('确认删除','confirmDeleteAsset','data-id="'+m.id+'"','danger'));}else if(m.type==='adoptShared'){
 html=modalFrame('采用共享最新说明','<p>将共享层当前解释带入本对象，替换本次编辑内容；已发布配置保持，提交审核并发布后才生效。</p>',btn('取消','closeModal')+btn('确认采用','confirmAdoptShared','','primary'));
 }else if(m.type==='key'){
 const reason=m.reason||(state.scene.ak==='凭据无效'?queryCredentialError(m.context==='owner'):'');const status=!reason&&hasCredential(m.context==='owner')?'<div class="success credential-banner">已关联校验成功的本人凭据。重新填写并校验后更新，失败不会覆盖原有效绑定。</div>':'';
@@ -554,17 +555,17 @@ function readableType(type){if(/int|number|decimal|bigint/i.test(type))return '�
 function optionalSampleLabel(field){return /[\u3400-\u9fff]/u.test(field.label||'')?'<small class="technical-name">'+esc(field.label)+'</small>':''}
 function sampleDataTable(src){const first=fieldMap[(src.ids||[])[0]];if(!first)return empty('暂无样例数据');const ids=allFields.filter(id=>id.startsWith(first.db.id+'.'+first.tb.id+'.')&&(src.demoOnly?(src.demoAllowedIds||src.ids).includes(id):allowedFields().includes(id)));if(!ids.length)return '<p>当前没有可查看的样例字段。</p>'+permissionLinks();const values={order_id:['O-1001','O-1002'],amount:['680','320'],region:['华北','华东'],order_date:['2026-09-12','2026-09-13'],sku:['SKU-1001','SKU-1002'],quantity:['2400','1850'],warehouse:['华北仓','华东仓'],day:['2026-09-12','2026-09-13'],sales_total:['1286000','962000'],sales_volume:['12500','9800'],order_count:['1286','962'],month:['2026-09','2026-09'],business_unit:['液态奶','冷饮']};return '<p class="mini muted">以下是“'+esc(first.tb.label)+'”的演示样例，帮助理解每列的含义；不是本次统计结果，不代表完整数据。</p><div class="sample-scroll"><table><thead><tr>'+ids.map(id=>'<th>'+esc(fieldMap[id].name)+optionalSampleLabel(fieldMap[id])+'</th>').join('')+'</tr></thead><tbody>'+[0,1].map(i=>'<tr>'+ids.map(id=>'<td>'+esc(values[fieldMap[id].name]?.[i]||'示例-'+(i+1))+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><small>仅展示本人有权数据，当前记录为演示样例。</small>'}
 
-async function multiSourceAnswer(q,rights){if(explicitScope())rights=rights.filter(id=>q.assets.some(a=>a.published.fields.includes(id)));const selections=[chooseCandidate('销售额',rights),chooseCandidate('库存',rights)];if(selections.some(x=>!x)){logQuery('缺少多来源权限');answer('<div class="warn">销售或库存来源缺少必要权限，不能给出完整结果。</div>'+permissionLinks()+btn('调整问题','adjustQuestion'));return}if(state.scene.schema!=='正常'||state.scene.sql==='修复失败'){logQuery('多来源校验失败');answer('<div class="warn">相关来源结构或查询校验未通过，未执行多来源查询。</div>'+btn('调整问题','adjustQuestion'));return}await stage('分别校验本人权限并查询销售、库存来源');if(stopForCredential())return;if(!selections.flat().every(id=>allowedFields().includes(id))){logQuery('执行前权限变化');answer('<div class="error">当前权限已变化，请核实授权。</div>'+permissionLinks());return}const indices=[];selections.forEach((ids,n)=>{const f=fieldMap[ids[0]];indices.push(state.sources.length);const source={ids,origin:'临时候选搜索',project:f.db.project,path:f.db.name+'.'+f.tb.name,fields:ids.map(id=>fieldMap[id].name).join('、'),metric:n?'可用库存，按商品与仓库展示':'实收销售额，按区域汇总',period:n?'当前中台可用库存':'2026-09-01 至 2026-09-30',time:nowText(),derivation:'分别查询，不将不同指标直接计算',resultRows:n?[['SKU-1001','华北仓','2400']]:[['华北','1286000']],resultColumns:n?['商品','仓库','可用库存']:['区域','实收销售额（元）']};state.sources.push(source);logQuery('成功','中台只读查询（多来源演示）',source);state.audit.at(-1).rows=1});indices.forEach(i=>state.sources[i].requestSources=indices);const c=i=>'<button class="source" data-action="source" data-index="'+i+'">'+(i+1)+'</button>';answer('<p>销售与库存来自不同数据源，分别展示，不混合计算。</p><h3>上月区域实收销售额 '+c(indices[0])+'</h3><table><tr><th>区域</th><th>实收销售额（元）</th></tr><tr><td>华北</td><td>1,286,000 '+c(indices[0])+'</td></tr></table><h3>当前可用库存 '+c(indices[1])+'</h3><table><tr><th>商品</th><th>仓库</th><th>可用库存</th></tr><tr><td>SKU-1001</td><td>华北仓</td><td>2,400 '+c(indices[1])+'</td></tr></table><p class="mini muted">统计范围和指标口径分别见来源。</p>')}
+async function multiSourceAnswer(q,rights){if(explicitScope())rights=rights.filter(id=>q.assets.some(a=>a.published.fields.includes(id)));const selections=[chooseCandidate('销售额',rights),chooseCandidate('库存',rights)];if(selections.some(x=>!x)){noMatch();return}if(state.scene.schema!=='正常'||state.scene.sql==='修复失败'){logQuery('多来源校验失败');answer('<div class="warn">相关来源结构或查询校验未通过，未执行多来源查询。</div>'+btn('调整问题','adjustQuestion'));return}await stage('正在核对销售、库存来源的字段及权限');if(stopForCredential())return;if(!selections.flat().every(id=>allowedFields().includes(id))){noMatch();return}if(!await confirmDemoSql(selections.map(selectForFields).join('\n\n'),selections.flat()))return;const indices=[];selections.forEach((ids,n)=>{const f=fieldMap[ids[0]];indices.push(state.sources.length);const source={ids,origin:'临时候选搜索',project:f.db.project,path:f.db.name+'.'+f.tb.name,fields:ids.map(id=>fieldMap[id].name).join('、'),metric:n?'可用库存，按商品与仓库展示':'实收销售额，按区域汇总',period:n?'当前中台可用库存':'2026-09-01 至 2026-09-30',time:nowText(),derivation:'分别查询，不将不同指标直接计算',resultRows:n?[['SKU-1001','华北仓','2400']]:[['华北','1286000']],resultColumns:n?['商品','仓库','可用库存']:['区域','实收销售额（元）']};state.sources.push(source);logQuery('成功','中台只读查询（多来源演示）',source);state.audit.at(-1).rows=1});indices.forEach((i,n)=>Object.assign(state.sources[i],{requestSources:indices,badge:n+1}));const c=i=>'<button class="source" data-action="source" data-index="'+i+'">'+state.sources[i].badge+'</button>';answer('<p>销售与库存来自不同数据源，分别展示，不混合计算。</p><h3>上月区域实收销售额</h3><table><tr><th>区域</th><th>实收销售额（元）</th></tr><tr><td>华北</td><td>1,286,000 '+c(indices[0])+'</td></tr></table><h3>当前可用库存</h3><table><tr><th>商品</th><th>仓库</th><th>可用库存</th></tr><tr><td>SKU-1001</td><td>华北仓</td><td>2,400 '+c(indices[1])+'</td></tr></table><p class="mini muted">统计范围和指标口径分别见来源。</p>')}
 
 
 const chatScenarios=[
  ['explicit-scope','显性引用：不足范围不扩查'],['sales','区域销售查询'],['stock','仓库库存查询'],['aligned','区域销售额＋销量＋客单价：同表三来源'],['multi','销售＋库存：分别展示'],['schema-unused','异常字段未使用：正常回答'],['schema-fallback','结构异常：找到其他有权来源'],['schema-no-match','结构异常：无可用替代来源'],['followup','连续追问：只看华东'],['search','未匹配数据源：本人有权搜索'],['partial','部分数据权限：提示与申请'],['alternate','确认采用其他有权来源'],['no-access','全部无权限：中台申请'],['ak-missing','本人AK未配置'],['ak-invalid','本人AK已失效'],['deps-ready','关联能力全部可用'],['deps-subscribe','部分依赖有权订阅但未订阅'],['deps-apply','部分依赖需申请'],['deps-pending','关联能力申请中'],['deps-blocked','部分依赖不可申请'],['clarify','指标口径不明：澄清'],['schema','字段结构异常：本次查询受影响'],['sql-repair','查询校验失败后修复成功'],['sql-failed','查询无法修复'],['empty','查询成功但无结果'],['timeout','查询服务超时'],['source-outside','不支持的数据源类型']
 ];
-function demoScenarioPicker(){return '<label class="demo-scenario-label" data-demo-control="true"><span>演示场景</span><select id="chatDemoScenario" aria-label="演示场景" '+(state.busy?'disabled':'')+'><option value="">实际对话</option>'+chatScenarios.filter(([id])=>['sales','stock','aligned','multi','followup','partial','no-access','ak-missing','ak-invalid','empty','timeout'].includes(id)).map(([id,title])=>'<option value="'+id+'" '+(state.demoScenario===id?'selected':'')+'>'+title+'</option>').join('')+'</select></label>'}
+function demoScenarioPicker(){return '<label class="demo-scenario-label" data-demo-control="true"><span>演示场景</span><select id="chatDemoScenario" aria-label="演示场景" '+(state.busy?'disabled':'')+'><option value="">实际对话</option>'+chatScenarios.filter(([id])=>['sales','stock','aligned','multi','followup','ak-missing','ak-invalid','empty','timeout'].includes(id)).map(([id,title])=>'<option value="'+id+'" '+(state.demoScenario===id?'selected':'')+'>'+title+'</option>').join('') +Object.entries(reviewScenarios).map(([id,item])=>'<option value="'+id+'" '+(state.demoScenario===id?'selected':'')+'>'+item.title+'</option>').join('')+'</select></label>'}
 function leaveChatScenario(){if(!state.demoSnapshot)return;Object.assign(state,state.demoSnapshot);state.demoSnapshot=null;state.demoScenario='';state.panel=null;render()}
-function showChatScenario(id){state.chatEpoch=(state.chatEpoch||0)+1;state.pendingCredentialQuery=null;state.afterKey=null;if(!id){leaveChatScenario();return}if(!state.demoSnapshot)state.demoSnapshot={chat:state.chat,sources:state.sources,lastQuery:state.lastQuery,question:state.question,selectedHub:state.selectedHub,selectedHubs:[...referenceIds()],busy:state.busy,progress:state.progress};state.demoScenario=id;state.chat=[];state.sources=[];state.question='';state.selectedHub=null;state.selectedHubs=[];state.busy=false;state.progress='';state.querySteps=[];state.panel=null;state.lastQuery={question:'',started:Date.now(),asset:null,actor:current().id};const addSource=(kind)=>{const stock=kind==='stock',summary=kind==='summary',prefix=stock?'inventory.stock.':summary?'summary.daily.':'sales.orders.',ids=allFields.filter(x=>x.startsWith(prefix)),f=fieldMap[ids[0]],i=state.sources.length;state.sources.push({demoOnly:true,demoAllowedIds:ids,ids,origin:summary?'临时候选搜索':'个人数据源',asset:summary?null:stock?'库存查询助手':'销售经营分析',project:f.db.project,path:f.db.name+'.'+f.tb.name,fields:ids.map(x=>fieldMap[x].name).join('、'),metric:stock?'可用库存，按商品与仓库查看':summary?'区域日销售汇总，以该来源口径为准':'实收销售额，按区域汇总',period:stock?'当前中台可用库存':'2026-09-01 至 2026-09-30',time:nowText(),derivation:'分别查询，按各自口径展示'});return i};const cite=i=>'<button class="source" data-action="source" data-index="'+i+'">'+(i+1)+'</button>';let question='上个月各区域实收销售额是多少？',html='',indices=[];const salesTable=(i,onlyEast=false)=>'<table><thead><tr><th>区域</th><th>实收销售额（元）</th></tr></thead><tbody>'+(onlyEast?[['华东','962,000']]:[['华北','1,286,000'],['华东','962,000'],['华南','814,000']]).map(row=>'<tr><td>'+row[0]+'</td><td>'+row[1]+cite(i)+'</td></tr>').join('')+'</tbody></table>';
- if(id==='explicit-scope'){question='@销售经营分析 查询上个月各区域实收销售额、销量和客单价';html='<div class="warn">当前引用仅包含销售相关表，无法提供销量及有效订单数。</div><p>本次不查询引用外资源；可补充其他个人数据源引用，或移除全部引用后重新提问。</p>';}else if(id==='aligned'){question='上个月各区域的实收销售额、销量和客单价是多少？';state.lastQuery.question=question;state.chat.push({role:'user',text:question});combinedMetricAnswer(true);render();return;}else if(id==='schema-unused'){const i=addSource('sales');indices=[i];question='查看上个月各区域销售额';html='<p>本次所需字段可用，查询结果如下。</p>'+salesTable(i);}else if(id==='schema-fallback'){const i=addSource('summary');indices=[i];question='原销售字段不可用，尝试其他有权来源';html='<p>原字段结构已变化，无法用于本次查询。本次找到本人有权的区域汇总来源，以下按该来源口径展示，不认定与原口径完全等价。</p>'+salesTable(i);}else if(id==='schema-no-match'){question='查询已调整表中的渠道分析';html='<p>本次所需表结构已变化，无法继续使用；在本人有权资源中未找到可支持本问题的替代来源，请补充范围或稍后重试。</p>';}else if(['sales','followup','search','alternate','deps-ready','deps-subscribe','deps-apply','deps-pending','deps-blocked','sql-repair'].includes(id)){const i=addSource(['search','alternate'].includes(id)?'summary':'sales');indices=[i];html='<p>以下为按当前来源口径得到的区域销售结果。'+cite(i)+'</p>'+salesTable(i,id==='followup');if(id==='followup'){state.chat.push({role:'user',text:'查看上个月各区域实收销售额'},{role:'assistant',html:'已返回三个区域的销售结果。'});question='只看华东'}if(id==='search')html='<p>未匹配个人数据源，已按本人权限找到相关来源。</p>'+html;if(id==='alternate'){question='尝试使用我有权的其他来源';html='<p>本次改用区域日销售汇总，口径以该来源为准，不视为与原数据源完全等价。</p>'+html}const depText={ 'deps-ready':'关联技能和知识库均可使用。','deps-subscribe':'部分关联能力尚未订阅；本次仅使用当前有权内容，不装载无权依赖。','deps-apply':'部分关联能力需要申请；当前仅使用已获授权的内容。','deps-pending':'关联能力申请正在处理中，本次不会使用未获授权内容。','deps-blocked':'部分关联能力当前无使用权限且不可申请；必要口径缺失时需补充确认。','sql-repair':'查询最初未通过校验，修正本次语句后执行成功；未修改源表或扩大权限。'};if(depText[id])html='<p>'+depText[id]+'</p>'+html;
- }else if(['stock','multi'].includes(id)){question=id==='multi'?'上个月销售和当前库存分别如何？':'查询各仓库当前可用库存';if(id==='multi'){indices.push(addSource('sales'));html='<h3>上月区域实收销售额</h3>'+salesTable(indices[0])}const i=addSource('stock');indices.push(i);html+='<h3>当前可用库存'+cite(i)+'</h3><table><tr><th>商品</th><th>仓库</th><th>可用库存</th></tr><tr><td>SKU-1001</td><td>华北仓</td><td>2,400'+cite(i)+'</td></tr><tr><td>SKU-1002</td><td>华东仓</td><td>1,850'+cite(i)+'</td></tr></table>';if(id==='multi')html='<p>销售和库存来自不同来源，分别展示，不混合计算。</p>'+html;
+function showChatScenario(id){if(reviewScenarios[id]){playReviewScenario(id);return}state.chatEpoch=(state.chatEpoch||0)+1;state.pendingCredentialQuery=null;state.afterKey=null;if(!id){leaveChatScenario();return}if(!state.demoSnapshot)state.demoSnapshot={chat:state.chat,sources:state.sources,lastQuery:state.lastQuery,question:state.question,selectedHub:state.selectedHub,selectedHubs:[...referenceIds()],busy:state.busy,progress:state.progress};state.demoScenario=id;state.chat=[];state.sources=[];state.question='';state.selectedHub=null;state.selectedHubs=[];state.busy=false;state.progress='';state.querySteps=[];state.panel=null;state.lastQuery={question:'',started:Date.now(),asset:null,actor:current().id};const addSource=(kind)=>{const stock=kind==='stock',summary=kind==='summary',prefix=stock?'inventory.stock.':summary?'summary.daily.':'sales.orders.',ids=allFields.filter(x=>x.startsWith(prefix)),f=fieldMap[ids[0]],i=state.sources.length;state.sources.push({demoOnly:true,demoAllowedIds:ids,ids,origin:summary?'临时候选搜索':'个人数据源',asset:summary?null:stock?'库存查询助手':'销售经营分析',project:f.db.project,path:f.db.name+'.'+f.tb.name,fields:ids.map(x=>fieldMap[x].name).join('、'),metric:stock?'可用库存，按商品与仓库查看':summary?'区域日销售汇总，以该来源口径为准':'实收销售额，按区域汇总',period:stock?'当前中台可用库存':'2026-09-01 至 2026-09-30',time:nowText(),derivation:'分别查询，按各自口径展示'});return i};const cite=i=>'<button class="source" data-action="source" data-index="'+i+'">'+(i+1)+'</button>';let question='上个月各区域实收销售额是多少？',html='',indices=[];const salesTable=(i,onlyEast=false)=>'<table><thead><tr><th>区域</th><th>实收销售额（元）</th></tr></thead><tbody>'+(onlyEast?[['华东','962,000']]:[['华北','1,286,000'],['华东','962,000'],['华南','814,000']]).map(row=>'<tr><td>'+row[0]+'</td><td>'+row[1]+cite(i)+'</td></tr>').join('')+'</tbody></table>';
+ if(id==='explicit-scope'){question='@销售经营分析 查询上个月各区域实收销售额、销量和客单价';html='<div class="warn">当前引用仅包含销售相关表，无法提供销量及有效订单数。</div><p>本次不查询引用外资源；可补充其他个人数据源引用，或移除全部引用后重新提问。</p>';}else if(id==='aligned'){question='上个月各区域的实收销售额、销量和客单价是多少？';state.lastQuery.question=question;state.chat.push({role:'user',text:question});combinedMetricAnswer(true);render();return;}else if(id==='schema-unused'){const i=addSource('sales');indices=[i];question='查看上个月各区域销售额';html='<p>本次所需字段可用，查询结果如下。</p>'+salesTable(i);}else if(id==='schema-fallback'){const i=addSource('summary');indices=[i];question='原销售字段不可用，尝试其他有权来源';html='<p>原字段结构已变化，无法用于本次查询。本次找到本人有权的区域汇总来源，以下按该来源口径展示，不认定与原口径完全等价。</p>'+salesTable(i);}else if(id==='schema-no-match'){question='查询已调整表中的渠道分析';html='<p>本次所需表结构已变化，无法继续使用；在本人有权资源中未找到可支持本问题的替代来源，请补充范围或稍后重试。</p>';}else if(['sales','followup','search','alternate','deps-ready','deps-subscribe','deps-apply','deps-pending','deps-blocked','sql-repair'].includes(id)){const i=addSource(['search','alternate'].includes(id)?'summary':'sales');indices=[i];html='<p>以下为按当前来源口径得到的区域销售结果。</p>'+salesTable(i,id==='followup');if(id==='followup'){state.chat.push({role:'user',text:'查看上个月各区域实收销售额'},{role:'assistant',html:'已返回三个区域的销售结果。'});question='只看华东'}if(id==='search')html='<p>未匹配个人数据源，已按本人权限找到相关来源。</p>'+html;if(id==='alternate'){question='尝试使用我有权的其他来源';html='<p>本次改用区域日销售汇总，口径以该来源为准，不视为与原数据源完全等价。</p>'+html}const depText={ 'deps-ready':'关联技能和知识库均可使用。','deps-subscribe':'部分关联能力尚未订阅；本次仅使用当前有权内容，不装载无权依赖。','deps-apply':'部分关联能力需要申请；当前仅使用已获授权的内容。','deps-pending':'关联能力申请正在处理中，本次不会使用未获授权内容。','deps-blocked':'部分关联能力当前无使用权限且不可申请；必要口径缺失时需补充确认。','sql-repair':'查询最初未通过校验，修正本次语句后执行成功；未修改源表或扩大权限。'};if(depText[id])html='<p>'+depText[id]+'</p>'+html;
+ }else if(['stock','multi'].includes(id)){question=id==='multi'?'上个月销售和当前库存分别如何？':'查询各仓库当前可用库存';if(id==='multi'){indices.push(addSource('sales'));html='<h3>上月区域实收销售额</h3>'+salesTable(indices[0])}const i=addSource('stock');indices.push(i);html+='<h3>当前可用库存</h3><table><tr><th>商品</th><th>仓库</th><th>可用库存</th></tr><tr><td>SKU-1001</td><td>华北仓</td><td>2,400'+cite(i)+'</td></tr><tr><td>SKU-1002</td><td>华东仓</td><td>1,850'+cite(i)+'</td></tr></table>';if(id==='multi')html='<p>销售和库存来自不同来源，分别展示，不混合计算。</p>'+html;
  }else if(['partial','no-access'].includes(id)){question=id==='partial'?'查看销售和客户渠道信息':'查询上个月销售额';state.lastQuery.missingIds=id==='partial'?['sales.customers.channel']:['sales.orders.amount','sales.orders.region','sales.orders.order_date'];html='<p>'+(id==='partial'?'当前仅有部分所需数据权限，无法提供完整结果。可以考虑使用本人有权的其他来源。':'当前没有可用于本问题的数据权限，未执行查询。')+'</p>'+permissionLinks();
  }else if(['ak-missing','ak-invalid'].includes(id)){question='查询上个月销售额';html='<p class="credential-notice">'+(id==='ak-missing'?'请先在能力商店维护并校验本人 Dataphin AccessKey，再重新提问。':'本人 Dataphin AccessKey 当前已失效，请更新并校验后重新提问。')+'</p>';
  }else {const messages={clarify:['查看净销售额','当前信息不能确定“净销售额”的定义，请补充计算口径、统计时间和必要条件。'],schema:['分析客户渠道构成','本次所需字段结构已变化，无法继续使用。可以尝试本人有权的其他来源；未找到足够依据时将说明无法回答。'], 'sql-failed':['查询上个月销售额','查询修正后仍未通过校验，已结束本次查询；未修改数据库或取消订阅。'],empty:['查询指定条件下的销售额','当前筛选条件下未查询到记录，请核对时间和条件。无记录不等于指标为0。'],timeout:['查询全年销售明细','查询服务超时，本次未返回完整结果。请缩小范围或稍后重试。'],'source-outside':['使用其他类型数据库查询','该数据源类型不在本期支持范围，不进行查询。可使用MySQL、StarRocks、Hive、MaxCompute、PostgreSQL、MongoDB、Oracle或Greenplum。']};[question,html]=messages[id]||['查看数据','请选择场景'];html='<p>'+html+'</p>'}
@@ -629,6 +630,7 @@ document.addEventListener('compositionstart',ev=>{ev.target.dataset.composing='t
 document.addEventListener('compositionend',ev=>{delete ev.target.dataset.composing;ev.target.dispatchEvent(new Event('input',{bubbles:true}))});
 document.addEventListener('input',ev=>{
 if(ev.isComposing||ev.target.dataset.composing==='true')return;
+if(ev.target.id==='reviewSqlDraft'&&state.sqlReview){state.sqlReview.draft=ev.target.value;return}
 if(ev.target.dataset.referenceFilter){
  const {id,value,selectionStart}=ev.target;
  (state.atFilters||={})[id]=value;
@@ -837,7 +839,11 @@ case 'approveApplication':{const x=state.applications.find(x=>x.id===id);if(!x||
 case 'rejectApplication':{const x=state.applications.find(x=>x.id===id);x.status='已拒绝';render();toast('已拒绝该申请。');break}
 case 'at':resetReferenceCascade();openModal('at');break;
 case 'sourceSelectRow':{const checkbox=b.closest('.treeitem').querySelector('[data-pick-db]');if(checkbox&&!checkbox.disabled)checkbox.click();state.node=id;renderModal();break;}
-case 'atExisting':state.atSection=id;state.atCascadeOpen=true;renderModal();break;
+case 'atExisting':if(id==='upload'){
+ const picker=document.createElement('input');picker.type='file';
+ picker.addEventListener('change',()=>{if(picker.files[0]){state.pendingLocalAttachment=picker.files[0].name;closeModal();render();$('#question')?.focus()}},{once:true});
+ picker.click();break
+ }if(id==='file'){openModal('reviewFile',{selected:false,tab:'资源管理'});break}state.atSection=id;state.atCascadeOpen=true;renderModal();break;
 case 'atOpenSources':state.atSection='sources';state.atCascadeOpen=true;renderModal();break;
 case 'atRoot':state.atCascadeOpen=false;state.atSection='sources';state.atAsset=null;state.atResource=null;renderModal();break;
 case 'atDirectResource':state.atMode='ak';state.atAsset=null;state.atResource=id;state.atPage=1;state.atSearch='';renderModal();break;
@@ -855,11 +861,22 @@ case 'demoUncached':
  state.question='@inventory_dw.stock_detail 查询当前库存';
  render();await sendQuery();break;
 case 'suggest':state.question=b.dataset.text;render();$('#question')?.focus();break;
-case 'send':{if(state.demoScenario){const q=state.question;leaveChatScenario();state.question=q}await sendQuery();break;}
+case 'editDemoSql':if(state.sqlReview){state.sqlReview.editing=true;state.sqlReview.draft=state.sqlReview.sql;state.sqlReview.error='';render();$('#reviewSqlDraft')?.focus()}break;
+case 'cancelDemoSqlEdit':if(state.sqlReview){state.sqlReview.editing=false;state.sqlReview.error='';render()}break;
+case 'saveDemoSql':saveDemoSql();break;
+case 'confirmDemoSql':if(state.sqlReview&&!state.sqlReview.editing)state.sqlReview.resolve(state.sqlReview.sql);break;
+case 'cancelDemoSql':state.sqlReview?.resolve(false);break;
+case 'reconnectDemoQuery':state.queryConnection?.();break;
+case 'addAnalysisReference':addAnalysisReference(id);break;
+case 'removeLocalAttachment':state.pendingLocalAttachment='';render();break;
+case 'reviewFileTab':state.modal.tab=b.dataset.tab;renderModal();break;
+case 'reviewFileToggle':state.modal.selected=!state.modal.selected;renderModal();break;
+case 'removeAnalysisReference':state.analysisRefs=(state.analysisRefs||[]).filter(x=>x!==id);render();break;
+case 'send':{if(state.demoScenario){state.demoScenario='';state.demoSnapshot=null}await sendQuery();break;}
 case 'retryQuestion':state.question=b.dataset.text;render();break;
 case 'continueQuery':await continueQuery();break;
 case 'adjustQuestion':state.question=state.lastQuery?.question||'';render();$('#question')?.focus();break;
-case 'newChat':if(state.busy)return;state.chatEpoch=(state.chatEpoch||0)+1;state.pendingCredentialQuery=null;state.afterKey=null;if(state.demoScenario)leaveChatScenario();state.chat=[];state.sources=[];state.querySteps=[];state.selectedHub=null;state.selectedHubs=[];state.referenceSelections=[];state.question='';render();break;
+case 'newChat':if(state.busy)return;state.analysisRefs=[];state.chatEpoch=(state.chatEpoch||0)+1;state.pendingCredentialQuery=null;state.afterKey=null;if(state.demoScenario)leaveChatScenario();state.chat=[];state.sources=[];state.querySteps=[];state.selectedHub=null;state.selectedHubs=[];state.referenceSelections=[];state.question='';render();break;
 case 'source':state.sourceTableIndex=null;state.sourceIndex=Number(b.dataset.index);state.sourceTab='元数据';state.panel='source';renderPanel();break;
 case 'selectNotice':{state.messageSelected=Number(b.dataset.index);const m=state.messages.filter(x=>x.owner===current().id)[state.messageSelected];if(m)m.read=true;render();break}
 case 'message':{const m=state.messages.find(x=>x.id===id);if(!m)break;m.read=true;const x=assets.find(x=>x.id===m.asset);if(!x){toast('该资产已删除，无法继续维护。');break}if(state.identity==='consumer'){toast('请由资产所有人在配置中心处理该资产异常。');break}state.detailId=x.id;state.issueFocus=m;state.detailTab='资源信息';state.route='assetDetail';render();toast(x.status==='已上线'?'查看异常后，请先申请下线；审核通过后才能修改资源配置。':'已打开资产详情，可按当前状态处理。');break}
@@ -876,25 +893,25 @@ case 'resetDemo':location.reload();break;
 
 
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-async function stage(text){
+async function stage(text,result=''){
  const list=state.querySteps||=[];const prev=list.at(-1);if(prev&&typeof prev==='object'&&prev.status==='running')prev.status='success';
- list.push({label:text,status:'running',result:''});state.progress=text;render();await sleep(420);
+ list.push({label:text,status:'running',result});state.progress=text;render();await sleep(420);
 }
 
 const feedbackIcons={"up": "<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M395.2 90.88c23.168-73.92 63.36-105.536 142.72-82.56l1.984 0.64c23.232 7.04 49.92 20.672 75.008 43.456 39.36 35.84 62.848 85.76 62.848 148.288 0 55.872-3.2 90.432-12.736 129.6l-0.32 1.088h205.248c125.44 0 175.36 84.608 143.808 225.344l-2.688 11.52-6.4 21.12-24.128 78.464-11.264 35.84-10.752 33.536-19.904 60.416-13.632 39.296-8.448 23.488-11.712 30.848-7.104 17.792c-34.56 83.328-105.792 121.6-198.976 110.656l-452.736-33.728-8.64-0.384-17.92-0.384h-51.008l-14.592-0.256-11.712-0.512-9.728-0.896-4.352-0.64-8.32-1.664-13.44-3.52C36.864 957.12 0.64 898.304 0.64 814.464V482.816c0-105.856 64.32-166.272 173.76-166.272l88.64-0.064 6.08-4.672c34.688-28.544 63.36-63.68 84.48-103.296l7.168-13.952c7.104-14.72 12.992-30.08 18.56-48l0.832-3.008 14.976-52.672z m103.68 9.472c-2.112-0.512-3.072 0.192-4.096 3.2l-4.544 17.472-12.48 44.992-3.008 9.984c-6.4 21.312-14.464 42.112-24.064 62.144a453.504 453.504 0 0 1-84.928 119.872 389.632 389.632 0 0 1-57.6 49.152l6.4-4.608v488.192l393.792 29.632c49.024 5.76 76.8-7.104 93.824-42.24l3.328-7.232 6.72-16.832 11.136-29.44 8.128-22.592 13.12-37.952 9.408-28.16 20.288-62.848 22.464-71.744 18.048-59.52c22.208-88.96 9.152-110.656-44.8-110.656H615.296a62.72 62.72 0 0 1-59.328-83.2l2.56-7.424 3.84-12.8c12.096-41.792 15.552-69.12 15.552-127.04 0-56.64-31.488-85.312-66.752-96.192l-4.352-1.344-8-2.816z m-284.16 315.904h-40.192c-55.68 0-73.92 17.28-73.92 66.56v331.648c0 44.416 11.584 62.336 39.488 68.992l1.728 0.384 4.48 0.64 5.952 0.512 13.504 0.32h33.408l15.616 0.128v-469.12z\" fill=\"currentColor\"></path></svg>", "down": "<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M395.2 933.12c23.168 73.92 63.36 105.536 142.72 82.56l1.984-0.64c23.232-7.04 49.92-20.672 75.008-43.456 39.36-35.84 62.848-85.76 62.848-148.288 0-55.872-3.2-90.432-12.736-129.6l-0.32-1.088h205.248c125.44 0 175.36-84.608 143.808-225.344l-2.688-11.52-6.4-21.12-24.128-78.464-11.264-35.84-10.752-33.536-19.904-60.416-13.632-39.296-8.448-23.488-11.712-30.848-7.104-17.792c-34.56-83.328-105.792-121.6-198.976-110.656L246.016 38.016 237.376 38.4l-17.92 0.384h-51.008L153.856 39.04 142.08 39.552 132.48 40.448l-4.352 0.64-8.32 1.664-13.44 3.52C36.864 66.88 0.64 125.696 0.64 209.536v331.648c0 105.856 64.32 166.272 173.76 166.272l88.64 0.064 6.08 4.672c34.688 28.544 63.36 63.68 84.48 103.296l7.168 13.952c7.104 14.72 12.992 30.08 18.56 48l0.832 3.008 14.976 52.672z m103.68-9.472c-2.112 0.512-3.072-0.192-4.096-3.2l-4.544-17.472-12.48-44.992-3.008-9.984a429.184 429.184 0 0 0-24.064-62.144 453.504 453.504 0 0 0-84.928-119.872 389.632 389.632 0 0 0-57.6-49.152l6.4 4.608V133.248l393.792-29.632c49.024-5.76 76.8 7.104 93.824 42.24l3.328 7.232 6.72 16.832 11.136 29.44 8.128 22.592 13.12 37.952 9.408 28.16 20.288 62.848 22.464 71.744 18.048 59.52c22.208 88.96 9.152 110.656-44.8 110.656H615.296a62.72 62.72 0 0 0-59.328 83.2l2.56 7.424 3.84 12.8c12.096 41.792 15.552 69.12 15.552 127.04 0 56.64-31.488 85.312-66.752 96.192l-4.352 1.344-8 2.816z m-284.16-315.904h-40.192c-55.68 0-73.92-17.28-73.92-66.56V209.536c0-44.416 11.584-62.336 39.488-68.992l1.728-0.384 4.48-0.64 5.952-0.512 13.504-0.32h33.408l15.616-0.128v469.12z\" fill=\"currentColor\"></path></svg>", "copy": "<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\">\n    <path\n      d=\"M576 272A176 176 0 0 1 752 448v384A176 176 0 0 1 576 1008H192A176 176 0 0 1 16 832V448A176 176 0 0 1 192 272h384z m0 96H192c-44.16 0-80 35.84-80 80v384c0 44.16 35.84 80 80 80h384c44.16 0 80-35.84 80-80V448c0-44.16-35.84-80-80-80z\"\n      ></path>\n    <path\n      d=\"M843.648 16a164.352 164.352 0 0 1 164.352 164.352v407.296a164.352 164.352 0 0 1-164.352 164.352h-112v-96h112c37.76 0 68.352-30.592 68.352-68.352V180.352c0-37.76-30.592-68.352-68.352-68.352H436.352c-37.76 0-68.352 30.592-68.352 68.352V300.16h-96v-119.68A164.352 164.352 0 0 1 436.352 16h407.296z\"\n      ></path>\n  </svg>", "voice": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m11 5-6 4H2v6h3l6 4z\"/><path d=\"M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14\"/></svg>"};
 function feedbackToolbar(index,sourceIndices=[]){const button=(name,label,action,extra='')=>'<button class="feedback-icon" data-action="'+action+'" data-message="'+index+'" '+extra+' title="'+label+'" aria-label="'+label+'">'+feedbackIcons[name]+'</button>';const duration=state.lastQuery?Math.max(1,Math.round((Date.now()-state.lastQuery.started)/1000)):0;return '<div class="answer-feedback native-feedback">'+button('copy','复制','copyAnswer')+button('voice','朗读','speakAnswer')+button('up','点赞','feedback','data-value="up"')+button('down','点踩','feedback','data-value="down"')+'<span class="feedback-safe" title="内容安全"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 4 6v5c0 5 4 8 8 10 4-2 8-5 8-10V6z"/><path d="m8 12 3 3 5-6"/></svg></span>'+(sourceIndices.length?'<span class="feedback-divider"></span>'+btn('数据来源','sourcesForAnswer','data-index="'+sourceIndices.at(-1)+'"','source-entry'):'')+'<span class="feedback-divider"></span><span class="feedback-meta">用时 '+duration+'s</span><span class="feedback-divider"></span><span class="feedback-meta">'+new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'})+'</span></div>'}
 
 function answer(html,meta={}){
- const last=state.sources.length-1,audit=state.audit.at(-1),withSources=last>=0&&audit?.status==='成功',indices=withSources?(state.sources[last].requestSources||[last]):[];
+ const last=state.sources.length-1,audit=state.audit.at(-1),currentAudit=audit?.requestId===state.lastQuery?.started&&audit,withSources=last>=0&&currentAudit?.status==='成功',indices=withSources?(state.sources[last].requestSources||[last]):[],succeeded=withSources||meta.completed===true;
  const tail=state.querySteps?.at(-1);if(tail&&typeof tail==='object'){
-  tail.status=withSources?'success':meta.kind==='credential-error'?'paused':'failed';
-  tail.result=withSources?'执行完成\n来源：'+indices.map(i=>state.sources[i].path).join('、')+'\n返回量：'+(audit.rows||0)+' 行':audit?.status||'本次未执行数据查询';
+  tail.status=succeeded?'success':meta.kind==='credential-error'?'paused':'failed';
+  tail.result=succeeded?(tail.result|| (withSources?'执行完成\n来源：'+indices.map(i=>state.sources[i].path).filter(Boolean).join('、')+'\n返回量：'+(currentAudit.rows||0)+' 行':'所引用材料已整理。')):currentAudit?.status||'本次未执行数据查询';
  }
- state.chat.push({...meta,role:'assistant',html:queryProgressView(state.querySteps,true,withSources?'success':'failed')+html+feedbackToolbar(state.chat.length,indices)});state.busy=false;state.progress='';render();setTimeout(()=>$('#chatMessages')?.lastElementChild?.scrollIntoView({block:'nearest'}),20);
+ state.chat.push({...meta,role:'assistant',html:queryProgressView(state.querySteps,true,succeeded?'success':'failed')+(succeeded&&state.lastQuery?.sqlEdited?'<p class="mini muted">已提交编辑后的 SQL。以下为 Demo 示例结果。</p>':'')+html+feedbackToolbar(state.chat.length,indices)});state.busy=false;state.progress='';render();setTimeout(()=>$('#chatMessages')?.lastElementChild?.scrollIntoView({block:'nearest'}),20);
 }
 
 function logQuery(status,sql='',source=null){
-const q=state.lastQuery||{};state.audit.push({id:'query-'+state.audit.length,requestId:q.started,user:current().id,asset:q.asset?.id||null,path:q.origin||'默认 AK',status,sql,source:source?.path||null,fields:source?.fields||null,time:new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'}),durationMs:Date.now()-(q.started||Date.now()),rows:status==='成功'?3:0});
+const q=state.lastQuery||{};if(status==='成功'&&q.executedSql)sql=q.executedSql;state.audit.push({id:'query-'+state.audit.length,requestId:q.started,user:current().id,asset:q.asset?.id||null,path:q.origin||'默认 AK',status,sql,source:source?.path||null,fields:source?.fields||null,time:new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'}),durationMs:Date.now()-(q.started||Date.now()),rows:status==='成功'?3:0});
 }
 function chooseCandidate(question,allowed,forceAlternate=false){
 const stock=/库存|仓库|商品/.test(question);const prefix=stock?'inventory.stock.':forceAlternate||!allowed.includes('sales.orders.amount')?'summary.daily.':'sales.orders.';
@@ -908,14 +925,14 @@ function chatCredentialCard(message){return '<div class="card chat-credential-ca
 function queryProgressView(entries,finished=false,outcome='success'){
  if(!entries?.length)return '';
  const steps=entries.map((x,i)=>typeof x==='string'?{label:x,status:finished?(i===entries.length-1&&/未产生|失败|无法/.test(x)?'failed':'success'):(i===entries.length-1?'running':'success')}:x);
- const failed=outcome==='failed'||steps.some(x=>x.status==='failed'),title=finished?(failed?'已停止':'思考完成'):'正在思考';
- return '<section class="query-toolchain"><details class="query-toolchain-group" '+(!finished?'open':'')+'><summary>'+title+' <span class="toolchain-chevron">⌄</span></summary><div class="query-toolchain-list">'+steps.map((x,i)=>{const status=x.status||'success',statusText=({running:'执行中',success:'已完成',failed:'失败',paused:'已中断'})[status],output=x.result||('执行步骤：'+x.label+'\n状态：'+statusText);return '<details class="query-tool-step tool-state-'+status+'"><summary><span class="tool-command-icon" aria-hidden="true">›_</span><span>'+esc(status==='running'?x.label:x.label.replaceAll('正在',''))+'</span><span class="tool-step-state">'+statusText+'</span><span class="toolchain-chevron">⌄</span></summary><div class="tool-execution-detail"><div class="tool-detail-head"><span>执行详情</span>'+'</div><pre>'+esc(output)+'</pre><div class="tool-detail-status">'+statusText+'</div></div></details>'}).join('')+'</div></details>'+mark(26)+'</section>';
+ const failed=outcome==='failed'||steps.some(x=>x.status==='failed'),title=finished?(failed?'已停止':'思考完成'):state.sqlReview?'等待确认 SQL':state.queryConnection?'连接中断 · 后台查询中':'正在思考';
+ return '<section class="query-toolchain"><details class="query-toolchain-group" '+(!finished?'open':'')+'><summary>'+title+' <span class="toolchain-chevron">⌄</span></summary><div class="query-toolchain-list">'+steps.map((x,i)=>{const status=x.status||'success',statusText=({running:'执行中',success:'已完成',failed:'失败',paused:'已中断'})[status],output=x.logs?.length?x.logs.join('\n'):status==='running'?(x.pending||x.label):x.result||statusText;return '<details class="query-tool-step tool-state-'+status+'" '+(!finished&&i===steps.length-1?'open':'')+'><summary><span class="tool-command-icon" aria-hidden="true">›_</span><span>'+esc(status==='running'?x.label:x.label.replaceAll('正在',''))+'</span><span class="tool-step-state">'+statusText+'</span><span class="toolchain-chevron">⌄</span></summary><div class="tool-execution-detail"><div class="tool-detail-head"><span>'+(x.logs?'中台查询任务':'执行日志')+'</span>'+'</div><pre>'+esc(output)+'</pre><div class="tool-detail-status">'+statusText+'</div></div></details>'}).join('')+'</div></details>'+mark(26)+'</section>';
 }
 
 function explicitScope(){return !!state.lastQuery?.assets?.length}
 function scopeFailure(message){logQuery('引用范围内无法回答');answer('<div class="warn">'+esc(message)+'</div><p>本次仅查询所引用数据源范围，不搜索范围外资源。可调整问题、补充其他个人数据源引用，或移除全部引用后重新提问。</p>'+permissionLinks());}
 function rememberCredentialQuery(q){
- state.pendingCredentialQuery={token:'resume-'+(++seq),actor:current().id,epoch:state.chatEpoch||0,question:q.question,refs:(q.assets||[]).map(a=>a.id),refScopes:clone(state.referenceSelections||[]),consumed:false};
+ state.pendingCredentialQuery={token:'resume-'+(++seq),actor:current().id,epoch:state.chatEpoch||0,question:q.question,refs:(q.assets||[]).map(a=>a.id),refScopes:clone(q.refScopes||state.referenceSelections||[]),analysisRefs:clone(q.analysisRefs||[]),consumed:false};
 }
 async function resumeCredentialQuery(token){
  const q=state.pendingCredentialQuery;if(!q||q.token!==token||q.consumed||state.busy)return false;
@@ -934,10 +951,12 @@ function stopForCredential(){const error=queryCredentialError();if(!error)return
 
 async function sendQuery(resume=null){
 if(state.busy)return;const question=resume?resume.question:state.question.trim();if(!question){toast('请输入要查询的问题。');return}
-const requestedRefs=resume?resume.refs:referenceIds();const referenced=requestedRefs.map(id=>queryReferenceAsset(id)).filter(Boolean).map(a=>{const picks=(resume?.refScopes||state.referenceSelections||[]).filter(r=>r.asset===a.id);return picks.length?{...a,published:{...a.published,fields:[...new Set(picks.flatMap(r=>r.ids))]}}:a}),selected=referenced[0]||null;if(resume&&referenced.length!==requestedRefs.length){state.querySteps=[];logQuery('原引用已不存在');answer('<p>原引用的数据源已不存在，未继续查询。请重新选择引用。</p>');return}
-if(!resume){state.pendingCredentialQuery=null;state.chat.push({role:'user',text:(state.referenceSelections||[]).map(r=>'@'+referenceDisplay(r).primary+' ').join('')+question})}
+const refScopes=resume?.refScopes||state.referenceSelections||[],analysisRefs=resume?.analysisRefs||state.analysisRefs||[];
+const requestedRefs=resume?resume.refs:referenceIds();const referenced=requestedRefs.map(id=>queryReferenceAsset(id,refScopes)).filter(Boolean).map(a=>{const picks=refScopes.filter(r=>r.asset===a.id);return picks.length?{...a,published:{...a.published,fields:[...new Set(picks.flatMap(r=>r.ids))]}}:a}),selected=referenced[0]||null;if(resume&&referenced.length!==requestedRefs.length){state.querySteps=[];logQuery('原引用已不存在');answer('<p>原引用的数据源已不存在，未继续查询。请重新选择引用。</p>');return}
+if(!resume){state.pendingCredentialQuery=null;state.chat.push({role:'user',text:question,tableRefs:refScopes.map(r=>referenceDisplay(r).primary),analysisRefs:[...analysisRefs],localAttachment:state.pendingLocalAttachment});state.pendingLocalAttachment='';state.referenceSelections=[];syncPersonalReferences();state.analysisRefs=[]}
 const prior=resume?null:state.lastQuery;const understood=/只看|继续|再看|其中|那就/.test(question)&&prior?prior.question+'；'+question:question;
-if(!resume)state.question='';state.busy=true;state.querySteps=[];state.lastQuery={question:understood,asset:null,actor:current().id,started:Date.now(),origin:'默认 AK',permissionConfirmed:false,assets:referenced};
+if(!resume)state.question='';state.busy=true;state.querySteps=[];state.lastQuery={question:understood,asset:null,actor:current().id,started:Date.now(),origin:'默认 AK',permissionConfirmed:false,assets:referenced,refScopes,analysisRefs};
+if(/GMV/i.test(question)&&analysisRefs.includes('file')&&!referenced.length&&!/@\w+\.\w+/.test(question)){await gmvDemo(question,[]);return}
 await stage('正在校验本人 Dataphin 凭据');if(stopForCredential())return;
 const typedTable=question.match(/(?:^|\s)@([\w]+)\.([\w]+)/);
 if(typedTable){
@@ -949,36 +968,30 @@ if(typedTable){
  const denied=state.deniedResourcesByActor?.[current().id]||[];
  if(!entry||denied.includes(db.id)||state.scene.owner==='已被收回'){
   logQuery('指定表无权限');
-  answer('<p>本人 AK 无权查询该表，或该表不存在。</p>'+permissionLinks());
+  answer('<p>未查询到匹配数据。</p>'+permissionLinks());
   return;
  }
  const path=db.name+'.'+entry.table.name;
+ if(/GMV/i.test(question)){await gmvDemo(question,[{published:{fields:entry.ids}}]);return}
+ if(!await confirmDemoSql('SELECT '+entry.ids.map(id=>fieldMap[id].name).join(', ')+' FROM '+path+' LIMIT 10000',entry.ids))return;
  const index=state.sources.length;
- const source={ids:entry.ids,path,requestSources:[index]};
+ const source={ids:entry.ids,path,badge:1,requestSources:[index]};
  state.sources.push(source);
  logQuery('成功','中台只读查询（Demo）',source);
- answer('<p>已使用本人 AK 查到 '+esc(path)+' <button class="source" data-action="source" data-index="'+index+'">'+(index+1)+'</button></p>'+sampleDataTable(source));
+ answer('<p>已使用本人 AK 查到 '+esc(path)+' <button class="source" data-action="source" data-index="'+index+'">1</button></p>'+sampleDataTable(source));
  return;
 }
+if(/GMV/i.test(question)){await gmvDemo(question,referenced);return}
 if(/天气|写诗|你好|笑话/.test(question)){logQuery('非问数');answer('当前入口用于数据查询与分析。你可以描述要查询的指标、统计时间和维度，例如“查看上个月各区域实收销售额”。');return}
 if(!/库存|仓库|商品/.test(state.lastQuery.question)&&!/上个月|上月|本月|这个月|今天|今日|当前|2026-09/.test(state.lastQuery.question)){logQuery('需要统计时间');answer('<div class="warn">请补充统计时间范围，避免使用未确认的时间口径。</div>'+btn('统计上个月','retryQuestion','data-text="'+esc(question+'，统计上个月')+'"')+btn('补充问题','adjustQuestion'));return}
 if(/利润|净收入|净销售/.test(question)){logQuery('需要澄清');answer('<div class="warn">当前已知信息不足以确定该指标口径。请补充计算定义、统计时间或指定有依据的口径资料后继续。</div>'+btn('补充问题','adjustQuestion')+mark(14));return}
 if(referenced.some(a=>!usable(a))){logQuery('能力不可用');answer('<div class="warn">该个人数据源已删除、归属或入口已变化，不能继续调用。</div><p>你也可以不引用该资产，按本人有权数据重新提问。</p>'+btn('重新选择数据源','at')+btn('调整问题','adjustQuestion'));return}
-if(!referenced.length)await stage('正在调用原生数据平台资源查询工具，检索本人有权来源');
-const asset=selected||assets.find(a=>usable(a)&&(/库存|仓库|商品/.test(state.lastQuery.question)?a.id==='stock-hub':a.published.fields.some(f=>f.startsWith('sales.'))));
+if(!referenced.length)await stage('正在通过 MCP 筛选本人有权的库、表和字段');
+const asset=selected||null;
 state.lastQuery.asset=asset||null;state.lastQuery.origin=asset?'个人数据源':'临时候选搜索';
 if(asset)await stage('已匹配 '+asset.published.name+'，正在检查相关资源');
 else if(referenced.length)await stage('正在检索引用范围内的有权资源');
 const rights=allowedFields();
-if(asset){
- const required=(/渠道/.test(understood)?['sales.customers.channel','sales.customers.customer_id']:null)||chooseCandidate(understood,[...new Set((referenced.length?referenced:[asset]).flatMap(a=>a.published.fields))])||asset.published.fields;if(referenced.length&&required.some(id=>!referenced.some(a=>a.published.fields.includes(id)))){scopeFailure('本次问题所需数据超出已引用的库表范围，请调整引用或问题。');return}if(explicitScope()&&required.some(id=>state.currentUnavailable.includes(id))){scopeFailure('本次所需字段或表当前不可用。');return}if(required.some(id=>state.currentUnavailable.includes(id))){logQuery('相关结构无法匹配');answer('<div class="warn">本次问题所需的字段或表当前无法匹配，未使用受影响资源生成结果。</div><p>可尝试本人有权的其他来源；只有满足指标定义与统计范围时才继续，否则说明无法回答。</p>'+btn('尝试本人有权来源','continueQuery','','primary')+btn('调整问题','adjustQuestion'));return}if(explicitScope()&&required.some(id=>!rights.includes(id))){state.lastQuery.missingIds=required.filter(id=>!rights.includes(id));scopeFailure('当前缺少所引用范围内的部分所需数据权限。');return}const granted=required.filter(x=>rights.includes(x));state.lastQuery.missingIds=required.filter(x=>!rights.includes(x));
- if(granted.length<required.length){
-  state.lastQuery.permissionDiff=true;
-  const full=granted.length===0;
-  logQuery('权限差异，等待用户选择');
-  answer('<div class="warn">'+(full?'当前账号对该数据源所选资源无可用数据权限。':'当前账号仅能访问该数据源的部分资源。')+' 订阅不会扩展底层数据权限。</div><p>无显性引用时可尝试从本人有权相关来源继续分析；替代口径须单独核对。</p><div class="row wrap">'+btn('尝试本人有权来源','continueQuery','','primary')+btn('调整问题','adjustQuestion')+'</div>'+permissionLinks()+''+mark(18));return;
- }
-}
 await executeQuery(false);
 }
 async function continueQuery(){
@@ -988,13 +1001,13 @@ if(stopForCredential())return;if(explicitScope()){scopeFailure('所引用范围�
 async function executeQuery(forceSearch){
 if(stopForCredential())return;
 const q=state.lastQuery,rights=allowedFields();if(forceSearch&&explicitScope()){scopeFailure('当前仍有显性引用，不能搜索引用外来源。');return}if(/销量|客单价/.test(q.question)&&/销售额|实收/.test(q.question))return combinedMetricAnswer(false);let ids;if((!q.asset||forceSearch)&&/销售/.test(q.question)&&/库存/.test(q.question)&&rights.length)return multiSourceAnswer(q,rights);
-if(!rights.length){logQuery('无数据权限');answer('<div class="warn">当前账号没有可用于本次问题的数据权限，未执行查询。</div>'+permissionLinks()+''+btn('调整问题','adjustQuestion')+mark(18));return}
+if(!rights.length){noMatch();return}
 if(forceSearch||!q.asset){
  if(state.scene.search==='服务超时'){logQuery('候选搜索超时');answer('<div class="error">查找相关数据源暂时超时，本次未执行查询。已保留问题，可稍后重试。</div>'+btn('重新填写问题','retryQuestion','data-text="'+esc(q.question)+'"'));return}
- if(state.scene.search==='无相关候选'){logQuery('未找到候选');answer('<div class="warn">在本人有权资源中未找到足以回答当前问题的相关来源。</div><p>请补充指标、时间或数据范围。没有查询结果不等于业务数据为零。</p>'+btn('调整问题','adjustQuestion')+mark(13));return}
+ if(state.scene.search==='无相关候选'){logQuery('未找到候选');answer('<div class="warn">未查询到匹配数据。</div><p>请补充指标、时间或数据范围。没有查询结果不等于业务数据为零。</p>'+btn('调整问题','adjustQuestion')+mark(13));return}
  await stage('正在按问题筛选候选库表与必要字段');ids=chooseCandidate(q.question,rights,forceSearch&&!/库存|仓库/.test(q.question)&&rights.some(x=>x.startsWith('summary.')));
 }else ids=chooseCandidate(q.question,[...new Set((q.assets?.length?q.assets:[q.asset]).flatMap(a=>a.published.fields))].filter(x=>rights.includes(x)));
-if(!ids&&explicitScope()){scopeFailure('所引用范围缺少本问题所需的字段或指标。');return}if(!ids){logQuery('缺少必要字段');answer('<div class="warn">当前可用范围缺少本问题需要的字段或口径，暂时不能给出完整结论。</div>'+btn('尝试本人其他有权来源','continueQuery','','primary')+btn('调整问题','adjustQuestion')+mark(13));return}
+if(!ids){noMatch();return}
 if(q.permissionConfirmed&&q.asset){q.origin='临时候选搜索'}
 const affected=ids.includes('sales.orders.amount');
 if(affected&&state.scene.schema!=='正常'){
@@ -1009,21 +1022,22 @@ if(q.asset&&!forceSearch&&[['skills','技能'],['knowledge','知识库']].some((
 await stage('已选定查询对象：'+[...new Set(ids.map(id=>{const f=fieldMap[id];return f.db.name+'.'+f.tb.name}))].join('、'));
 await stage('正在生成查询并检查语句');
 if(state.scene.sql!=='正常'){await stage('正在根据校验错误调整查询语句');if(state.scene.sql==='修复失败'){logQuery('SQL 修复失败');answer('<div class="error">查询语句未能通过校验，修复后仍无法执行，本次查询已结束。</div><p>未修改数据库、未取消订阅。可以调整问题或联系维护者核查资源口径。</p>'+btn('调整问题','adjustQuestion')+mark(16));return}}
-await stage('正在校验本人当前权限并执行只读查询：'+[...new Set(ids.map(id=>fieldMap[id].db.name+'.'+fieldMap[id].tb.name))].join('、'));
-if(stopForCredential())return;if(!ids.every(id=>allowedFields().includes(id))){logQuery('执行前权限变化');answer('<p>当前数据权限已变化，未继续执行。请核实授权后重试。</p>'+permissionLinks());return}
+await stage('正在核对本次查询字段：'+[...new Set(ids.map(id=>fieldMap[id].db.name+'.'+fieldMap[id].tb.name))].join('、'));
+if(stopForCredential())return;if(!ids.every(id=>allowedFields().includes(id))){logQuery('执行前权限变化');answer('<p>未查询到匹配数据。</p>'+permissionLinks());return}
 if(ids.some(id=>!supportedResource(fieldMap[id].db))){logQuery('数据源类型不支持');answer('<p>当前数据源类型不在本期支持范围，请使用MySQL、StarRocks、Hive、MaxCompute、PostgreSQL、MongoDB、Oracle或Greenplum。</p>');return}const f=fieldMap[ids[0]],stock=f.db.id==='inventory',alternate=f.db.id==='summary';
 const path=f.db.name+'.'+f.tb.name;
 const thisMonth=/本月|这个月/.test(q.question),today=/今天|今日|当前/.test(q.question);const begin=today?'2026-10-28':thisMonth?'2026-10-01':'2026-09-01',end=today||thisMonth?'2026-10-29':'2026-10-01';
 const sql=stock?'SELECT sku, warehouse, quantity FROM '+path+' LIMIT ...':'SELECT region, SUM('+(alternate?'sales_total':'amount')+') AS sales_amount FROM '+path+' WHERE '+(alternate?'day':'order_date')+" >= '"+begin+"' AND "+(alternate?'day':'order_date')+" < '"+end+"' GROUP BY region";
 const adoptedMeaning=q.asset&&!forceSearch?enhancementText(q.asset.published.enh[ids.find(id=>/amount|sales_total/.test(id))]):null;
+if(!await confirmDemoSql(sql.replace('LIMIT ...','LIMIT 10000'),ids))return;
 const source={ids:clone(ids),dbId:f.db.id,tableId:f.tb.id,origin:forceSearch||!q.asset?'临时候选搜索':'个人数据源',asset:q.asset&&!forceSearch?q.asset.published.name:null,project:f.db.project,path,fields:ids.map(id=>fieldMap[id].name).join('、'),metric:adoptedMeaning||(stock?'可用库存，按仓库及商品展示':alternate?'区域日销售汇总口径，以当前来源说明为准':'订单实收金额，单位元；不含取消订单'),period:stock?'本次查询时中台可用库存':begin+' 至 '+(today||thisMonth?'2026-10-28':'2026-09-30'),time:new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'})};
-state.sources.push(source);const i=state.sources.length-1;
+source.badge=1;state.sources.push(source);const i=state.sources.length-1;
 await stage('正在整理结果并关联实际数据来源');
-const cite=()=>'<button class="source" data-action="source" data-index="'+i+'" aria-label="查看数据来源 '+(i+1)+'">'+(i+1)+'</button>';
+const cite=()=>'<button class="source" data-action="source" data-index="'+i+'" aria-label="查看数据来源 1">1</button>';
 let rows=stock?[['SKU-1001','华北仓','2,400'],['SKU-1002','华东仓','1,850'],['SKU-1003','华南仓','3,120']]:[['华北','1,286,000'],['华东','962,000'],['华南','814,000']];
 const region=['华北','华东','华南'].find(r=>q.question.includes(r));if(region)rows=rows.filter(row=>row.some(v=>v.includes(region)));
 source.resultRows=clone(rows);source.resultColumns=stock?['商品','仓库','可用库存']:['区域',alternate?'销售额（汇总来源，元）':'实收销售额（元）'];source.derivation='查询结果直接展示，未进行跨来源推导';source.inputSources=[source.path];logQuery('成功',sql,source);state.audit[state.audit.length-1].rows=rows.length;
-answer(depNotice+(alternate?'<div class="warn">本次改用本人有权的区域日销售汇总来源，以下按该来源口径展示，不认定其与原数据源指标完全等价。</div>':'')+'<p>'+(stock?'当前各仓库可用库存如下。':(rows.length>1?'按本次来源口径，'+rows.reduce((best,row)=>Number(row[1].replaceAll(',',''))>Number(best[1].replaceAll(',',''))?row:best,rows[0])[0]+'区域销售额最高；各区域查询结果如下。':'当前筛选区域查询结果如下。'))+cite()+'</p><table><thead><tr>'+(stock?'<th>商品</th><th>仓库</th><th>可用库存</th>':'<th>区域</th><th>'+(alternate?'销售额（汇总来源，元）':'实收销售额（元）')+'</th>')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map((v,j)=>'<td>'+esc(v)+(j===row.length-1?cite():'')+'</td>').join('')+'</tr>').join('')+'</tbody></table><div class="row wrap"><span class="tag blue">'+source.origin+'</span><small>统计范围：'+source.period+'</small>'+mark(17)+'</div><p class="mini muted">数值与结论旁的蓝色编号关联实际查询来源，同一来源共用编号。你可以继续补充区域、时间等条件。</p>'+mark(16));
+answer(depNotice+(alternate?'<div class="warn">本次改用本人有权的区域日销售汇总来源，以下按该来源口径展示，不认定其与原数据源指标完全等价。</div>':'')+'<p>'+(stock?'当前各仓库可用库存如下。':(rows.length>1?'按本次来源口径，'+rows.reduce((best,row)=>Number(row[1].replaceAll(',',''))>Number(best[1].replaceAll(',',''))?row:best,rows[0])[0]+'区域销售额最高；各区域查询结果如下。':'当前筛选区域查询结果如下。'))+'</p><table><thead><tr>'+(stock?'<th>商品</th><th>仓库</th><th>可用库存</th>':'<th>区域</th><th>'+(alternate?'销售额（汇总来源，元）':'实收销售额（元）')+'</th>')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map((v,j)=>'<td>'+esc(v)+(j===row.length-1?cite():'')+'</td>').join('')+'</tr>').join('')+'</tbody></table><div class="row wrap"><span class="tag blue">'+source.origin+'</span><small>统计范围：'+source.period+'</small>'+mark(17)+'</div><p class="mini muted">数值旁的蓝色编号关联实际查询来源，同一来源共用编号。你可以继续补充区域、时间等条件。</p>'+mark(16));
 }
 function initializeDatasetFixtures(){
  const extras=[{name:'渠道分析方法',channels:['yilibuddy']},{name:'预算分析方法',channels:['yilibuddy']},{name:'活动复盘方法',channels:['yilibuddy']},{name:'触点分析方法',channels:['yilibuddy']}];skills.push(...extras);knowledges.push({name:'渠道经营口径',channels:['yilibuddy']},{name:'预算口径说明',channels:['yilibuddy']},{name:'活动指标定义',channels:['yilibuddy']},{name:'触点指标说明',channels:['yilibuddy']});
@@ -1089,7 +1103,8 @@ function savePersonalSource(){
  const locked=configuredDbs();
  const choices=selectableDbs().filter(db=>e.picked.includes(db.id)&&!locked.has(db.id));
  if(!choices.length)return personalSaveError('请选择至少一个尚未配置且有权访问的库。');
- if(choices.length!==e.picked.length)return personalSaveError('部分资源的权限已变化，请更新资源后重新选择。');
+ if(choices.length!==e.picked.length||choices.some(db=>!referenceTableEntries(db).length))return personalSaveError('部分资源的权限已变化，请更新资源后重新选择。');
+ for(const db of choices)updateCatalogue(db);
  for(const db of choices)assets.push(databaseAsset(db));
  state.editor=null;closeModal();state.route='shop';state.marketMine=true;state.myAbilityType='数据源';render();
  toast('已添加 '+choices.length+' 个数据源。');
@@ -1103,7 +1118,7 @@ function configuredDbs(){return new Set(assets.filter(a=>a.owner===current().id)
 function selectableDbs(){
  const denied=state.deniedResourcesByActor?.[current().id]||[];
  if(state.scene.owner==='已被收回')return [];
- return resources.filter(db=>personalGroupResources(db)[0]===db&&!denied.includes(db.id)&&referenceTableEntries(db).length);
+ return resources.filter(db=>personalGroupResources(db)[0]===db&&!denied.includes(db.id)&&cachedTableEntries(db).length);
 }
 function databaseAsset(db,owner=current().id,department=current().department){
  const fields=referenceTableEntries(db).flatMap(table=>table.ids);
@@ -1117,6 +1132,10 @@ document.addEventListener('pointerover',event=>{
  const row=event.target.closest('.reference-cascade .cascade-row[data-action]');
  if(!row||row.contains(event.relatedTarget))return;
  const action=row.dataset.action;
+ if(action==='atExisting'&&['upload','file'].includes(row.dataset.id)){
+  if(state.atCascadeOpen){state.atCascadeOpen=false;state.atSection=null;renderModal()}
+  return;
+ }
  if(!['atOpenSources','atPersonalAsset','atPersonalResource','atDirectResource','atExisting'].includes(action))return;
  if(row.classList.contains('active'))return;
  const selectors=['.cascade-root','.cascade-groups','.cascade-detail'];
@@ -1127,15 +1146,30 @@ document.addEventListener('pointerover',event=>{
   if(pane&&(index<2||action==='atPersonalResource'))pane.scrollTop=offsets[index];
  });
 });
+function referenceMenuIcon(name){
+ const paths={
+  upload:'M9 13H4V2h6l3 3v3m-3-6v3h3m-3 6 2-2 2 2m-2-2v5',
+  file:'M10 2H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5L10 2zm0 0v3h3M5 8h5m-5 2h5',
+  message:'M3 3h9v7H7l-3 2v-2H3zm3 10h6l2 1V6',
+  task:'M3 3h10v9H7l-3 2v-2H3zM5 6h6M5 9h4',
+  knowledge:'M8 4C6 3 4 3 2 4v8c2-1 4-1 6 0 2-1 4-1 6 0V4c-2-1-4-1-6 0zm0 0v8',
+  skill:'m8 2 6 3v6l-6 3-6-3V5zm-6 3 6 3 6-3M8 8v6',
+  tool:'M10 3a4 4 0 0 0-5 5l-3 3a2 2 0 0 0 3 3l3-3a4 4 0 0 0 5-5L10 8 8 6z',
+  agent:'M3 5h10v7H3zM8 5V2M5 8h.1M11 8h.1M6 12v2m4-2v2',
+  sources:'M2 3h12v10H2zm4 0v10m4-10v10'
+ };
+ return '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="'+paths[name]+'"/></svg>';
+}
 function personalReferencePopover(){
  const error=validatePersonalCredential(), a=assets.find(x=>x.id===state.atAsset), db=resources.find(x=>x.id===state.atResource), direct=state.atMode==='ak';
  const available=a?personalResources(a.published):[];
  const key=a?.id||'__ak__';
  const title=db?resourceEnglishName(db):a?.published.name;
 
- const existing = [['引用任务','▤','task'],['引用消息','▣','message']];
+ const content=[['上传文件或图片','upload'],['从资源或聊天选择文件','file'],['引用聊天消息','message'],['引用任务对话','task'],['引用知识库','knowledge']];
+ const capabilities=[['技能','skill'],['工具','tool'],['智能体','agent']];
  if(state.atInlineSearch?.trim())return flatSourceReferences(error);
- const root=(label,icon,id)=>btn('<span>'+icon+'　'+label+'</span><span>›</span>','atExisting','data-id="'+id+'"','cascade-row '+(state.atCascadeOpen&&state.atSection===id?'active':''));
+ const root=(label,id)=>btn('<span class="cascade-root-label">'+referenceMenuIcon(id)+label+'</span>'+(['file','upload'].includes(id)?'':'<span aria-hidden="true">›</span>'),'atExisting','data-id="'+id+'"','cascade-row '+(state.atCascadeOpen&&state.atSection===id?'active':''));
  const names=(en,cn)=>'<span class="cascade-name"><b>'+esc(en)+'</b>'+(cn&&cn!==en?'<small>'+esc(cn)+'</small>':'')+'</span>';
  const rows=(list,isAk)=>list.filter((r,i,all)=>sourceKind(r)!=='数据中台项目'||all.findIndex(x=>x.project===r.project&&sourceKind(x)==='数据中台项目')===i).map(r=>'<div class="cascade-resource">'+btn(names(resourceEnglishName(r),sourceName(r))+'<span>›</span>',isAk?'atDirectResource':'atPersonalResource','data-id="'+r.id+'"','cascade-row '+(db?.id===r.id?'active':''))+(!isAk&&referenceTableEntries(r).length?btn('引用','atPickResource','data-asset="'+key+'" data-id="'+r.id+'"','link cascade-pick'):'')+'</div>').join('');
  const mine=(state.atEmptyDemo?[]:assets.filter(usable)).map(x=>btn('<span>'+esc(x.published.name)+'</span><span>›</span>','atPersonalAsset','data-id="'+x.id+'"','cascade-row '+(a?.id===x.id?'active':''))).join('');
@@ -1149,7 +1183,7 @@ function personalReferencePopover(){
   }else detail+=rows(available,false)||'<div class="reference-empty">暂无可引用资源</div>';
   detail+='</section>';
  }
- return '<div class="reference-dismiss" data-action="closeModal"></div><div class="personal-reference reference-cascade '+(!state.atCascadeOpen?'cascade-root-only':detail?'cascade-level-detail':'cascade-level-groups')+'" role="dialog" aria-label="选择内容与能力"><section class="cascade-pane cascade-root">' +existing.map(args=>root(...args)).join('')+btn('<span>▥　引用数据源</span><span>›</span>','atOpenSources','','cascade-row '+(state.atCascadeOpen&&state.atSection==='sources'?'active':''))+'</section>'+(state.atCascadeOpen?(state.atSection==='sources'?groups+detail:'<section class="cascade-pane cascade-groups"><div class="cascade-mobile-back">'+btn('‹ 返回','atRoot','','link')+'</div><div class="reference-empty">'+(state.atSection==='task'?'暂无可引用任务':'暂无可引用消息')+'</div></section>'):'')+'</div>';
+ return '<div class="reference-dismiss" data-action="closeModal"></div><div class="personal-reference reference-cascade '+(!state.atCascadeOpen?'cascade-root-only':detail?'cascade-level-detail':'cascade-level-groups')+'" role="dialog" aria-label="选择内容与能力"><section class="cascade-pane cascade-root">' +'<div class="cascade-heading">添加内容</div>'+content.map(args=>root(...args)).join('')+'<div class="cascade-heading cascade-divider">选择能力</div>'+capabilities.map(args=>root(...args)).join('')+btn('<span class="cascade-root-label">'+referenceMenuIcon('sources')+'引用数据源</span><span aria-hidden="true">›</span>','atOpenSources','','cascade-row '+(state.atCascadeOpen&&state.atSection==='sources'?'active':''))+'</section>'+(state.atCascadeOpen?(state.atSection==='sources'?groups+detail:'<section class="cascade-pane cascade-groups"><div class="cascade-mobile-back">'+btn('‹ 返回','atRoot','','link')+'</div>'+analysisReferenceRows(state.atSection)+'</section>'):'')+'</div>';
 }
 
 function flatSourceReferences(error){
@@ -1165,7 +1199,7 @@ function flatSourceReferences(error){
   const haystack=[name,resource,label,db.id].filter(Boolean).join(' ');
   const matchParent=includes(haystack,parts[0]);
   if(parts.length===1&&matchParent)results.push(btn('<span class="cascade-name"><b>'+esc(parent)+'</b><small>引用整个项目或数据源</small></span><span>＋</span>','atPickResource','data-asset="'+asset+'" data-id="'+db.id+'"','cascade-row'));
-  for(const entry of referenceTableEntries(db)){
+  for(const entry of cachedTableEntries(db)){
    if(asset==='__ak__'&&entry.db.id==='inventory'&&entry.table.id==='stock')continue;
    const {table}=entry;
    if(parts.length>1?!(matchParent&&includes(table.name+' '+(table.label||''),parts.slice(1).join('.'))):!includes(haystack+' '+table.name+' '+(table.label||''),query))continue;
@@ -1173,7 +1207,7 @@ function flatSourceReferences(error){
   }
  }
  if(!error){
-  groups.forEach(asset=>personalResources(asset.published).filter(db=>referenceTableEntries(db).length).forEach(db=>collect(db,asset.id,asset.published.name)));
+  groups.forEach(asset=>personalResources(asset.published).filter(db=>cachedTableEntries(db).length).forEach(db=>collect(db,asset.id,asset.published.name)));
   akReferenceResources().forEach(db=>collect(db,'__ak__',''));
  }
  const direct=/^[a-z0-9_]+\.[a-z0-9_]+$/i.test(query);
@@ -1183,11 +1217,11 @@ function flatSourceReferences(error){
 function akReferenceResources(){
  const cached=state.atAkCatalogue;
  if(cached?.actor!==current().id||validatePersonalCredential())return [];
- return resources.filter(r=>cached.ids.includes(r.id)&&referenceTableEntries(r).length);
+ return resources.filter(r=>cached.ids.includes(r.id)&&cachedTableEntries(r).length);
 }
 function referenceCascadeTables(db,asset,direct){
  const query=(state.atSearch||(state.atInlineSearch?.includes('.')?state.atInlineSearch.split('.').at(-1):'')||'').trim().toLowerCase();
- const entries=referenceTableEntries(db).filter(t=>!(direct&&t.db.id==='inventory'&&t.table.id==='stock')).filter(t=>(t.table.name+' '+(t.table.label||'')).toLowerCase().includes(query));
+ const entries=cachedTableEntries(db).filter(t=>(t.table.name+' '+(t.table.label||'')).toLowerCase().includes(query));
  const pages=Math.ceil(entries.length/20),page=direct?Math.min(state.atPage||1,Math.max(1,pages)):1;
  const shown=direct?entries.slice((page-1)*20,page*20):entries;
  const rows=shown.map(t=>btn('<span class="cascade-name"><b>'+esc(t.table.name)+'</b>'+(t.table.label?'<small>'+esc(t.table.label)+'</small>':'')+'</span><span>＋</span>','atPickTable','data-asset="'+asset+'" data-resource="'+t.db.id+'" data-id="'+t.table.id+'"','cascade-row')).join('');
@@ -1209,7 +1243,7 @@ function openReferencePagingDemo(){
 }
 function resetReferenceCascade(){
  state.atInlineSearch='';state.atFilters={};state.atEmptyDemo=!!state.atEmptyOnce;state.atEmptyOnce=false;state.atCascadeOpen=false;state.atAsset=null;state.atResource=null;state.atMode='mine';state.atPage=1;state.atSearch='';
- state.atAkCatalogue={actor:current().id,ids:state.atEmptyDemo||validatePersonalCredential()?[]:resources.filter(r=>referenceTableEntries(r).length).map(r=>r.id)};
+ state.atAkCatalogue={actor:current().id,ids:state.atEmptyDemo||validatePersonalCredential()?[]:resources.filter(r=>cachedTableEntries(r).length).map(r=>r.id)};
 }
 
 function pickPersonalReference(assetId,dbId,tableId){const direct=assetId==='__ak__',a=assets.find(a=>a.id===assetId),db=resources.find(r=>r.id===dbId);if(!db||(!direct&&(!a||!usable(a)||!personalResources(a.published).some(r=>r.id===db.id)))){toast('当前引用范围已变化，请重新选择。');return}const error=validatePersonalCredential();if(error){toast(error);return}const entries=referenceTableEntries(db),ids=entries.filter(t=>!tableId||t.table.id===tableId&&t.db.id===dbId).flatMap(t=>t.ids);if(!ids.length){toast('当前没有可引用的数据权限。');return}const t=tableId?db.tables.find(t=>t.id===tableId):null,key=assetId+':'+dbId+':'+(tableId||'*'),label=[a?.published.name,resourceEnglishName(db),t?.name].filter(Boolean).join(' / '),chineseLabel=[a?.published.name,sourceName(db),t?.label].filter(Boolean).join(' / ');state.referenceSelections=(state.referenceSelections||[]).filter(r=>r.key!==key);state.referenceSelections.push({key,asset:assetId,resource:dbId,table:tableId||null,ids,label,chineseLabel});syncPersonalReferences();const trigger=state.modal?.trigger;if(trigger!==undefined&&state.question[trigger]==='@')state.question=state.question.slice(0,trigger)+state.question.slice(trigger+1+(state.atInlineSearch||'').length);closeModal();render();const input=document.getElementById('question');input?.focus();if(trigger!==undefined)input?.setSelectionRange(trigger,trigger)}
@@ -1218,7 +1252,7 @@ function positionPersonalReference(){const menu=document.querySelector('.referen
 
 function updateReferenceSearch(){const host=document.createElement('div');host.innerHTML=personalReferencePopover();const list=document.querySelector('.personal-ref-list');if(list){list.innerHTML=host.querySelector('.personal-ref-list').innerHTML;list.scrollTop=0;}positionPersonalReference();}
 
-function queryReferenceAsset(id){if(id!=='__ak__')return assets.find(a=>a.id===id);const picks=(state.referenceSelections||[]).filter(r=>r.asset==='__ak__');if(!picks.length)return null;return {id:'__ak__',owner:current().id,published:{name:'本人AK有权资源',desc:'',fields:[...new Set(picks.flatMap(r=>r.ids))],channels:[state.entryChannel||'yilibuddy'],enh:{},skills:[],knowledge:[]}};}
+function queryReferenceAsset(id,refs=state.referenceSelections||[]){if(id!=='__ak__')return assets.find(a=>a.id===id);const picks=refs.filter(r=>r.asset==='__ak__');if(!picks.length)return null;return {id:'__ak__',owner:current().id,published:{name:'本人AK有权资源',desc:'',fields:[...new Set(picks.flatMap(r=>r.ids))],channels:[state.entryChannel||'yilibuddy'],enh:{},skills:[],knowledge:[]}};}
 
 function personalMoreMenu(id){const anchor=document.querySelector('[data-action="personalMore"][data-id="'+id+'"]'),a=assets.find(x=>x.id===id);if(!anchor||!a||!usable(a))return '';const rect=anchor.getBoundingClientRect(),left=Math.max(8,Math.min(rect.right-132,innerWidth-140));return '<div class="reference-dismiss" data-action="closeModal"></div><div class="personal-card-menu" role="menu" style="left:'+left+'px;top:'+(rect.bottom+6)+'px">'+btn('删除','personalDelete','data-id="'+id+'" role="menuitem"','danger')+'</div>'}
 
@@ -1226,8 +1260,8 @@ function startAdminPartialRightsScene(){state.identity='business';state.adminCre
 
 function resourceEnglishName(db){return sourceKind(db)==='数据中台项目'?(db.projectEnglish||db.name||'--'):(db.name||'--')}
 function referenceDisplay(ref){const a=assets.find(a=>a.id===ref.asset),db=resources.find(r=>r.id===ref.resource);if(!db)return {primary:ref.label||'',secondary:ref.chineseLabel||''};const table=ref.table?db.tables.find(t=>t.id===ref.table):null,first=a?.published.name,primary=[first,resourceEnglishName(db),ref.table?(table?.name||ref.table):null].filter(Boolean).join(' / '),secondary=[first,sourceName(db),ref.table?table?.label:null].filter(Boolean).join(' / ');return {primary,secondary}}
-function resourceRefreshToolbar(){const sync=state.resourceSync?.editor===state.editor?state.resourceSync:null,loading=sync?.loading,finished=sync&&!loading&&!!sync.message,statusIcon=finished?'<span class="resource-refresh-result '+(sync.error?'is-failure':'is-success')+'" role="img" aria-label="'+(sync.error?'更新失败':'更新成功')+'" title="'+(sync.error?'更新失败':'更新成功')+'"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+(sync.error?'<path d="m5 5 10 10M15 5 5 15"/>':'<path d="m4 10 4 4 8-8"/>')+'</svg></span>':'';return '<div class="row wrap resource-refresh-row"><input id="resourceSearch" placeholder="搜索项目或资源名称" value="'+esc(state.resourceFilter||'')+'">'+btn(loading?'更新中…':'手动更新','manualRefreshResources',loading?'disabled':'')+statusIcon+'<div class="resource-sync-status '+(sync?.error?'error':'mini muted')+'" role="status" aria-live="polite">'+esc(loading?'正在同步资源，请稍候；同步期间请勿重复操作。':sync?.message||'')+'</div></div><p class="mini muted resource-wait-hint">手动更新可同步本人当前有权资源。资源较多时可能需要较长时间，请耐心等待。 '+mark(27)+'</p>'}
-async function manualRefreshPersonalResources(){const e=state.editor;if(!e||state.resourceSync?.editor===e&&state.resourceSync.loading)return;const firstReason=resourceSyncFailureReason();if(validatePersonalCredential()){state.resourceSync={editor:e,loading:false,error:true,message:'资源同步失败：'+firstReason+'已选资源和填写内容已保留。'};render();return}const token=Symbol('resource-refresh'),modalOrigin=state.modal?.type==='personalEditor';state.resourceSync={editor:e,loading:true,token,message:'',error:false};render();await new Promise(r=>setTimeout(r,900));if(state.editor!==e||state.resourceSync?.token!==token||modalOrigin&&state.modal?.type!=='personalEditor'){if(state.resourceSync?.token===token)state.resourceSync.loading=false;return}const reason=resourceSyncFailureReason();state.resourceSync={editor:e,loading:false,error:!!reason,message:reason?'资源同步失败：'+reason+'已选资源和填写内容已保留。':'资源已更新，已选资源和填写内容已保留。'};render()}
+function resourceRefreshToolbar(){const sync=state.resourceSync?.editor===state.editor?state.resourceSync:null,loading=sync?.loading,finished=sync&&!loading&&!!sync.message,statusIcon=finished?'<span class="resource-refresh-result '+(sync.error?'is-failure':'is-success')+'" role="img" aria-label="'+(sync.error?'更新失败':'更新成功')+'" title="'+(sync.error?'更新失败':'更新成功')+'"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+(sync.error?'<path d="m5 5 10 10M15 5 5 15"/>':'<path d="m4 10 4 4 8-8"/>')+'</svg></span>':'';return '<div class="row wrap resource-refresh-row"><input id="resourceSearch" placeholder="搜索项目或资源名称" value="'+esc(state.resourceFilter||'')+'">'+btn(loading?'更新中…':'手动更新','manualRefreshResources',loading?'disabled':'')+statusIcon+'<div class="resource-sync-status '+(sync?.error?'error':'mini muted')+'" role="status" aria-live="polite">'+esc(loading?'正在同步资源，请稍候；同步期间请勿重复操作。':sync?.message||'')+'</div></div><p class="mini muted resource-wait-hint">在数据中台修改配置或权限后，请回到这里点击「手动更新」。同步可能需要片刻。 '+mark(27)+'</p>'}
+async function manualRefreshPersonalResources(){const e=state.editor;if(!e||state.resourceSync?.editor===e&&state.resourceSync.loading)return;const firstReason=resourceSyncFailureReason();if(validatePersonalCredential()){state.resourceSync={editor:e,loading:false,error:true,message:'资源同步失败：'+firstReason+'已选资源和填写内容已保留。'};render();return}const token=Symbol('resource-refresh'),modalOrigin=state.modal?.type==='personalEditor';state.resourceSync={editor:e,loading:true,token,message:'',error:false};render();await new Promise(r=>setTimeout(r,900));if(state.editor!==e||state.resourceSync?.token!==token||modalOrigin&&state.modal?.type!=='personalEditor'){if(state.resourceSync?.token===token)state.resourceSync.loading=false;return}const reason=resourceSyncFailureReason();if(!reason)updateCatalogue();state.resourceSync={editor:e,loading:false,error:!!reason,message:reason?'资源同步失败：'+reason+'已选资源和填写内容已保留。':'资源已更新，已选资源和填写内容已保留。'};render()}
 function resourceSyncFailureReason(){if(!hasCredential()||state.scene.ak==='未配置')return '尚未配置本人AK，请先维护并校验。';if(state.scene.ak==='凭据无效')return '本人AK校验失败，无法读取资源目录，请更新AK后重试。';if(state.scene.ak==='网络失败')return '暂时无法连接Dataphin，请检查网络后重试。';if(state.scene.search==='服务超时')return 'Dataphin资源接口响应超时，请稍后重试。';return ''}
 
 async function startResourceRefreshScene(mode){state.identity='consumer';state.credentials.u=true;state.scene.ak='正常';state.scene.search=mode==='timeout'?'服务超时':'匹配成功';state.panel=null;state.modal=null;state.editor=null;state.resourceSync=null;state.deniedResourcesByActor={};if(!assets.some(a=>a.id==='12092')){const fields=allFields.filter(f=>f.startsWith('sales.'));assets.push({id:'12092',numericId:12092,owner:'u',department:people.consumer.department,createdAt:new Date().toISOString(),updatedAt:nowText(),version:1,versions:[{id:'13092',number:1,status:'已生效',time:nowText(),remark:'首次创建'}],published:{name:'个人资源更新演示',identifier:'personal_refresh_demo',desc:'演示资源同步结果',fields,resourceIds:['sales'],channels:['yilibuddy'],visibleMode:'selected',visibleEntries:['u'],subMode:'selected',subEntries:['u'],enh:{},skills:[],knowledge:[]}})}state.route='shop';state.marketMine=true;state.myAbilityType='数据源';render();openPersonalEdit('12092','user');if(!state.editor)return;if(mode==='invalid')state.scene.ak='凭据无效';if(mode==='network')state.scene.ak='网络失败';await manualRefreshPersonalResources()}
@@ -1278,6 +1312,180 @@ for(const a of assets){a.publisherAccount=a.publisherAccount||"demo_"+a.owner;fo
 document.addEventListener('click',ev=>{const n=ev.target.closest('[data-action]');if(!n)return;if(n.dataset.action==='sourceAdmin'){if(state.identity==='consumer')state.identity='business';route('admin')}if(n.dataset.action==='sourceUser')route('chat');if(n.dataset.action==='sourceSubmitDraft'){const a=assets.find(x=>x.id===n.dataset.id);if(!a||a.status!=='草稿'||a.pending||!sourceCanManage(a))return;a.pending=clone(a.draft);a.draft=null;a.status='待审核';a.submitter=current().id;a.submittedAt=nowText();a.updatedAt=a.submittedAt;a.submitOperation='上线';a.statusRequest=false;render();toast('已提交审核，请到审核中心处理。')}});
 
 window.addEventListener('resize',positionPersonalReference);window.addEventListener('scroll',positionPersonalReference,true);window.visualViewport?.addEventListener('resize',positionPersonalReference);
+
+const catalogueByUser=new Map();
+function userCatalogue(){
+ const actor=current().id;
+ if(!catalogueByUser.has(actor))catalogueByUser.set(actor,new Set(resources.flatMap(db=>referenceTableEntries(db)).filter(({db,table})=>db.id!=='inventory'||table.id!=='stock').map(tableKey)));
+ return catalogueByUser.get(actor);
+}
+function tableKey({db,table}){return db.id+'.'+table.id}
+function cachedTableEntries(db){const cache=userCatalogue();return referenceTableEntries(db).filter(entry=>cache.has(tableKey(entry)))}
+function updateCatalogue(db){
+ const cache=userCatalogue();
+ if(!db)cache.clear();
+ else for(const scope of personalGroupResources(db))for(const key of [...cache])if(key.startsWith(scope.id+'.'))cache.delete(key);
+ for(const scope of db?[db]:resources)for(const entry of referenceTableEntries(scope))cache.add(tableKey(entry));
+}
+function selectForFields(ids){
+ const field=fieldMap[ids[0]];
+ return 'SELECT '+ids.map(id=>fieldMap[id].name).join(', ')+' FROM '+field.db.name+'.'+field.tb.name+' LIMIT 10000';
+}
+function noMatch(){logQuery('未查询到匹配数据');answer('<p>未查询到匹配数据。可补充指标、日期或业务范围后重试。</p>')}
+function queryRunControls(){
+ const review=state.sqlReview;
+ if(review){
+  const main=review.editing?'<label for="reviewSqlDraft">SQL</label><textarea id="reviewSqlDraft" class="review-sql-draft" spellcheck="false">'+esc(review.draft)+'</textarea>': '<pre class="review-sql-text">'+esc(review.sql)+'</pre>';
+  const actions=review.editing?btn('取消','cancelDemoSqlEdit')+btn('保存','saveDemoSql','','primary'):btn('取消','cancelDemoSql')+btn('编辑','editDemoSql')+btn('确认执行','confirmDemoSql','','primary');
+  return '<section class="card" aria-label="确认查询 SQL"><b>确认查询 SQL</b><p class="muted">'+(review.editing?'编辑后保存，回到确认页面核对。':'请核对查询范围和统计口径，确认后创建查询任务。')+'</p>'+main+(review.error?'<p class="error" role="alert">'+esc(review.error)+'</p>':'')+'<div class="row wrap">'+actions+'</div></section>';
+ }
+ return state.queryConnection?'<div class="warn" role="status">网络连接中断，查询任务仍在后台执行。 '+btn('重新连接','reconnectDemoQuery','','link')+'</div>':'';
+}
+function saveDemoSql(){
+ const review=state.sqlReview;
+ if(!review?.editing)return;
+ const draft=review.draft.trim();
+ const statements=draft.split(';').map(value=>value.trim()).filter(Boolean);
+ const tables=value=>[...value.matchAll(/\b(?:from|join)\s+([\w.]+)/gi)].map(match=>match[1].toLowerCase()).sort().join('|');
+ const allowedTables=new Set(tables(review.original).split('|'));
+ if(!draft)review.error='请输入 SQL 后保存。';
+ else if(statements.some(value=>!/^select\b/i.test(value))||/\b(insert|update|delete|drop|alter|truncate|create|grant|revoke|merge|into|call)\b/i.test(draft))review.error='仅支持只读查询。请检查 SQL 后保存。';
+ else if(statements.flatMap(value=>tables(value).split('|')).some(table=>!table||!allowedTables.has(table)))review.error='编辑后的 SQL 必须使用本次查询范围内的表。';
+ else{review.sql=draft;review.error='';review.editing=false}
+ render();
+ if(review.editing)$('#reviewSqlDraft')?.focus();
+}
+async function confirmDemoSql(sql,ids=[]){
+ const task=state.lastQuery;
+ await stage('正在生成 SQL 并进行规则审查','已生成只读查询草稿，可在确认卡片中核对。');
+ const decision=await new Promise(resolve=>{state.sqlReview={sql,original:sql,resolve};render();setTimeout(()=>$('.chatMessages')?.lastElementChild?.scrollIntoView({block:'nearest'}),20)});
+ state.sqlReview=null;
+ if(state.lastQuery!==task)return false;
+ if(!decision){logQuery('用户取消');answer('<p>已取消，未创建查询任务。</p>');return false}
+ await stage(decision===sql?'正在创建任务并执行中台语法校验':'正在复核修改后的 SQL 并进行中台语法校验','校验通过，查询任务已提交。');
+ if(state.demoScenario==='review-hard'){logQuery('中台语法校验失败');answer('<div class="error">中台语法校验失败，未创建查询任务。调整 SQL 后需重新确认。</div>');return false}
+ if(stopForCredential())return false;
+ if(!ids.every(id=>allowedFields().includes(id))){noMatch();return false}
+ task.executedSql=decision;task.sqlEdited=decision!==sql;task.taskId='query-'+task.started;
+ const longQuery=['review-long-running','review-long'].includes(state.demoScenario);
+ const step={label:'查询任务 · '+task.taskId,status:'running',logs:[]};
+ state.querySteps.at(-1).status='success';
+ state.querySteps.push(step);
+ const appendLog=message=>{
+  step.logs.push(new Date().toLocaleTimeString('zh-CN',{hour12:false})+'  '+message);
+  state.progress=message;
+  render();
+ };
+ appendLog('查询任务已创建，等待中台调度');
+ if(longQuery){
+  await sleep(1400);
+  if(state.lastQuery!==task)return false;
+  appendLog('第 1 次状态查询：排队中');
+  await sleep(1500);
+  if(state.lastQuery!==task)return false;
+  appendLog('第 2 次状态查询：执行中，等待查询结果');
+  if(state.demoScenario==='review-long'){
+   await new Promise(resolve=>{
+    state.queryConnection=resolve;
+    appendLog('连接中断，中台任务继续执行');
+   });
+   if(state.lastQuery!==task)return false;
+   state.queryConnection=null;
+   appendLog('连接已恢复，继续跟踪同一任务');
+  }
+  await sleep(1800);
+  if(state.lastQuery!==task)return false;
+  appendLog('第 3 次状态查询：执行中');
+ }
+ await sleep(1100);
+ if(state.lastQuery!==task)return false;
+ step.status='success';
+ appendLog('查询完成，开始整理结果与数据来源');
+ return true;
+}
+const reviewReferences={
+ file:{name:'电商 GMV 日报.xlsx',section:'file'},
+ task:{name:'上月电商 GMV 问数',section:'task'},
+ knowledge:{name:'电商 GMV 指标口径',section:'knowledge'}
+};
+function addAnalysisReference(id){
+ if(!reviewReferences[id])return;
+ state.analysisRefs=[...new Set([...(state.analysisRefs||[]),id])];
+ if(state.question.trimEnd().endsWith('@'))state.question=state.question.trimEnd().slice(0,-1);
+ closeModal();render();$('#question')?.focus();
+}
+function analysisReferenceChips(){return (state.pendingLocalAttachment?'<span class="chip">▧ '+esc(state.pendingLocalAttachment)+btn('×','removeLocalAttachment','aria-label="移除附件"','link')+'</span>':'')+(state.analysisRefs||[]).filter(id=>id!=='knowledge').map(id=>'<span class="chip"> '+(id==='file'?'▧ ':'@')+esc(reviewReferences[id].name)+btn('×','removeAnalysisReference','data-id="'+id+'" aria-label="移除引用"','link')+'</span>').join('')}
+function sentQueryMessage(message){
+ const references=message.analysisRefs||[];
+ const labels=(message.tableRefs||[]).map(name=>'<span class="sent-table-ref">@'+esc(name)+'</span>').join(' ');
+ const attachments=(message.localAttachment?'<span class="sent-reference sent-reference-file">▧ '+esc(message.localAttachment)+'</span>':'')+references.map(id=>{
+  const item=reviewReferences[id];
+  return item?'<span class="sent-reference sent-reference-'+id+'">'+(id==='file'?'▧ ':id==='knowledge'?'<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 4.2C6.2 3 4.3 3 2 3.5v9c2.3-.5 4.2-.5 6 .7 1.8-1.2 3.7-1.2 6-.7v-9c-2.3-.5-4.2-.5-6 .7zm0 0v9" stroke="currentColor" fill="none" stroke-linejoin="round"/></svg> ':'▤ ')+esc(item.name)+'</span>':'';
+ }).join('');
+ return '<div class="sent-query">'+(attachments?'<div class="sent-reference-list">'+attachments+'</div>':'')+'<div class="bubbleUser">'+(labels?labels+' ':'')+esc(message.text)+'</div></div>';
+}
+function reviewFileModal(m){
+ const file=reviewReferences.file.name;
+ return modalFrame('选择附件','<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;min-height:260px"><section><div class="row wrap">'+['资源管理','IM 聊天'].map(tab=>btn(tab,'reviewFileTab','data-tab="'+tab+'"',m.tab===tab?'primary':'')).join('')+'</div><p class="mini muted">演示附件</p>'+btn((m.selected?'☑ ':'☐ ')+esc(file),'reviewFileToggle','aria-pressed="'+m.selected+'"')+'</section><section><p>已选择：'+Number(m.selected)+' 个文件</p>'+(m.selected?'<span class="chip">'+esc(file)+'</span>':'<p class="muted">请从左侧选择附件</p>')+'</section></div>',btn('取消','closeModal')+btn('添加','addAnalysisReference','data-id="file" '+(m.selected?'':'disabled'),'primary'),'760px');
+}
+function analysisReferenceRows(section){
+ const rows=Object.entries(reviewReferences).filter(([,item])=>item.section===section);
+ if(!rows.length)return '<div class="reference-empty">暂无可引用内容</div>';
+ return (section==='task'?'<div class="cascade-heading">任务 '+rows.length+'</div>':'')+rows.map(([id,item])=>btn(esc(item.name),'addAnalysisReference','data-id="'+id+'"','cascade-row')).join('');
+}
+const reviewScenarios={
+ 'review-direct':{title:'GMV：直接提问'},
+ 'review-table':{title:'GMV：引用具体表',table:true},
+ 'review-excel':{title:'GMV：引用 Excel',refs:['file']},
+ 'review-knowledge':{title:'GMV：引用表与知识库',table:true,refs:['knowledge']},
+ 'review-mixed':{title:'GMV：表、Excel、知识库与历史会话',table:true,refs:['file','knowledge','task']},
+ 'review-long-running':{title:'长查询：查看执行进度'},
+ 'review-long':{title:'长查询：断线与恢复'},
+ 'review-hard':{title:'SQL：中台硬校验拒绝'},
+ 'review-no-match':{title:'无匹配：仅检索有权数据'}
+};
+async function playReviewScenario(id){
+ if(state.busy)return;
+ const item=reviewScenarios[id];
+ state.demoScenario=id;state.chat=[];state.sources=[];state.querySteps=[];state.analysisRefs=item.refs||[];
+ state.referenceSelections=item.table?[{asset:'__ak__',resource:'sales',table:'orders',ids:['sales.orders.amount','sales.orders.region','sales.orders.order_date']}]:[];
+ syncPersonalReferences();
+ state.credentials[current().id]=true;
+ state.scene.ak='正常';state.scene.access='全部权限';state.scene.owner='正常';state.scene.search='匹配成功';
+ if(id==='review-no-match')state.scene.access='完全无权';
+ state.question='本月电商 GMV 多少，最近两天日环比多少，涨跌原因是什么？';
+ render();await sendQuery();
+}
+async function gmvDemo(question,referenced){
+ const refs=state.lastQuery.analysisRefs||[];
+ const file=refs.includes('file'),needsQuery=!file||referenced.length>0||/^review-(mixed|table|knowledge)$/.test(state.demoScenario||'');
+ const ids=['sales.orders.amount','sales.orders.region','sales.orders.order_date'];
+ if(file)await stage('正在读取 Excel 附件','已读取电商 GMV 日报.xlsx 的汇总及日明细。');
+ if(needsQuery){
+  if(!ids.every(id=>allowedFields().includes(id)&&(!referenced.length||referenced.some(a=>a.published.fields.includes(id))))){noMatch();return}
+  await stage('MCP 已匹配 sales_dw.order_fact 的有权字段');
+  const sql="SELECT order_date, SUM(amount) AS gmv FROM sales_dw.order_fact WHERE order_date >= '2026-11-01' AND order_date < '2026-11-16' GROUP BY order_date ORDER BY order_date";
+  if(!await confirmDemoSql(sql,ids))return;
+ }
+ await stage('正在整理结果','已核对 GMV 口径并计算最近两日日环比。');
+ let cite='',growthCite='';
+ if(needsQuery){
+  const index=state.sources.length;
+  state.sources.push({ids,path:'sales_dw.order_fact',requestSources:[index],resultColumns:['日期','GMV'],resultRows:[['2026-11-14','20000'],['2026-11-15','22000']]});
+  logQuery('成功','GMV 演示查询',state.sources[index]);
+  const derived=index+1,source=state.sources[index];
+  source.badge=1;
+  source.requestSources=[index,derived];
+  state.sources.push({ids,inputs:[index],badge:2,path:source.path,requestSources:source.requestSources,formula:'（22,000 − 20,000）÷ 20,000 = +10.0%'});
+  cite=' <button class="source" data-action="source" data-index="'+index+'">1</button>';
+  growthCite=' <button class="source" data-action="source" data-index="'+derived+'">2</button>';
+ }
+ const hasBreakdown=file&&refs.includes('knowledge');
+ const explanation=hasBreakdown?'日报渠道明细显示：自营渠道增加 1,600 元，占净增额 80%；平台渠道增加 400 元，占 20%。这是分项贡献，当前资料无法判断活动或流量等原因。':'当前资料缺少渠道、商品或订单量拆分，无法判断涨跌原因。';
+ const list=refs.map(id=>'<li>'+esc(reviewReferences[id].name)+'：'+({file:needsQuery?'复核 11 月 14–15 日 GMV，并提供渠道拆分明细':'提供 11 月 1–15 日 GMV 汇总和最近两日明细',task:'历史会话的上月同期 GMV 为 ¥295,000；本期同期增加 ¥15,000（约 +5.1%）',knowledge:'按支付日期统计实收金额，剔除已取消订单'}[id])+ '</li>').join('');
+ answer('<p>以下为示例电商 GMV 及日环比。</p><table><thead><tr><th>统计项</th><th>电商 GMV</th></tr></thead><tbody><tr><td>11 月 1–15 日合计</td><td>310,000 元'+cite+'</td></tr><tr><td>11 月 14 日</td><td>20,000 元'+cite+'</td></tr><tr><td>11 月 15 日</td><td>22,000 元'+cite+'</td></tr><tr><td>最近两日日环比</td><td>+10.0%'+growthCite+'</td></tr></tbody></table><p>较前一日增加 2,000 元。'+explanation+'</p>'+(list?'<h4>综合分析依据</h4><ul>'+list+'</ul>':''),{completed:!needsQuery});
+}
+
 initializePersonalSources();
 const seeded=new Map();
 for(const a of assets)for(const db of personalResources(a.published)){
