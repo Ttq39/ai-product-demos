@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta name="demo-version" content="1.0.4"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>YiliBuddy · 数据中心</title>
+<html lang="zh-CN"><head>
+<meta name="demo-version" content="2.1.1"><meta name="demo-version" content="1.0.4"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>YiliBuddy · 数据中心</title>
 <style>
 :root{--blue:#195bff;--bluebg:#eef3ff;--line:#e5e9f0;--ink:#182133;--muted:#7b8698;--surface:#f7f9fc;--red:#c91836;--green:#14956b}
 *{box-sizing:border-box}body{margin:0;color:var(--ink);font:14px/1.6 "Microsoft YaHei","Segoe UI",sans-serif;background:var(--surface)}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid #dce2ed;background:white;border-radius:7px;padding:7px 13px;color:inherit;transition:background .15s,border-color .15s}button:hover{background:#f2f5fb;border-color:#c4cfe0}button:focus-visible,a:focus-visible{outline:3px solid #a8c2ff;outline-offset:2px}button:disabled{opacity:.45;cursor:not-allowed}input,textarea,select{padding:9px 12px;border:1px solid #dce2ed;border-radius:7px;background:white;max-width:100%;color:var(--ink)}input:focus,textarea:focus,select:focus{outline:2px solid #c5d5ff;border-color:#7196ff}input[type=checkbox],input[type=radio]{accent-color:var(--blue);width:16px;height:16px;padding:0;vertical-align:middle}textarea{resize:vertical;width:100%}h1{font-size:25px;margin:0 0 3px}h2{font-size:19px;margin:0}h3{font-size:16px;margin:0 0 12px}p{margin:8px 0}small,.muted{color:var(--muted)}.primary{background:var(--blue);border-color:var(--blue);color:white}.primary:hover{background:#124bd4;color:white}.danger{color:#d43843}.link{border:0;background:transparent;color:var(--blue);padding:3px 6px}.link:hover{background:var(--bluebg)}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.grow{flex:1;min-width:0}.tag{display:inline-flex;align-items:center;padding:1px 8px;font-size:12px;background:#f0f2f5;color:#6e7a8b;border-radius:5px;white-space:nowrap}.tag.green{background:#eaf9f2;color:#138264}.tag.blue{background:#eaf1ff;color:var(--blue)}.tag.orange{background:#fff3df;color:#ad7112}.tag.red{background:#fff0ef;color:#b63e47}.demoBar{height:53px;background:#19263c;color:white;display:flex;align-items:center;gap:12px;padding:0 20px;position:sticky;top:0;z-index:30;font-size:12px}.demoBar strong{font-size:14px}.demoBar span{color:#b8c6dc}.demoBar select,.demoBar button{font-size:12px;padding:5px 9px}.demoBar .spacer{flex:1}.demoBar button{color:#263a5c}.demoBar .active{background:#dce8ff;color:#164ac9}.shell{display:flex;min-height:calc(100vh - 53px)}.sidebar{width:238px;background:white;border-right:1px solid var(--line);flex-shrink:0;padding:18px 13px;display:flex;flex-direction:column;position:sticky;top:53px;height:calc(100vh - 53px);overflow:auto}.brand{height:60px;padding:0 12px;display:flex;gap:12px;align-items:flex-start}.brandIcon{height:33px;width:33px;border-radius:8px;background:var(--blue);color:white;font-size:12px;display:grid;place-items:center;margin-top:2px}.brand strong{font-size:15px}.brand small{display:block;font-size:10px}.navlabel{color:#9ba6b8;font-size:12px;padding:20px 13px 7px}.navitem{display:flex;align-items:center;gap:12px;width:100%;border:0;background:none;text-align:left;padding:12px 15px;color:#607089;border-radius:8px;margin:3px 0;font-size:14px}.navitem.active{background:#edf2ff;color:var(--blue)}.navitem[disabled]{opacity:.7;cursor:default}.navicon{font-size:17px;width:19px;text-align:center}.sidefoot{margin-top:auto;padding:24px 10px 0;border-top:1px solid var(--line)}.sidefoot strong{font-size:13px}.main{flex:1;min-width:0;padding:27px 32px 40px;max-width:1800px}.pagehead{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:23px}.breadcrumb{color:#8c97a8;font-size:12px;margin-bottom:8px}.card{background:white;border:1px solid var(--line);border-radius:10px;padding:22px;margin-bottom:18px;box-shadow:0 2px 4px #263b5b03}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}.stat{background:white;border:1px solid var(--line);border-radius:9px;padding:16px 19px}.stat b{display:block;font-size:25px;margin:2px 0}.stat span{font-size:12px;color:var(--muted)}.filters{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}.filters input{min-width:210px;flex:1}.tablewrap{overflow:auto}table{width:100%;border-collapse:collapse;white-space:normal}th,td{padding:14px 12px;text-align:left;border-bottom:1px solid #edf0f5;vertical-align:middle}th{font-size:12px;color:#5c697b;background:#f8f9fb;font-weight:600;white-space:nowrap}td{font-size:13px}td.name{min-width:170px}td.actions{white-space:nowrap}.empty{padding:58px 24px;text-align:center;color:#8d97a8}.emptyIcon{font-size:34px;color:#bcc8da;margin-bottom:8px}.help{padding:11px 14px;background:#f4f7ff;border:1px solid #e2eafd;border-radius:7px;color:#5b6d91;font-size:12px}.warn{background:#fff9eb;border:1px solid #f3ddb0;color:#986617;padding:12px 15px;border-radius:7px;margin:12px 0}.error{background:#fff2f1;border:1px solid #f2c2bf;color:#b63739;padding:10px 13px;border-radius:7px;margin:12px 0}.success{background:#effaf5;border:1px solid #bde8d3;color:#16815b;padding:10px 13px;border-radius:7px;margin:12px 0}.field{display:flex;flex-direction:column;gap:6px;margin-bottom:18px}.field>label{font-size:13px;font-weight:600}.field>input{width:100%}.field small{font-size:12px}.req{color:#d6334b;margin-left:3px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.stepper{display:flex;gap:0;border:1px solid var(--line);background:white;border-radius:9px;overflow:hidden;margin-bottom:20px}.step{flex:1;padding:15px;text-align:center;color:#8b95a6;font-size:13px}.step.active{background:#edf3ff;color:var(--blue);font-weight:600}.step.done{color:#179272}.step i{font-style:normal;display:inline-grid;place-items:center;width:24px;height:24px;border:1px solid currentColor;border-radius:50%;margin-right:8px}.split{display:grid;grid-template-columns:310px 1fr;border:1px solid var(--line);border-radius:8px;overflow:hidden;min-height:355px}.tree{background:#fbfcfe;border-right:1px solid var(--line);padding:15px;overflow:auto}.tree .treeitem{display:flex;gap:7px;align-items:center;margin:3px 0;border-radius:6px;padding:5px 7px}.treeitem.selected{background:#eaf0ff}.treeitem button{border:0;background:transparent;text-align:left;padding:4px;flex:1;font-size:13px}.indent{padding-left:19px}.treebody{padding:20px;min-width:0}.footerActions{display:flex;justify-content:space-between;gap:12px;background:white;border-top:1px solid var(--line);padding:15px 0;margin-top:15px}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.chip{border:1px solid #dce6ff;border-radius:5px;padding:3px 8px;background:#f2f6ff;color:#3f65a6;font-size:12px}.chip button{border:0;background:none;color:inherit;padding:0 2px;margin-left:6px}.tabs{display:flex;gap:22px;border-bottom:1px solid var(--line);margin-bottom:20px}.tabs button{border:0;border-radius:0;padding:11px 1px;color:#718099}.tabs button.active{border-bottom:2px solid var(--blue);color:var(--blue);font-weight:600}.assetGrid{display:grid;grid-template-columns:repeat(3,minmax(200px,1fr));gap:16px}.assetcard{background:white;border:1px solid var(--line);border-radius:11px;padding:20px;display:flex;flex-direction:column;gap:12px}.assetcard:hover{border-color:#b6caff;box-shadow:0 5px 18px #2449990b}.assetIcon{height:42px;width:42px;display:grid;place-items:center;color:var(--blue);background:#eaf2ff;border-radius:10px;font-size:22px}.assetcard p{font-size:13px;min-height:42px;color:#7c889b}.assetcard .bottom{display:flex;justify-content:space-between;align-items:center;margin-top:auto}.noticeCard{padding:16px 20px;border:1px solid var(--line);border-radius:8px;background:white;margin-bottom:12px}.dot{width:7px;height:7px;display:inline-block;border-radius:50%;background:var(--blue);margin-right:8px}.chat{max-width:980px;margin:auto;display:flex;flex-direction:column;min-height:calc(100vh - 150px);background:white;border:1px solid var(--line);border-radius:12px}.chathead{padding:18px 23px;border-bottom:1px solid var(--line)}.chatMessages{flex:1;padding:25px 30px;min-height:350px}.welcome{text-align:center;padding:65px 10px}.welcome h1{font-size:28px}.suggestions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}.suggestions button{color:#526782;font-size:12px}.bubbleUser{max-width:80%;margin:18px 0 22px auto;display:table;background:#eff3ff;border-radius:10px 10px 2px 10px;padding:12px 17px;white-space:pre-wrap}.answer{margin-bottom:27px;line-height:1.85}.answer>strong{display:block;margin-bottom:12px}.answer table{margin:15px 0}.source{border:0;color:var(--blue);background:#e9f0ff;border-radius:5px;font-size:11px;padding:1px 5px;vertical-align:super;margin-left:3px}.composer{padding:15px 23px 20px;background:white;position:sticky;bottom:0;border-top:1px solid var(--line);border-radius:0 0 12px 12px}.composer textarea{border:0;min-height:65px;padding:9px 0;outline:none!important;resize:none}.composebox{border:1px solid #dce3ee;border-radius:10px;padding:4px 13px 12px}.progress{font-size:13px;color:#6c7d98;padding:12px 0}.spinner{display:inline-block;border:2px solid #dce5f5;border-top-color:var(--blue);border-radius:50%;height:13px;width:13px;animation:spin .8s linear infinite;margin-right:8px}@keyframes spin{to{transform:rotate(360deg)}}
@@ -137,6 +138,10 @@
 .reference-cascade .cascade-root .cascade-row{min-height:34px;padding:6px 12px;border-radius:8px;color:#242424}
 .reference-cascade .cascade-root .cascade-row>span:last-child:not(:first-child){color:#929292}
 .cascade-root-label{display:inline-flex;align-items:center;gap:9px}.cascade-root-label svg{color:#737373;flex:none}
+ .source-info-icon{display:inline-block;position:relative;margin-left:7px;color:#8b97aa;cursor:help;font-size:13px}
+.source-info-tip{display:none;position:absolute;left:0;bottom:24px;z-index:30;width:270px;white-space:normal;text-align:left;line-height:1.65;padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#34435c;box-shadow:0 4px 16px #14203b1a;font-size:12px;font-weight:400}
+.source-info-icon:hover .source-info-tip,.source-info-icon:focus .source-info-tip{display:block}
+.resource-category-tabs{overflow:visible}.tag.red{background:#fff1f0;color:#d4380d}
 </style></head><body><header class="demoBar"><strong>数据中心 · 交互体验</strong><span>模拟数据 · 不连接 Dataphin · 不发送真实消息</span><div class="spacer"></div><button data-action="sourceAdmin">配置中心</button><button data-action="sourceUser">用户端</button><button data-action="toggleMarks" id="marksToggle">隐藏编号说明</button><button data-action="demoPanel">目录与演示场景</button></header><div id="app"></div><div id="modalRoot"></div><div id="panelRoot"></div><div id="toastRoot"></div><script>
 
 
@@ -185,9 +190,10 @@ function qualified(a){return a?.owner===current().id}
 function subscribed(a){return a?.owner===current().id}
 
 function sourceEligible(p,user){return !!p&&visiblePool(p).includes(user)&&(p.subMode==='all'||(p.subUsers||[]).includes(user))}
-function usable(a){return !!a?.published&&a.owner===current().id&&a.published.channels.includes(state.entryChannel||'yilibuddy')}
+function ownedPersonalSource(a){return !!a?.published&&a.owner===current().id&&a.published.channels.includes(state.entryChannel||'yilibuddy')}
+function usable(a){return ownedPersonalSource(a)&&!a.credentialInvalid}
 
-function allowedFields(){const available=allFields.filter(id=>!state.currentUnavailable.includes(id)&&!isCatalogUnavailable(id));switch(state.scene.access){case '部分有权':return available.filter(x=>!x.startsWith('sales.customers')&&!x.startsWith('inventory.'));case '完全无权':return [];case '仅替代来源有权':return available.filter(x=>x.startsWith('summary.'));default:return available}}
+function allowedFields(){const available=allFields.filter(id=>!state.currentUnavailable.includes(id)&&!isCatalogUnavailable(id)&&!(state.deniedResourcesByActor?.[current().id]||[]).includes(id.split('.')[0]));switch(state.scene.access){case '部分有权':return available.filter(x=>!x.startsWith('sales.customers')&&!x.startsWith('inventory.'));case '完全无权':return [];case '仅替代来源有权':return available.filter(x=>x.startsWith('summary.'));default:return available}}
 function btn(text,action,extra='',cls=''){return '<button class="'+cls+'" data-action="'+action+'" '+extra+'>'+text+'</button>'}
 function fieldLabel(id){const f=fieldMap[id];if(f)return f.db.name+'.'+f.tb.name+'.'+f.name;const parts=id.split('.'),db=resources.find(x=>x.id===parts[0]),tb=db?.tables.find(x=>x.id===parts[1]);return db?(tb?db.name+'.'+tb.name+(parts[2]?'.'+parts[2]:''):db.name):id}
 function toast(text){const error=/没有|不能|无法|未通过|不满足|无.*权限|仍无法/.test(text);$('#toastRoot').innerHTML='<div class="toast '+(error?'toast-error':'')+'" role="status">'+esc(text)+'</div>';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>$('#toastRoot').innerHTML='',2600)}
@@ -374,7 +380,7 @@ function sourceCallCount(a){return new Set(state.audit.filter(q=>q.user===curren
 function mySourceBrief(a){if(!a||!usable(a))return modalFrame('数据源详情','<p>该个人数据源当前不可用。</p>',btn('关闭','closeModal'));return '<div class="modalback" data-backdrop="true"><section class="source-brief" role="dialog" aria-modal="true" aria-label="数据源详情">'+btn('×','closeModal','aria-label="关闭详情"','close')+'<div class="source-brief-head"><div class="consumer-logo">▥</div><div class="source-brief-main"><div class="source-brief-title"><h2>'+esc(a.published.name)+'</h2></div><div class="source-brief-meta">'+personalTypeTags(a.published)+'</div></div></div><p>'+esc(a.published.desc||'暂无说明')+'</p><p class="mini muted">仅本人使用</p></section></div>'}
 
 function marketSearchToolbar(){return '<div class="market-search-tools"><label class="market-search-box"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg><input id="marketSearch" aria-label="搜索能力" placeholder="搜索技能、工具、智能体…" value="'+esc(state.filter)+'"></label>'+btn('<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg>筛选','legacyFilter','','market-filter')+'</div>'}
-function mySourceAbilities(){const tab=state.myAbilityType||'数据源',q=state.filter.toLowerCase(),sources=assets.filter(usable).filter(a=>(a.published.name+a.published.desc).toLowerCase().includes(q));const legacy=[...skills.map(x=>({...x,kind:'技能'})),...knowledges.map(x=>({...x,kind:'知识库'}))].filter(x=>(tab==='全部'||tab===x.kind)&&x.name.toLowerCase().includes(q));const cards=(tab==='数据源'||tab==='全部'?sources.map(a=>'<article class="assetcard source-owned-card"><div class="row"><div class="assetIcon">▥</div><b>'+esc(a.published.name)+'</b><span class="shop-subscribe" aria-label="个人数据源操作" title="更多" data-action="personalMore" data-id="'+a.id+'">⋯</span></div>'+dbSubtitle(personalResources(a.published)[0])+'<div class="card-metrics"><span title="调用次数">▥ '+sourceCallCount(a)+'</span></div></article>').join(''):'')+(tab==='数据源'?'':legacy.map(x=>'<article class="assetcard"><div class="row"><div class="assetIcon">'+(x.kind==='技能'?'ϟ':'▤')+'</div><b>'+esc(x.name)+'</b></div><p class="muted">'+esc(x.kind)+'</p></article>').join(''));return '<div class="market-global"><div class="market-global-tabs">'+btn('能力商店','abilityView','data-view="store"','link')+'<b>我的能力</b></div>'+marketSearchToolbar()+'</div><div class="tabs market-categories">'+['全部','技能','工具','智能体','知识库','数据源'].map(t=>btn(t,'myAbilityType','data-value="'+t+'"',tab===t?'active':'')).join('')+'</div>'+(tab==='数据源'?'<div class="source-ability-actions">'+btn('数据中台个人密钥','key','data-context="consumer"')+btn('＋ 新建数据源','personalCreate','','primary')+mark(10)+'</div>':'')+'<div class="assetGrid">'+cards+'</div>'+(!cards?empty(tab==='数据源'?'暂无个人数据源':'暂无匹配的能力'):'')}
+function mySourceAbilities(){const tab=state.myAbilityType||'数据源',q=state.filter.toLowerCase(),sources=assets.filter(ownedPersonalSource).filter(a=>(a.published.name+a.published.desc).toLowerCase().includes(q));const legacy=[...skills.map(x=>({...x,kind:'技能'})),...knowledges.map(x=>({...x,kind:'知识库'}))].filter(x=>(tab==='全部'||tab===x.kind)&&x.name.toLowerCase().includes(q));const cards=(tab==='数据源'||tab==='全部'?sources.map(a=>'<article class="assetcard source-owned-card"><div class="row"><div class="assetIcon">▥</div><b>'+esc(a.published.name)+'</b>'+(a.credentialInvalid?'<span class="tag red">已失效</span>':'')+'<span class="shop-subscribe" aria-label="个人数据源操作" title="更多" data-action="personalMore" data-id="'+a.id+'">⋯</span></div>'+dbSubtitle(personalResources(a.published)[0])+'<div class="card-metrics"><span title="调用次数">▥ '+sourceCallCount(a)+'</span></div></article>').join(''):'')+(tab==='数据源'?'':legacy.map(x=>'<article class="assetcard"><div class="row"><div class="assetIcon">'+(x.kind==='技能'?'ϟ':'▤')+'</div><b>'+esc(x.name)+'</b></div><p class="muted">'+esc(x.kind)+'</p></article>').join(''));return '<div class="market-global"><div class="market-global-tabs">'+btn('能力商店','abilityView','data-view="store"','link')+'<b>我的能力</b></div>'+marketSearchToolbar()+'</div><div class="tabs market-categories">'+['全部','技能','工具','智能体','知识库','数据源'].map(t=>btn(t,'myAbilityType','data-value="'+t+'"',tab===t?'active':'')).join('')+'</div>'+(tab==='数据源'?'<div class="source-ability-actions">'+btn('数据中台个人密钥','key','data-context="consumer"')+btn('＋ 新建数据源','personalCreate','','primary')+mark(10)+'</div>':'')+'<div class="assetGrid">'+cards+'</div>'+(!cards?empty(tab==='数据源'?'暂无个人数据源':'暂无匹配的能力'):'')}
 
 function shopPage(){
 if(state.marketMine)return mySourceAbilities();
@@ -509,7 +515,7 @@ else if(state.panel==='source'){title='数据来源';content=sourcePanelContent(
 else{
 title='目录与演示场景';
 const sceneInputs=[['ak','本人 AK 校验状态（保存及查询生效）',['正常','未配置','凭据无效','网络失败']],['access','使用者当前数据权限',['全部有权','部分有权','完全无权','仅替代来源有权']],['schema','资源结构（持续生效）',['正常','字段已删除','字段已改名','类型不兼容','无法校验']],['sql','SQL 处理',['正常','修复后成功','修复失败']],['search','候选搜索',['匹配成功','无相关候选','服务超时']],['owner','当前操作者资源权限',['正常','已被收回']]];
-content='<div class="help">个人数据源：用户端创建，保存直接生效，仅本人使用。配置中心按部门管理；没有审核、上下线、草稿或消息通知。所有接口、数据及凭据校验为本地模拟，刷新会重置，请勿填写真实凭据。</div><h3>演示旅程</h3><div class="row wrap">'+btn('我的个人数据源','personalDemoMine')+btn('资源盘点','sourceAdmin')+btn('问数与@库表选择','sourceUser')+btn('@引用：两组为空','demoEmptyReferences')+btn('@引用：AK表分页','demoReferencePaging')+btn('未缓存表：有权','demoUncached','data-mode="allow"')+btn('未缓存表：无权','demoUncached','data-mode="deny"')+'</div><h3>手动更新资源</h3><div class="row wrap">'+btn('更新成功','demoRefresh','data-mode="success"')+btn('失败：接口超时','demoRefresh','data-mode="timeout"')+btn('失败：AK失效','demoRefresh','data-mode="invalid"')+btn('失败：连接异常','demoRefresh','data-mode="network"')+'</div><h3>创建与查询异常</h3>'+sceneInputs.filter(([k])=>['ak','access','search'].includes(k)).map(([k,l,opts])=>'<div class="field"><label>'+l+'</label><select data-scene="'+k+'">'+opts.map(x=>'<option '+(state.scene[k]===x?'selected':'')+'>'+x+'</option>').join('')+'</select></div>').join('')+'<div class="row">'+btn('恢复正常场景','normalScenes')+'</div><p class="mini muted">库表目录只显示前50张元数据表；@中仅列出当前AK可访问的表。两者不等价。</p>';
+content='<div class="help">个人数据源：用户端创建，保存直接生效，仅本人使用。配置中心按部门管理；没有审核、上下线、草稿或消息通知。所有接口、数据及凭据校验为本地模拟，刷新会重置，请勿填写真实凭据。</div><h3>演示旅程</h3><div class="row wrap">'+btn('我的个人数据源','personalDemoMine')+btn('资源盘点','sourceAdmin')+btn('问数与@库表选择','sourceUser')+btn('@引用：两组为空','demoEmptyReferences')+btn('@引用：AK表分页','demoReferencePaging')+btn('未缓存表：有权','demoUncached','data-mode="allow"')+btn('未缓存表：无权','demoUncached','data-mode="deny"')+'</div><h3>密钥与分来源缓存</h3><div class="row wrap">'+btn('更换密钥：部分卡片失效','demoKeyReconcile')+btn('业务数据库：仅库缓存','demoBusinessCold')+btn('业务数据库：已有表缓存','demoBusinessWarm')+'</div><h3>手动更新资源</h3><div class="row wrap">'+btn('更新成功','demoRefresh','data-mode="success"')+btn('失败：接口超时','demoRefresh','data-mode="timeout"')+btn('失败：AK失效','demoRefresh','data-mode="invalid"')+btn('失败：连接异常','demoRefresh','data-mode="network"')+'</div><h3>创建与查询异常</h3>'+sceneInputs.filter(([k])=>['ak','access','search'].includes(k)).map(([k,l,opts])=>'<div class="field"><label>'+l+'</label><select data-scene="'+k+'">'+opts.map(x=>'<option '+(state.scene[k]===x?'selected':'')+'>'+x+'</option>').join('')+'</select></div>').join('')+'<div class="row">'+btn('恢复正常场景','normalScenes')+'</div><p class="mini muted">库表目录只显示前50张元数据表；@中仅列出当前AK可访问的表。两者不等价。</p>';
 
 }
 root.innerHTML='<aside class="floatPanel '+(state.panel==='demo'?'demoPanel':state.panel==='source'?'sourcePanel':'')+'" aria-label="'+title+'"><div class="panelhead row between"><b>'+title+'</b>'+btn('×','closePanel','aria-label="关闭面板"','close')+'</div><div class="panelbody">'+content+'</div></aside>';
@@ -569,7 +575,7 @@ function showChatScenario(id){if(reviewScenarios[id]){playReviewScenario(id);ret
  }else if(['partial','no-access'].includes(id)){question=id==='partial'?'查看销售和客户渠道信息':'查询上个月销售额';state.lastQuery.missingIds=id==='partial'?['sales.customers.channel']:['sales.orders.amount','sales.orders.region','sales.orders.order_date'];html='<p>'+(id==='partial'?'当前仅有部分所需数据权限，无法提供完整结果。可以考虑使用本人有权的其他来源。':'当前没有可用于本问题的数据权限，未执行查询。')+'</p>'+permissionLinks();
  }else if(['ak-missing','ak-invalid'].includes(id)){question='查询上个月销售额';html='<p class="credential-notice">'+(id==='ak-missing'?'请先在能力商店维护并校验本人 Dataphin AccessKey，再重新提问。':'本人 Dataphin AccessKey 当前已失效，请更新并校验后重新提问。')+'</p>';
  }else {const messages={clarify:['查看净销售额','当前信息不能确定“净销售额”的定义，请补充计算口径、统计时间和必要条件。'],schema:['分析客户渠道构成','本次所需字段结构已变化，无法继续使用。可以尝试本人有权的其他来源；未找到足够依据时将说明无法回答。'], 'sql-failed':['查询上个月销售额','查询修正后仍未通过校验，已结束本次查询；未修改数据库或取消订阅。'],empty:['查询指定条件下的销售额','当前筛选条件下未查询到记录，请核对时间和条件。无记录不等于指标为0。'],timeout:['查询全年销售明细','查询服务超时，本次未返回完整结果。请缩小范围或稍后重试。'],'source-outside':['使用其他类型数据库查询','该数据源类型不在本期支持范围，不进行查询。可使用MySQL、StarRocks、Hive、MaxCompute、PostgreSQL、MongoDB、Oracle或Greenplum。']};[question,html]=messages[id]||['查看数据','请选择场景'];html='<p>'+html+'</p>'}
- indices.forEach(i=>state.sources[i].requestSources=indices);state.lastQuery.question=question;if(['ak-missing','ak-invalid'].includes(id))rememberCredentialQuery(state.lastQuery);state.chat.push({role:'user',text:question},{role:'assistant',demoOnly:true,kind:['ak-missing','ak-invalid'].includes(id)?'credential-error':undefined,credentialActor:current().id,html:(['ak-missing','ak-invalid'].includes(id)?chatCredentialCard(id==='ak-missing'?'请维护本人AK后重新提问。':'本人AK已失效，请更新并校验后继续处理。'):queryProgressView(['正在校验本人凭据',...(indices.map(i=>'查询 '+state.sources[i].path)),indices.length?'整理查询结果':'本次未产生查询结果'],true)+html)+feedbackToolbar(state.chat.length+1,indices)});render();$('#chatMessages')?.scrollTo({top:0});}
+ indices.forEach(i=>state.sources[i].requestSources=indices);state.lastQuery.question=question;if(['ak-missing','ak-invalid'].includes(id))rememberCredentialQuery(state.lastQuery);state.chat.push({role:'user',text:question},{role:'assistant',demoOnly:true,kind:['ak-missing','ak-invalid'].includes(id)?'credential-error':undefined,credentialActor:current().id,html:(['ak-missing','ak-invalid'].includes(id)?chatCredentialCard(id==='ak-missing'?'请维护本人AK后重新提问。':'本人AK已失效，请更新并校验后继续处理。'):queryProgressView(['正在检索有权资源',...(indices.map(i=>'查询 '+state.sources[i].path)),indices.length?'整理查询结果':'本次未产生查询结果'],true)+html)+feedbackToolbar(state.chat.length+1,indices)});render();$('#chatMessages')?.scrollTo({top:0});}
 
 function resourceSignature(p){if(!p)return '';const fields=[...p.fields].sort(),keys=[...new Set(fields.flatMap(id=>{const x=id.split('.');return [x[0],x.slice(0,2).join('.'),id]}))].sort();return JSON.stringify({name:p.name,desc:p.desc,fields,skills:[...(p.skills||[])].sort(),knowledge:[...(p.knowledge||[])].sort(),enh:keys.map(k=>[k,enhancementText(p.enh?.[k])]),schema:fields.map(k=>[k,p.resourceSchema?.[k]||fieldMap[k]?.type||''])});}
 function makeEditor(a){
@@ -792,7 +798,7 @@ case 'saveKey':{
  b.disabled=true;b.textContent='校验中…';await new Promise(r=>setTimeout(r,250));
  if(current().id!==keyActor||state.modal!==validationModal)return;
  if(!['正常','未配置'].includes(state.scene.ak)){b.disabled=false;b.textContent='校验并保存';formFailure(box,(state.scene.ak==='凭据无效'?'AccessKey 校验失败，请核对本人凭据。':'暂时无法连接 Dataphin，请稍后重试。')+' 本次修改未保存，原有效绑定不变。');return}
- state.scene.ak='正常';(validationModal.context==='owner'?state.adminCredentials:state.credentials)[keyActor]=true;if(validationModal.context!=='owner')reconcileCredentialNotices();closeModal();const next=state.afterKey;state.afterKey=null;render();toast('本人 AK 校验成功，已保存。');if(next?.type==='subscribe')subscribe(next.id);else if(next?.type==='query')await resumeCredentialQuery(next.token);else if(next?.type==='personalAction'){state.pendingPersonalAction=null;if(next.action?.type==='edit')openPersonalEdit(next.action.id,next.action.origin);else beginPersonalCreate()}break;
+ state.scene.ak='正常';(validationModal.context==='owner'?state.adminCredentials:state.credentials)[keyActor]=true;if(validationModal.context!=='owner'){await saveCredentialIdentity(key,secret);reconcileCredentialNotices();}closeModal();const next=state.afterKey;state.afterKey=null;render();toast('本人 AK 校验成功，已保存。');if(next?.type==='subscribe')subscribe(next.id);else if(next?.type==='query')await resumeCredentialQuery(next.token);else if(next?.type==='personalAction'){state.pendingPersonalAction=null;if(next.action?.type==='edit')openPersonalEdit(next.action.id,next.action.origin);else beginPersonalCreate()}break;
 }
 case 'closeModal':{const parent=state.modal?.type==='dependencyInfo'?state.dependencyInfoParent:null;state.afterKey=null;closeModal();if(parent)openModal(parent.type,parent);break}
 case 'toggleMarks':state.marks=!state.marks;document.body.classList.toggle('hideMarks',!state.marks);$('#marksToggle').textContent=state.marks?'隐藏编号说明':'显示编号说明';break;
@@ -838,7 +844,11 @@ case 'confirmApply':{const a=assets.find(x=>x.id===id);if(!a||!readable(a)||!a.p
 case 'approveApplication':{const x=state.applications.find(x=>x.id===id);if(!x||x.status!=='待审批')return;if((x.owner||assets.find(a=>a.id===x.asset)?.owner)!==current().id){toast('当前账号无权处理该申请。');break}x.status='已通过';if(x.dependency){state.dependencyGrants??={};state.dependencyGrants[x.user]=[...new Set([...(state.dependencyGrants[x.user]||[]),x.dependency])];render();toast('关联能力申请已通过。');break}state.subscriptions[x.user]=[...new Set([...(state.subscriptions[x.user]||[]),x.asset])];render();toast('已批准订阅申请，不改变底层数据权限。');break}
 case 'rejectApplication':{const x=state.applications.find(x=>x.id===id);x.status='已拒绝';render();toast('已拒绝该申请。');break}
 case 'at':resetReferenceCascade();openModal('at');break;
-case 'sourceSelectRow':{const checkbox=b.closest('.treeitem').querySelector('[data-pick-db]');if(checkbox&&!checkbox.disabled)checkbox.click();state.node=id;renderModal();break;}
+case 'sourceSelectRow':{const checkbox=b.closest('.treeitem').querySelector('[data-pick-db]');if(checkbox&&!checkbox.disabled)checkbox.click();state.node=id;await loadResourceTables(resources.find(db=>db.id===id));break;}
+case 'retryResourceTables':await loadResourceTables(resources.find(db=>db.id===id));break;
+case 'demoKeyReconcile':invalidAssetDemo();break;
+case 'demoBusinessCold':businessCacheDemo(false);break;
+case 'demoBusinessWarm':businessCacheDemo(true);break;
 case 'atExisting':if(id==='upload'){
  const picker=document.createElement('input');picker.type='file';
  picker.addEventListener('change',()=>{if(picker.files[0]){state.pendingLocalAttachment=picker.files[0].name;closeModal();render();$('#question')?.focus()}},{once:true});
@@ -923,8 +933,8 @@ return ids.filter(id=>needed.includes(fieldMap[id].name));
 function chatCredentialCard(message){return '<div class="card chat-credential-card"><b>本人AK信息需要维护</b><p>'+esc(message)+'</p>'+btn('维护本人AK','chatKey','','primary')+'<p class="mini muted">校验并保存成功后，将继续处理本次被中断的问题。</p></div>'}
 
 function queryProgressView(entries,finished=false,outcome='success'){
- if(!entries?.length)return '';
- const steps=entries.map((x,i)=>typeof x==='string'?{label:x,status:finished?(i===entries.length-1&&/未产生|失败|无法/.test(x)?'failed':'success'):(i===entries.length-1?'running':'success')}:x);
+ if(!entries?.length||entries.every(x=>/(校验|核验).*(凭据|凭证|密钥)/.test(typeof x==='string'?x:x.label)))return '';
+ const steps=entries.filter(x=>!/(校验|核验).*(凭据|凭证|密钥)/.test(typeof x==='string'?x:x.label)).map((x,i)=>typeof x==='string'?{label:x,status:finished?(i===entries.length-1&&/未产生|失败|无法/.test(x)?'failed':'success'):(i===entries.length-1?'running':'success')}:x);
  const failed=outcome==='failed'||steps.some(x=>x.status==='failed'),title=finished?(failed?'已停止':'思考完成'):state.sqlReview?'等待确认 SQL':state.queryConnection?'连接中断 · 后台查询中':'正在思考';
  return '<section class="query-toolchain"><details class="query-toolchain-group" '+(!finished?'open':'')+'><summary>'+title+' <span class="toolchain-chevron">⌄</span></summary><div class="query-toolchain-list">'+steps.map((x,i)=>{const status=x.status||'success',statusText=({running:'执行中',success:'已完成',failed:'失败',paused:'已中断'})[status],output=x.logs?.length?x.logs.join('\n'):status==='running'?(x.pending||x.label):x.result||statusText;return '<details class="query-tool-step tool-state-'+status+'" '+(!finished&&i===steps.length-1?'open':'')+'><summary><span class="tool-command-icon" aria-hidden="true">›_</span><span>'+esc(status==='running'?x.label:x.label.replaceAll('正在',''))+'</span><span class="tool-step-state">'+statusText+'</span><span class="toolchain-chevron">⌄</span></summary><div class="tool-execution-detail"><div class="tool-detail-head"><span>'+(x.logs?'中台查询任务':'执行日志')+'</span>'+'</div><pre>'+esc(output)+'</pre><div class="tool-detail-status">'+statusText+'</div></div></details>'}).join('')+'</div></details>'+mark(26)+'</section>';
 }
@@ -957,7 +967,7 @@ if(!resume){state.pendingCredentialQuery=null;state.chat.push({role:'user',text:
 const prior=resume?null:state.lastQuery;const understood=/只看|继续|再看|其中|那就/.test(question)&&prior?prior.question+'；'+question:question;
 if(!resume)state.question='';state.busy=true;state.querySteps=[];state.lastQuery={question:understood,asset:null,actor:current().id,started:Date.now(),origin:'默认 AK',permissionConfirmed:false,assets:referenced,refScopes,analysisRefs};
 if(/GMV/i.test(question)&&analysisRefs.includes('file')&&!referenced.length&&!/@\w+\.\w+/.test(question)){await gmvDemo(question,[]);return}
-await stage('正在校验本人 Dataphin 凭据');if(stopForCredential())return;
+await stage('正在检索有权资源');if(stopForCredential())return;
 const typedTable=question.match(/(?:^|\s)@([\w]+)\.([\w]+)/);
 if(typedTable){
  const [,dbName,tableName]=typedTable;
@@ -1074,7 +1084,11 @@ function personalTypes(config){return [...new Set(personalResources(config).map(
 function personalTypeTags(config){return personalTypes(config).map(t=>'<span class="tag blue">'+t+'</span>').join(' ')}
 function personalGroupResources(db){return sourceKind(db)==='数据中台项目'?resources.filter(r=>r.project===db.project&&sourceKind(r)==='数据中台项目'):[db]}
 function cataloguePreview(db){
- const rows=referenceTableEntries(db).slice(0,50);
+ const load=tableLoads.get(current().id+':'+db.id);
+ if(load?.loading)return '<section class="catalogue-preview"><h3>数据表目录</h3><div class="resource-loading" role="status"><span></span>正在加载有权数据表…</div></section>';
+ if(load?.error)return '<section class="catalogue-preview"><h3>数据表目录</h3><p class="error">'+esc(load.error)+'</p>'+btn('重试','retryResourceTables','data-id="'+db.id+'"')+'</section>';
+ const rows=cachedTableEntries(db).slice(0,50);
+ if(!rows.length)return '<section class="catalogue-preview"><h3>数据表目录</h3>'+empty('当前没有有权数据表')+'</section>';
  return '<section class="catalogue-preview"><h3>数据表目录</h3><div class="tablewrap"><table><thead><tr><th>表名</th><th>中文名称</th></tr></thead><tbody>'+rows.map(({table})=>'<tr><td>'+esc(table.name)+'</td><td>'+esc(table.label||'')+'</td></tr>').join('')+'</tbody></table></div></section>';
 }
 function validatePersonalCredential(admin=['admin','editor','assetDetail'].includes(state.route)){return queryCredentialError(admin)}
@@ -1085,7 +1099,7 @@ function beginPersonalCreate(){
  const editor=state.editor={owner:current().id,fields:[],picked:[],loading:true};
  state.node='';state.resourceFilter='';state.sourceCategory='数据中台项目';
  openModal('personalEditor');
- setTimeout(()=>{if(state.editor===editor&&state.modal?.type==='personalEditor'){editor.loading=false;renderModal()}},450);
+ setTimeout(()=>{if(state.editor===editor&&state.modal?.type==='personalEditor'){editor.loading=false;const db=selectableDbs().find(r=>sourceKind(r)==='数据中台项目');state.node=db?.id||'';renderModal();if(db)loadResourceTables(db)}},450);
 }
 function openPersonalEdit(id,origin){const a=assets.find(x=>x.id===id);if(!a||(origin==='admin'?!sourceCanManage(a):!usable(a))){toast('当前无权编辑该资产。');return}const credentialError=validatePersonalCredential(origin==='admin');if(credentialError){state.pendingPersonalAction={type:'edit',id,origin};openModal('personalGate',{message:credentialError});return}state.editOrigin=origin;state.personalEditor=origin!=='admin';state.editor={...clone(a.published),id:a.id,owner:a.owner};state.step=0;state.node=personalResources(a.published)[0]?.id||'sales';state.sourceCategory=sourceKind(resources.find(r=>r.id===state.node)||resources[0]);state.resourceFilter='';if(origin==='admin'){closeModal();state.route='editor';render()}else openModal('personalEditor')}
 function personalEditorBody(){
@@ -1118,13 +1132,13 @@ function configuredDbs(){return new Set(assets.filter(a=>a.owner===current().id)
 function selectableDbs(){
  const denied=state.deniedResourcesByActor?.[current().id]||[];
  if(state.scene.owner==='已被收回')return [];
- return resources.filter(db=>personalGroupResources(db)[0]===db&&!denied.includes(db.id)&&cachedTableEntries(db).length);
+ return resources.filter(db=>personalGroupResources(db)[0]===db&&!denied.includes(db.id)&&actorResourceIds().includes(db.id));
 }
 function databaseAsset(db,owner=current().id,department=current().department){
  const fields=referenceTableEntries(db).flatMap(table=>table.ids);
  return {id:'personal-'+owner+'-'+db.id,owner,department,published:{name:resourceEnglishName(db),desc:'',resourceIds:[db.id],fields,channels:['yilibuddy','hr'],enh:{},skills:[],knowledge:[]}};
 }
-function deletePersonalSource(id){const a=assets.find(x=>x.id===id);if(!a||(!sourceCanManage(a)&&!usable(a))){toast('当前无权删除该资产。');return}assets.splice(assets.indexOf(a),1);state.referenceSelections=(state.referenceSelections||[]).filter(r=>r.asset!==id);syncPersonalReferences();closeModal();state.route='shop';state.marketMine=true;state.myAbilityType='数据源';render();toast('资产已删除。')}
+function deletePersonalSource(id){const a=assets.find(x=>x.id===id);if(!a||(!sourceCanManage(a)&&!ownedPersonalSource(a))){toast('当前无权删除该资产。');return}assets.splice(assets.indexOf(a),1);state.referenceSelections=(state.referenceSelections||[]).filter(r=>r.asset!==id);syncPersonalReferences();closeModal();state.route='shop';state.marketMine=true;state.myAbilityType='数据源';render();toast('资产已删除。')}
 function syncPersonalReferences(){state.selectedHubs=[...new Set((state.referenceSelections||[]).map(r=>r.asset))];state.selectedHub=state.selectedHubs[0]||null}
 function referenceTableEntries(db){const rights=allowedFields();return personalGroupResources(db).flatMap(r=>r.tables.map(t=>({db:r,table:t,ids:rights.filter(id=>id.startsWith(r.id+'.'+t.id+'.'))}))).filter(t=>t.ids.length)}
 document.addEventListener('pointerover',event=>{
@@ -1200,14 +1214,14 @@ function flatSourceReferences(error){
   const matchParent=includes(haystack,parts[0]);
   if(parts.length===1&&matchParent)results.push(btn('<span class="cascade-name"><b>'+esc(parent)+'</b><small>引用整个项目或数据源</small></span><span>＋</span>','atPickResource','data-asset="'+asset+'" data-id="'+db.id+'"','cascade-row'));
   for(const entry of cachedTableEntries(db)){
-   if(asset==='__ak__'&&entry.db.id==='inventory'&&entry.table.id==='stock')continue;
+
    const {table}=entry;
    if(parts.length>1?!(matchParent&&includes(table.name+' '+(table.label||''),parts.slice(1).join('.'))):!includes(haystack+' '+table.name+' '+(table.label||''),query))continue;
    results.push(btn('<span class="cascade-name"><b>'+esc(parent+' / '+table.name)+'</b>'+(table.label?'<small>'+esc(table.label)+'</small>':'')+'</span><span>＋</span>','atPickTable','data-asset="'+asset+'" data-resource="'+entry.db.id+'" data-id="'+table.id+'"','cascade-row'));
   }
  }
  if(!error){
-  groups.forEach(asset=>personalResources(asset.published).filter(db=>cachedTableEntries(db).length).forEach(db=>collect(db,asset.id,asset.published.name)));
+  groups.forEach(asset=>personalResources(asset.published).filter(db=>actorResourceIds().includes(personalGroupResources(db)[0].id)).forEach(db=>collect(db,asset.id,asset.published.name)));
   akReferenceResources().forEach(db=>collect(db,'__ak__',''));
  }
  const direct=/^[a-z0-9_]+\.[a-z0-9_]+$/i.test(query);
@@ -1217,7 +1231,7 @@ function flatSourceReferences(error){
 function akReferenceResources(){
  const cached=state.atAkCatalogue;
  if(cached?.actor!==current().id||validatePersonalCredential())return [];
- return resources.filter(r=>cached.ids.includes(r.id)&&cachedTableEntries(r).length);
+ return resources.filter(r=>cached.ids.includes(r.id));
 }
 function referenceCascadeTables(db,asset,direct){
  const query=(state.atSearch||(state.atInlineSearch?.includes('.')?state.atInlineSearch.split('.').at(-1):'')||'').trim().toLowerCase();
@@ -1243,10 +1257,10 @@ function openReferencePagingDemo(){
 }
 function resetReferenceCascade(){
  state.atInlineSearch='';state.atFilters={};state.atEmptyDemo=!!state.atEmptyOnce;state.atEmptyOnce=false;state.atCascadeOpen=false;state.atAsset=null;state.atResource=null;state.atMode='mine';state.atPage=1;state.atSearch='';
- state.atAkCatalogue={actor:current().id,ids:state.atEmptyDemo||validatePersonalCredential()?[]:resources.filter(r=>cachedTableEntries(r).length).map(r=>r.id)};
+ state.atAkCatalogue={actor:current().id,ids:state.atEmptyDemo||validatePersonalCredential()?[]:actorResourceIds()};
 }
 
-function pickPersonalReference(assetId,dbId,tableId){const direct=assetId==='__ak__',a=assets.find(a=>a.id===assetId),db=resources.find(r=>r.id===dbId);if(!db||(!direct&&(!a||!usable(a)||!personalResources(a.published).some(r=>r.id===db.id)))){toast('当前引用范围已变化，请重新选择。');return}const error=validatePersonalCredential();if(error){toast(error);return}const entries=referenceTableEntries(db),ids=entries.filter(t=>!tableId||t.table.id===tableId&&t.db.id===dbId).flatMap(t=>t.ids);if(!ids.length){toast('当前没有可引用的数据权限。');return}const t=tableId?db.tables.find(t=>t.id===tableId):null,key=assetId+':'+dbId+':'+(tableId||'*'),label=[a?.published.name,resourceEnglishName(db),t?.name].filter(Boolean).join(' / '),chineseLabel=[a?.published.name,sourceName(db),t?.label].filter(Boolean).join(' / ');state.referenceSelections=(state.referenceSelections||[]).filter(r=>r.key!==key);state.referenceSelections.push({key,asset:assetId,resource:dbId,table:tableId||null,ids,label,chineseLabel});syncPersonalReferences();const trigger=state.modal?.trigger;if(trigger!==undefined&&state.question[trigger]==='@')state.question=state.question.slice(0,trigger)+state.question.slice(trigger+1+(state.atInlineSearch||'').length);closeModal();render();const input=document.getElementById('question');input?.focus();if(trigger!==undefined)input?.setSelectionRange(trigger,trigger)}
+function pickPersonalReference(assetId,dbId,tableId){const direct=assetId==='__ak__',a=assets.find(a=>a.id===assetId),db=resources.find(r=>r.id===dbId);if(!db||!actorResourceIds().includes(personalGroupResources(db)[0].id)||(!direct&&(!a||!usable(a)||!personalResources(a.published).some(r=>r.id===db.id)))){toast('当前引用范围已变化，请重新选择。');return}const error=validatePersonalCredential();if(error){toast(error);return}const entries=referenceTableEntries(db),ids=entries.filter(t=>!tableId||t.table.id===tableId&&t.db.id===dbId).flatMap(t=>t.ids);if(!ids.length){toast('当前没有可引用的数据权限。');return}const t=tableId?db.tables.find(t=>t.id===tableId):null,key=assetId+':'+dbId+':'+(tableId||'*'),label=[a?.published.name,resourceEnglishName(db),t?.name].filter(Boolean).join(' / '),chineseLabel=[a?.published.name,sourceName(db),t?.label].filter(Boolean).join(' / ');state.referenceSelections=(state.referenceSelections||[]).filter(r=>r.key!==key);state.referenceSelections.push({key,asset:assetId,resource:dbId,table:tableId||null,ids,label,chineseLabel});syncPersonalReferences();const trigger=state.modal?.trigger;if(trigger!==undefined&&state.question[trigger]==='@')state.question=state.question.slice(0,trigger)+state.question.slice(trigger+1+(state.atInlineSearch||'').length);closeModal();render();const input=document.getElementById('question');input?.focus();if(trigger!==undefined)input?.setSelectionRange(trigger,trigger)}
 
 function positionPersonalReference(){const menu=document.querySelector('.reference-cascade'),anchor=document.querySelector('.composebox');if(!menu||!anchor)return;const rect=anchor.getBoundingClientRect(),v=window.visualViewport,height=v?.height||innerHeight,width=v?.width||innerWidth,narrow=width<780,desired=narrow?rect.width:menu.classList.contains('cascade-flat')?480:menu.classList.contains('cascade-root-only')?210:menu.classList.contains('cascade-level-detail')?770:490,w=Math.min(desired,width-16),left=Math.max(8,Math.min(rect.left,width-w-8)),bottom=Math.max(8,height-rect.top+6);Object.assign(menu.style,{left:left+'px',width:w+'px',bottom:bottom+'px',maxHeight:Math.max(120,Math.min(365,height-bottom-65))+'px',transform:'none'});}
 
@@ -1254,14 +1268,14 @@ function updateReferenceSearch(){const host=document.createElement('div');host.i
 
 function queryReferenceAsset(id,refs=state.referenceSelections||[]){if(id!=='__ak__')return assets.find(a=>a.id===id);const picks=refs.filter(r=>r.asset==='__ak__');if(!picks.length)return null;return {id:'__ak__',owner:current().id,published:{name:'本人AK有权资源',desc:'',fields:[...new Set(picks.flatMap(r=>r.ids))],channels:[state.entryChannel||'yilibuddy'],enh:{},skills:[],knowledge:[]}};}
 
-function personalMoreMenu(id){const anchor=document.querySelector('[data-action="personalMore"][data-id="'+id+'"]'),a=assets.find(x=>x.id===id);if(!anchor||!a||!usable(a))return '';const rect=anchor.getBoundingClientRect(),left=Math.max(8,Math.min(rect.right-132,innerWidth-140));return '<div class="reference-dismiss" data-action="closeModal"></div><div class="personal-card-menu" role="menu" style="left:'+left+'px;top:'+(rect.bottom+6)+'px">'+btn('删除','personalDelete','data-id="'+id+'" role="menuitem"','danger')+'</div>'}
+function personalMoreMenu(id){const anchor=document.querySelector('[data-action="personalMore"][data-id="'+id+'"]'),a=assets.find(x=>x.id===id);if(!anchor||!a||!ownedPersonalSource(a))return '';const rect=anchor.getBoundingClientRect(),left=Math.max(8,Math.min(rect.right-132,innerWidth-140));return '<div class="reference-dismiss" data-action="closeModal"></div><div class="personal-card-menu" role="menu" style="left:'+left+'px;top:'+(rect.bottom+6)+'px">'+btn('删除','personalDelete','data-id="'+id+'" role="menuitem"','danger')+'</div>'}
 
 function startAdminPartialRightsScene(){state.identity='business';state.adminCredentials.b=true;state.scene.ak='正常';state.scene.owner='正常';state.currentUnavailable=[];state.deniedResourcesByActor={b:['inventory']};state.panel=null;state.modal=null;state.editor=null;state.filter='';state.personalTypeFilter='';const prior=assets.findIndex(x=>x.id==='12091');if(prior>=0)assets.splice(prior,1);let a=assets.find(x=>x.id==='12091');if(!a){const fields=allFields.filter(f=>['sales','inventory','summary'].includes(f.split('.')[0]));a={id:'12091',numericId:12091,owner:'u',department:people.consumer.department,createdAt:'2026-11-05T01:00:00',updatedAt:'2026/11/05 01:00',version:1,versions:[{id:'1300',number:1,status:'已生效',time:'2026/11/05 01:00',remark:'首次创建'}],published:{name:'C端个人经营分析（权限差异演示）',identifier:'personal_source_12091',desc:'销售与库存经营问数',fields,resourceIds:['sales','inventory','summary'],channels:['yilibuddy'],visibleMode:'selected',visibleUsers:['u'],visibleEntries:['u'],subMode:'selected',subUsers:['u'],subEntries:['u'],enh:{},skills:[],knowledge:[]}};assets.push(a)}openPersonalEdit(a.id,'admin');toast('演示场景：管理员AK有效，但没有 inventory_dw 权限。修改后点击保存验证。')}
 
 function resourceEnglishName(db){return sourceKind(db)==='数据中台项目'?(db.projectEnglish||db.name||'--'):(db.name||'--')}
 function referenceDisplay(ref){const a=assets.find(a=>a.id===ref.asset),db=resources.find(r=>r.id===ref.resource);if(!db)return {primary:ref.label||'',secondary:ref.chineseLabel||''};const table=ref.table?db.tables.find(t=>t.id===ref.table):null,first=a?.published.name,primary=[first,resourceEnglishName(db),ref.table?(table?.name||ref.table):null].filter(Boolean).join(' / '),secondary=[first,sourceName(db),ref.table?table?.label:null].filter(Boolean).join(' / ');return {primary,secondary}}
-function resourceRefreshToolbar(){const sync=state.resourceSync?.editor===state.editor?state.resourceSync:null,loading=sync?.loading,finished=sync&&!loading&&!!sync.message,statusIcon=finished?'<span class="resource-refresh-result '+(sync.error?'is-failure':'is-success')+'" role="img" aria-label="'+(sync.error?'更新失败':'更新成功')+'" title="'+(sync.error?'更新失败':'更新成功')+'"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+(sync.error?'<path d="m5 5 10 10M15 5 5 15"/>':'<path d="m4 10 4 4 8-8"/>')+'</svg></span>':'';return '<div class="row wrap resource-refresh-row"><input id="resourceSearch" placeholder="搜索项目或资源名称" value="'+esc(state.resourceFilter||'')+'">'+btn(loading?'更新中…':'手动更新','manualRefreshResources',loading?'disabled':'')+statusIcon+'<div class="resource-sync-status '+(sync?.error?'error':'mini muted')+'" role="status" aria-live="polite">'+esc(loading?'正在同步资源，请稍候；同步期间请勿重复操作。':sync?.message||'')+'</div></div><p class="mini muted resource-wait-hint">在数据中台修改配置或权限后，请回到这里点击「手动更新」。同步可能需要片刻。 '+mark(27)+'</p>'}
-async function manualRefreshPersonalResources(){const e=state.editor;if(!e||state.resourceSync?.editor===e&&state.resourceSync.loading)return;const firstReason=resourceSyncFailureReason();if(validatePersonalCredential()){state.resourceSync={editor:e,loading:false,error:true,message:'资源同步失败：'+firstReason+'已选资源和填写内容已保留。'};render();return}const token=Symbol('resource-refresh'),modalOrigin=state.modal?.type==='personalEditor';state.resourceSync={editor:e,loading:true,token,message:'',error:false};render();await new Promise(r=>setTimeout(r,900));if(state.editor!==e||state.resourceSync?.token!==token||modalOrigin&&state.modal?.type!=='personalEditor'){if(state.resourceSync?.token===token)state.resourceSync.loading=false;return}const reason=resourceSyncFailureReason();if(!reason)updateCatalogue();state.resourceSync={editor:e,loading:false,error:!!reason,message:reason?'资源同步失败：'+reason+'已选资源和填写内容已保留。':'资源已更新，已选资源和填写内容已保留。'};render()}
+function resourceRefreshToolbar(){const sync=state.resourceSync?.editor===state.editor?state.resourceSync:null,loading=sync?.loading,finished=sync&&!loading&&!!sync.message,statusIcon=finished?'<span class="resource-refresh-result '+(sync.error?'is-failure':'is-success')+'" role="img" aria-label="'+(sync.error?'更新失败':'更新成功')+'" title="'+(sync.error?'更新失败':'更新成功')+'"><svg viewBox="0 0 20 20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">'+(sync.error?'<path d="m5 5 10 10M15 5 5 15"/>':'<path d="m4 10 4 4 8-8"/>')+'</svg></span>':'';return '<div class="row wrap resource-refresh-row"><input id="resourceSearch" placeholder="搜索项目或资源名称" value="'+esc(state.resourceFilter||'')+'">'+btn(loading?'更新中…':'手动更新','manualRefreshResources',loading?'disabled':'')+statusIcon+'<div class="resource-sync-status '+(sync?.error?'error':'mini muted')+'" role="status" aria-live="polite">'+esc(loading?'正在同步资源，请稍候；同步期间请勿重复操作。':sync?.message||'')+'</div></div><p class="mini muted resource-wait-hint">在数据中台修改配置或权限后，请回到这里点击「手动更新」。同步可能需要片刻。手动刷新仅提供用户所在中台项目的表信息 '+mark(27)+'</p>'}
+async function manualRefreshPersonalResources(){const e=state.editor;if(!e||state.resourceSync?.editor===e&&state.resourceSync.loading)return;const firstReason=resourceSyncFailureReason();if(validatePersonalCredential()){state.resourceSync={editor:e,loading:false,error:true,message:'资源同步失败：'+firstReason+'已选资源和填写内容已保留。'};render();return}const token=Symbol('resource-refresh'),modalOrigin=state.modal?.type==='personalEditor';state.resourceSync={editor:e,loading:true,token,message:'',error:false};render();await new Promise(r=>setTimeout(r,900));if(state.editor!==e||state.resourceSync?.token!==token||modalOrigin&&state.modal?.type!=='personalEditor'){if(state.resourceSync?.token===token)state.resourceSync.loading=false;return}const reason=resourceSyncFailureReason();if(!reason)updateCatalogue();state.resourceSync={editor:e,loading:false,error:!!reason,message:reason?'资源同步失败：'+reason+'已选资源和填写内容已保留。':actorResourceIds().some(id=>sourceKind(resources.find(r=>r.id===id))==='数据中台项目')?'已分配中台项目的表信息已更新。':'暂无可更新的已分配中台项目。'};render()}
 function resourceSyncFailureReason(){if(!hasCredential()||state.scene.ak==='未配置')return '尚未配置本人AK，请先维护并校验。';if(state.scene.ak==='凭据无效')return '本人AK校验失败，无法读取资源目录，请更新AK后重试。';if(state.scene.ak==='网络失败')return '暂时无法连接Dataphin，请检查网络后重试。';if(state.scene.search==='服务超时')return 'Dataphin资源接口响应超时，请稍后重试。';return ''}
 
 async function startResourceRefreshScene(mode){state.identity='consumer';state.credentials.u=true;state.scene.ak='正常';state.scene.search=mode==='timeout'?'服务超时':'匹配成功';state.panel=null;state.modal=null;state.editor=null;state.resourceSync=null;state.deniedResourcesByActor={};if(!assets.some(a=>a.id==='12092')){const fields=allFields.filter(f=>f.startsWith('sales.'));assets.push({id:'12092',numericId:12092,owner:'u',department:people.consumer.department,createdAt:new Date().toISOString(),updatedAt:nowText(),version:1,versions:[{id:'13092',number:1,status:'已生效',time:nowText(),remark:'首次创建'}],published:{name:'个人资源更新演示',identifier:'personal_refresh_demo',desc:'演示资源同步结果',fields,resourceIds:['sales'],channels:['yilibuddy'],visibleMode:'selected',visibleEntries:['u'],subMode:'selected',subEntries:['u'],enh:{},skills:[],knowledge:[]}})}state.route='shop';state.marketMine=true;state.myAbilityType='数据源';render();openPersonalEdit('12092','user');if(!state.editor)return;if(mode==='invalid')state.scene.ak='凭据无效';if(mode==='network')state.scene.ak='网络失败';await manualRefreshPersonalResources()}
@@ -1292,12 +1306,12 @@ function sourceResourceView(){
  const kinds=['数据中台项目','业务数据库','StarRocks'],kind=state.sourceCategory,query=(state.resourceFilter||'').toLowerCase(),locked=configuredDbs();
  const choices=selectableDbs().filter(db=>sourceKind(db)===kind&&(resourceEnglishName(db)+' '+dbChinese(db)).toLowerCase().includes(query));
  const selected=choices.find(db=>db.id===state.node)||choices[0];
- const tabs=kinds.map(k=>btn(k,'sourceCategory','data-value="'+k+'"',k===kind?'active':'')).join('');
+ const tabs=kinds.map(k=>btn(sourceTabLabel(k),'sourceCategory','data-value="'+k+'"',k===kind?'active':'')).join('');
  const rows=choices.map(db=>'<div class="treeitem '+(db===selected?'selected':'')+'"><input type="checkbox" data-pick-db="'+esc(db.id)+'" '+(locked.has(db.id)||e.picked?.includes(db.id)?'checked':'')+' '+(locked.has(db.id)?'disabled':'')+' aria-label="选择 '+esc(resourceEnglishName(db))+'"><button data-action="sourceSelectRow" data-id="'+esc(db.id)+'" title="'+esc(resourceEnglishName(db)+(locked.has(db.id)?' · 已配置':''))+'"><b class="resource-english">'+esc(resourceEnglishName(db))+'</b></button></div>').join('');
  return '<div class="tabs resource-category-tabs">'+tabs+'</div><div class="split detail-resource"><div class="tree">'+rows+'</div><div class="treebody">'+(selected?sourceInfo(selected)+(locked.has(selected.id)?'<p class="mini muted">已配置</p>':'')+cataloguePreview(selected):empty('暂无匹配资源'))+'</div></div>';
 }
 function sourceLocalError(text){document.querySelectorAll('.source-local-error').forEach(n=>n.remove());let target=/名称/.test(text)?document.querySelector('[data-edit="name"]'):/标识/.test(text)?document.querySelector('[data-edit="identifier"]'):/AK|AccessKey|凭据/.test(text)?document.querySelector('.source-credential'):/渠道/.test(text)?document.querySelector('.advanced-config'):/范围/.test(text)?document.querySelector('.access-group'):document.querySelector('.source-resource');if(!target)target=document.getElementById('editorError');const msg=document.createElement('div');msg.className='error source-local-error';msg.setAttribute('role','alert');msg.textContent=text;target.insertAdjacentElement('afterend',msg);target.scrollIntoView({block:'center',behavior:'smooth'});if(target.matches('input'))target.focus()}
-document.addEventListener('click',ev=>{let n=ev.target.closest('[data-action="sourceCategory"]');if(n){state.sourceCategory=n.dataset.value;const db=resources.find(x=>sourceKind(x)===state.sourceCategory);state.node=db?.id||'';state.detailNode=state.node;render()}if(ev.target.closest('[data-action="profileMenu"]')){state.profileOpen=!state.profileOpen;render()}});
+document.addEventListener('click',ev=>{let n=ev.target.closest('[data-action="sourceCategory"]');if(n){state.sourceCategory=n.dataset.value;const db=resources.find(x=>sourceKind(x)===state.sourceCategory);state.node=db?.id||'';state.detailNode=state.node;render();const selected=selectableDbs().find(x=>sourceKind(x)===state.sourceCategory);if(selected&&state.modal?.type==='personalEditor')loadResourceTables(selected)}if(ev.target.closest('[data-action="profileMenu"]')){state.profileOpen=!state.profileOpen;render()}});
 
 
 function sourceCanManage(a){return state.identity==='platform'||state.identity==='business'&&a.department===current().department}
@@ -1314,19 +1328,102 @@ document.addEventListener('click',ev=>{const n=ev.target.closest('[data-action]'
 window.addEventListener('resize',positionPersonalReference);window.addEventListener('scroll',positionPersonalReference,true);window.visualViewport?.addEventListener('resize',positionPersonalReference);
 
 const catalogueByUser=new Map();
+const credentialFingerprints=new Map();
+const resourceDirectoryByUser=new Map();
+const tableLoads=new Map();
+function actorResourceIds(){
+ const actor=current().id;
+ if(!resourceDirectoryByUser.has(actor)){
+  const denied=state.deniedResourcesByActor?.[actor]||[];
+  resourceDirectoryByUser.set(actor,resources.filter(db=>personalGroupResources(db)[0]===db&&!denied.includes(db.id)&&state.scene.owner!=='已被收回').map(db=>db.id));
+ }
+ return resourceDirectoryByUser.get(actor);
+}
 function userCatalogue(){
  const actor=current().id;
- if(!catalogueByUser.has(actor))catalogueByUser.set(actor,new Set(resources.flatMap(db=>referenceTableEntries(db)).filter(({db,table})=>db.id!=='inventory'||table.id!=='stock').map(tableKey)));
+ if(!catalogueByUser.has(actor)){
+  const available=new Set(actorResourceIds());
+  catalogueByUser.set(actor,new Set(resources.filter(db=>sourceKind(db)!=='业务数据库'&&available.has(personalGroupResources(db)[0].id)).flatMap(db=>referenceTableEntries(db)).filter(({db,table})=>db.id!=='inventory'||table.id!=='stock').map(tableKey)));
+ }
  return catalogueByUser.get(actor);
 }
 function tableKey({db,table}){return db.id+'.'+table.id}
 function cachedTableEntries(db){const cache=userCatalogue();return referenceTableEntries(db).filter(entry=>cache.has(tableKey(entry)))}
 function updateCatalogue(db){
  const cache=userCatalogue();
- if(!db)cache.clear();
- else for(const scope of personalGroupResources(db))for(const key of [...cache])if(key.startsWith(scope.id+'.'))cache.delete(key);
- for(const scope of db?[db]:resources)for(const entry of referenceTableEntries(scope))cache.add(tableKey(entry));
+ const scopes=db?personalGroupResources(db):resources.filter(r=>sourceKind(r)==='数据中台项目'&&actorResourceIds().includes(personalGroupResources(r)[0].id));
+ for(const scope of scopes){
+  for(const key of [...cache])if(key.startsWith(scope.id+'.'))cache.delete(key);
+  for(const entry of referenceTableEntries(scope))cache.add(tableKey(entry));
+ }
 }
+function reconcilePersonalAssets(){
+ const available=new Set(actorResourceIds());
+ for(const asset of assets.filter(ownedPersonalSource)){
+  asset.credentialInvalid=personalResources(asset.published).some(db=>!available.has(personalGroupResources(db)[0].id));
+ }
+}
+function clearPersonalCatalogue(){
+ const actor=current().id;
+ catalogueByUser.delete(actor);resourceDirectoryByUser.delete(actor);
+ for(const key of tableLoads.keys())if(key.startsWith(actor+':'))tableLoads.delete(key);
+ state.atAkCatalogue=null;state.atResource=null;state.atAsset=null;
+}
+async function saveCredentialIdentity(key,secret){
+ const actor=current().id;
+ const bytes=new TextEncoder().encode(key+'\u0000'+secret);
+ const digest=await crypto.subtle.digest('SHA-256',bytes);
+ const fingerprint=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+ if(current().id!==actor)return;
+ const previous=credentialFingerprints.get(actor);
+ const replacement=previous!==fingerprint;
+ credentialFingerprints.set(actor,fingerprint);
+ if(state.nextCredentialDenied){
+  state.deniedResourcesByActor??={};state.deniedResourcesByActor[actor]=state.nextCredentialDenied;
+  state.nextCredentialDenied=null;
+ }
+ if(replacement){clearPersonalCatalogue();reconcilePersonalAssets()}
+}
+async function loadResourceTables(db){
+ const actor=current().id,key=actor+':'+db.id;
+ const existing=tableLoads.get(key);
+ if(existing?.loading)return;
+ const generation=credentialFingerprints.get(actor);
+ const token=Symbol('table-load');
+ tableLoads.set(key,{loading:true,token});renderModal();
+ await sleep(650);
+ if(current().id!==actor||credentialFingerprints.get(actor)!==generation||tableLoads.get(key)?.token!==token)return;
+ const error=resourceSyncFailureReason();
+ if(error)tableLoads.set(key,{loading:false,error});
+ else{updateCatalogue(db);tableLoads.set(key,{loading:false,ready:true})}
+ if(state.modal?.type==='personalEditor')renderModal();
+}
+function sourceTabLabel(kind){
+ const tips={
+  '数据中台项目':'中台项目：适合复杂离线分析、问数，稳定性强，查询耗时较长；数据一般截止昨日',
+  '业务数据库':'业务数据库：适合简单实时问数，谨慎选用，查询可能影响业务系统稳定性；可查当前最新数据',
+  'StarRocks':'StarRocks：适合快速出结果的离线分析、问数，响应快、稳定性佳；数据一般截止昨日'
+ };
+ return '<span>'+kind+'</span><span class="source-info-icon" tabindex="0" aria-label="'+esc(tips[kind])+'">ⓘ<span class="source-info-tip" role="tooltip">'+esc(tips[kind])+'</span></span>';
+}
+function invalidAssetDemo(){
+ state.identity='consumer';state.credentials.u=true;state.scene.ak='正常';
+ state.deniedResourcesByActor={};clearPersonalCatalogue();
+ for(const id of ['sales','summary'])if(!assets.some(a=>a.owner==='u'&&a.published?.resourceIds?.includes(id)))assets.push(databaseAsset(resources.find(db=>db.id===id)));
+ state.nextCredentialDenied=['summary'];
+ state.route='shop';state.marketMine=true;state.myAbilityType='数据源';state.panel=null;
+ render();openModal('key',{context:'consumer',reason:'演示：保存有效新密钥后，sales_summary_dw 将显示已失效。'});
+}
+function businessCacheDemo(warm){
+ state.identity='consumer';state.credentials.u=true;state.scene.ak='正常';state.scene.access='全部权限';state.scene.owner='正常';
+ state.deniedResourcesByActor={};clearPersonalCatalogue();
+ const db=resources.find(r=>r.id==='summary');
+ if(warm)updateCatalogue(db);
+ state.panel=null;state.route='chat';state.question='@';
+ resetReferenceCascade();state.atSection='sources';state.atCascadeOpen=true;state.atMode='ak';state.atResource=db.id;
+ render();openModal('at');
+}
+
 function selectForFields(ids){
  const field=fieldMap[ids[0]];
  return 'SELECT '+ids.map(id=>fieldMap[id].name).join(', ')+' FROM '+field.db.name+'.'+field.tb.name+' LIMIT 10000';
